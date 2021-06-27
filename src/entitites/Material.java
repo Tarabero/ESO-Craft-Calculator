@@ -1,20 +1,16 @@
 package entitites;
 
-public class Material extends Entity {
+public class Material extends DatabaseEntity {
 
-    private final long id;
+    private final int id;
     private final int price;
     private final MaterialType materialType;
 
-    public Material(long id, String name, int price, MaterialType materialType){
-        super(name);
+    public Material(int id, String name, int price, MaterialType materialType){
+        super(name, id);
         this.id = id;
         this.price = price;
         this.materialType = materialType;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public int getPrice() {
@@ -23,5 +19,10 @@ public class Material extends Entity {
 
     public MaterialType getMaterialType() {
         return materialType;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", type:" + materialType.toString() ;
     }
 }

@@ -8,6 +8,7 @@ public enum MaterialType {
     BASE_LEATHER,
     BASE_METAL,
     BASE_JEWELRY,
+    BASE_WOOD,
     FINE_CLOTHING,
     RARE_CLOTHING,
     EPIC_CLOTHING,
@@ -24,5 +25,4 @@ public enum MaterialType {
     RARE_WOODWORK,
     EPIC_WOODWORK,
     LEGENDARY_WOODWORK
-
 }
