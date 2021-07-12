@@ -5,13 +5,22 @@ import entitites.*;
 public class Weapon extends Item {
     private final WeaponType weaponType;
 
-    public Weapon(WeaponType weaponType, String name, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(name, trait,baseMaterial, workbench);
+    public Weapon(WeaponType weaponType, Trait trait, Material baseMaterial, Workbench workbench) {
+        super(trait,baseMaterial, workbench);
         this.weaponType = weaponType;
     }
 
     public WeaponType getWeaponType() {
         return weaponType;
+    }
+
+    @Override
+    protected String createName() {
+        return getQualityType().getName()
+                + " "
+                + getTrait().getName()
+                + " "
+                + weaponType.getName();
     }
 
     @Override

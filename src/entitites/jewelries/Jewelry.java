@@ -5,13 +5,22 @@ import entitites.*;
 public class Jewelry extends Item {
     private final JewelryType jewelryType;
 
-    public Jewelry(JewelryType jewelryType, String name, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(name, trait, baseMaterial, workbench);
+    public Jewelry(JewelryType jewelryType, Trait trait, Material baseMaterial, Workbench workbench) {
+        super(trait, baseMaterial, workbench);
         this.jewelryType = jewelryType;
     }
 
     public JewelryType getJewelryType() {
         return jewelryType;
+    }
+
+    @Override
+    protected String createName() {
+        return getQualityType().getName()
+                + " "
+                + getTrait().getName()
+                + " "
+                + jewelryType.getName();
     }
 
     @Override
