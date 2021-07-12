@@ -31,9 +31,4 @@ public class Trait extends DatabaseEntity {
     public void setCraftResource(CraftResource craftResource) {
         this.craftResource = craftResource;
     }
-
-    @Override
-    public String toString() {
-        return name + " " + traitType.name() + " " + craftResource.getMaterial().toString();
-    }
 }

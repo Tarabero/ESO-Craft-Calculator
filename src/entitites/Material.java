@@ -20,9 +20,4 @@ public class Material extends DatabaseEntity {
     public MaterialType getMaterialType() {
         return materialType;
     }
-
-    @Override
-    public String toString() {
-        return name + ", type:" + materialType.toString() ;
-    }
 }

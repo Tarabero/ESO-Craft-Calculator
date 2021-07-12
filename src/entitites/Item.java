@@ -12,12 +12,14 @@ public abstract class Item extends Entity {
     private QualityType qualityType;
     private List<CraftResource> qualityMaterials;
 
-    public Item(String name, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(name);
+    public Item(Trait trait, Material baseMaterial, Workbench workbench) {
         this.trait = trait;
         this.baseMaterial = baseMaterial;
         this.workbench = workbench;
+        this.name = createName();
     }
+
+    protected abstract String createName();
 
     public abstract CraftResource getBaseCraftResource();
 

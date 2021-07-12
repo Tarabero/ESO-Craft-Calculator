@@ -53,13 +53,13 @@ public class DatabaseHelper {
             throwables.printStackTrace();
             logger.log(Level.WARNING, "Failed to close connection", throwables );
         }
-
     }
 
     public void executeStatement(String query){
         executeStatementWithResult(query, null);
     }
 
+    // TO READ: generics <T extends smth>
     public<T extends DatabaseEntity> List<T> executeStatementWithResult(String query, Parser<T> parser){
         if (!isAlive()){
             logger.log(Level.WARNING, "Can't send query, connection is null");
@@ -110,6 +110,7 @@ public class DatabaseHelper {
         return connection != null;
     }
 
+    // TODO: 12.07.2021 remove later
     public void testStatement() {
         if (connection == null) {
             return;
