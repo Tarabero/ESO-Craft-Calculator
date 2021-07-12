@@ -14,7 +14,7 @@ public class Trait extends Entity {
         craftResource = new CraftResource(material, MATERIAL_REQUIRED);
     }
 
-    public int getPrice(){
+    public int getPrice() {
         return craftResource.getTotalPrice();
     }
 

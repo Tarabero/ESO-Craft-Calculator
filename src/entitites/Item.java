@@ -1,27 +1,53 @@
 package entitites;
 
-public class Item extends Entity {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Item extends Entity {
 
     private final Trait trait;
-    private final QualityType qualityType;
-    private final CraftResource baseCraftResource;
+    private final Material baseMaterial;
     private final Workbench workbench;
 
-    public Item (String name, Trait trait, QualityType qualityType, CraftResource baseCraftResource, Workbench workbench){
+    private QualityType qualityType;
+    private List<CraftResource> qualityMaterials;
+
+    public Item(String name, Trait trait, Material baseMaterial, Workbench workbench) {
         super(name);
         this.trait = trait;
-        this.qualityType = qualityType;
-        this.baseCraftResource = baseCraftResource;
+        this.baseMaterial = baseMaterial;
         this.workbench = workbench;
     }
 
-    public Trait getTrait() { return trait;}
+    public abstract CraftResource getBaseCraftResource();
 
-    public QualityType getQualityType() {return qualityType;}
+    public Trait getTrait() {
+        return trait;
+    }
 
-    public CraftResource getBaseCraftResource() {return baseCraftResource;}
+    public QualityType getQualityType() {
+        return qualityType;
+    }
 
-    public Workbench getWorkbench() {return workbench;}
+    public Workbench getWorkbench() {
+        return workbench;
+    }
 
+    public List<CraftResource> getAllCraftingResources() {
+        List<CraftResource> resources = new ArrayList<>();
+        resources.add(getBaseCraftResource());
+        resources.add(trait.getCraftResource());
+        resources.addAll(qualityMaterials);
+        return resources;
+    }
+
+    protected Material getBaseMaterial() {
+        return baseMaterial;
+    }
+
+    public void setQuality(QualityType qualityType, List<CraftResource> qualityMaterials) {
+        this.qualityType = qualityType;
+        this.qualityMaterials = qualityMaterials;
+    }
 }
 
