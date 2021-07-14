@@ -1,6 +1,7 @@
 package entitites;
 
 public enum QualityType {
+    COMMON("Common"),
     FINE("Fine"),
     RARE("Superior"),
     EPIC("Epic"),
