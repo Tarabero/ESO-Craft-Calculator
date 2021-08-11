@@ -1,7 +1,9 @@
 package entitites.armor;
 
 public enum ArmorType {
-    LIGHT("Light"), MEDIUM("Medium"), HEAVY("Heavy");
+    LIGHT("Light"),
+    MEDIUM("Medium"),
+    HEAVY("Heavy");
 
     private String name;
 
