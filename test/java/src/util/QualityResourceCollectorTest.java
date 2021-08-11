@@ -29,6 +29,7 @@ public class QualityResourceCollectorTest {
     @Before
     public void setup(){
         databaseHelper = DatabaseHelper.getInstance();
+        databaseHelper.connect();
         MaterialDao materialDao = new MaterialDaoImpl(databaseHelper);
         qualityResourceCollector = new QualityResourceCollector(materialDao);
     }

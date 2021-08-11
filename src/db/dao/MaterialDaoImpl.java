@@ -33,7 +33,7 @@ public class MaterialDaoImpl implements MaterialDao {
     @Override
     public Material getMaterialFor(MaterialType type) {
         List<Material> result = databaseHelper.executeStatementWithResult(QUERY_SEARCH_MATERIAL + type.name() + "\"", new MaterialParser());
-        if (!result.isEmpty()){
+        if (result != null && !result.isEmpty()){
             return result.get(0);
         }
         return null;
