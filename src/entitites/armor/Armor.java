@@ -18,10 +18,7 @@ public class Armor extends Item {
 
     @Override
     protected String createName() {
-        return getQualityType().getName()
-                + " "
-                + getTrait().getName()
-                + " "
+        return super.createName()
                 + armorType.getName()
                 + " "
                 + armorSlot.getName();

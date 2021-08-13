@@ -6,5 +6,5 @@ import entitites.TraitType;
 import java.util.List;
 
 public interface TraitDao {
-    List<Trait> getTraitFor(TraitType traitType);
+    List<Trait> getTraitsFor(TraitType traitType);
 }

@@ -16,11 +16,7 @@ public class Weapon extends Item {
 
     @Override
     protected String createName() {
-        return getQualityType().getName()
-                + " "
-                + getTrait().getName()
-                + " "
-                + weaponType.getName();
+        return super.createName() + weaponType.getName();
     }
 
     @Override

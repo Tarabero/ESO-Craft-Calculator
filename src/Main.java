@@ -9,6 +9,7 @@ import entitites.armor.ArmorType;
 import entitites.jewelries.JewelryType;
 import entitites.weapon.WeaponType;
 import gui.GUIMain;
+import gui.MainPresenter;
 import util.QualityResourceCollector;
 import java.util.List;
 
@@ -16,7 +17,9 @@ public class Main {
     // VARs
 
     public static void main (String[] args) {
-        GUIMain GUIMainWindow = new GUIMain();
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
+        databaseHelper.connect();
+        GUIMain GUIMainWindow = new GUIMain(new MainPresenter(databaseHelper));
         GUIMainWindow.setVisible(true);
     }
 
@@ -63,7 +66,7 @@ public class Main {
 
     // Test methods
     private void printAllTraits(TraitDao traitDao){
-        List<Trait> traits = traitDao.getTraitFor(TraitType.ARMOR);
+        List<Trait> traits = traitDao.getTraitsFor(TraitType.ARMOR);
         for (Trait trait : traits) {
             System.out.println(trait.toString());
         }

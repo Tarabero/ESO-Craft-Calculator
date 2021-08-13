@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TraitDaoImpl implements TraitDao {
     private final static String QUERY_GET_BY_TYPE =
-            "SELECT traits.id, traits.trait_name, materials.material_name, materials.price, material_types.material_type_name, trait_types.trait_type_name " +
+            "SELECT traits.id, traits.trait_name, materials.id AS material_id, materials.material_name, materials.price, material_types.material_type_name, trait_types.trait_type_name " +
                     "FROM traits " +
                     "JOIN trait_types " +
                     "ON traits.trait_type_id = trait_types.id " +
@@ -26,7 +26,7 @@ public class TraitDaoImpl implements TraitDao {
         this.databaseHelper = databaseHelper;
     }
 
-    public List<Trait> getTraitFor(TraitType traitType) {
+    public List<Trait> getTraitsFor(TraitType traitType) {
         String completeQuery = QUERY_GET_BY_TYPE + "\"" + traitType.name() + "\"";
         return databaseHelper.executeStatementWithResult(completeQuery, new TraitParser());
     }

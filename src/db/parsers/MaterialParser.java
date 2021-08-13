@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 
 public class MaterialParser implements Parser<Material> {
-    private final static String KEY_ID = "id";
+    private final static String KEY_ID = "material_id";
     private final static String KEY_NAME = "material_name";
     private final static String KEY_PRICE = "price";
     private final static String KEY_MATERIAL_TYPE = "material_type_name";

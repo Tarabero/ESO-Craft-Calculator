@@ -24,4 +24,9 @@ public class CraftResource {
     public Material getMaterial() {
         return material;
     }
+
+    @Override
+    public String toString() {
+        return material.toString() + ": " + quantity;
+    }
 }

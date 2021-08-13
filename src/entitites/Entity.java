@@ -1,7 +1,7 @@
 package entitites;
 
 public class Entity {
-    protected String name;
+    private String name;
 
     public Entity(){}
 

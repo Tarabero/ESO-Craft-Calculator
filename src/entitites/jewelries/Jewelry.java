@@ -16,11 +16,7 @@ public class Jewelry extends Item {
 
     @Override
     protected String createName() {
-        return getQualityType().getName()
-                + " "
-                + getTrait().getName()
-                + " "
-                + jewelryType.getName();
+        return super.createName() + jewelryType.getName();
     }
 
     @Override
