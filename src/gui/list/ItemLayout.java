@@ -13,17 +13,9 @@ public class ItemLayout extends JPanel implements ListCellRenderer<Item> {
     private JPanel materialsListContainer;
     private JPanel container;
 
-    public ItemLayout(LayoutManager layout) {
-        super(layout);
-        setVisible(true);
-        add(container);
-    }
-
-    public ItemLayout(Item item){
+    public ItemLayout() {
         super(new BorderLayout());
-        itemName.setText(item.toString());
-        itemName.setVisible(true);
-        setMaterialsDescription(item.getAllCraftingResources());
+        setVisible(true);
         add(container);
     }
 
@@ -53,9 +45,5 @@ public class ItemLayout extends JPanel implements ListCellRenderer<Item> {
             stringBuilder.append(", ");
         }
         materialListDescription.setText(stringBuilder.toString());
-    }
-
-    public void setMaterialsVisible(boolean isVisible) {
-        materialsListContainer.setVisible(isVisible);
     }
 }

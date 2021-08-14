@@ -2,13 +2,12 @@ package gui.main;
 
 import gui.dialog.CreateItemDialog;
 import gui.list.ItemLayout;
+import gui.list.ToggleSelectionModel;
 import item.Item;
-import view.ToggleSelectionModel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +17,8 @@ public class MainScreen extends JFrame {
     private JButton btnAddItem;
     private JList<Item> listItems;
     private JButton btnRemoveItem;
+    private JList listAllMaterials;
+    private JLabel labelTotal;
 
     private int selectedPosition = -1;
     private final MainPresenter presenter;
@@ -34,15 +35,16 @@ public class MainScreen extends JFrame {
         this.mainScreenActionsListener = mainScreenActionsListener;
         setContentPane(this.panelMain);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setupList();
+        setupItemsList();
+        setupMaterialsList();
         setupButtons();
-        panelMain.setSize(1000, 1000);
+        updateTotalLabel();
         pack();
     }
 
-    private void setupList() {
+    private void setupItemsList() {
         listItems.setSelectionModel(new ToggleSelectionModel());
-        listItems.setCellRenderer(new ItemLayout(new BorderLayout()));
+        listItems.setCellRenderer(new ItemLayout());
         listItems.setModel(presenter.getItemsModel());
         listItems.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -52,6 +54,10 @@ public class MainScreen extends JFrame {
                 }
             }
         });
+    }
+
+    private void setupMaterialsList() {
+        listAllMaterials.setModel(presenter.getMaterialsModel());
     }
 
     private void onSelectionChanged() {
@@ -81,6 +87,11 @@ public class MainScreen extends JFrame {
 
     private void removeItem() {
         presenter.removeItem(selectedPosition);
+        updateTotalLabel();
+    }
+
+    private void updateTotalLabel() {
+        labelTotal.setText(presenter.getTotalPrice());
     }
 
     private void openCreateNewItemDialog() {
@@ -89,6 +100,7 @@ public class MainScreen extends JFrame {
             public void onItemCreated(Item item) {
                 if (item != null) {
                     presenter.onNewItemCreated(item);
+                    updateTotalLabel();
                 }
             }
         });

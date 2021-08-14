@@ -31,4 +31,19 @@ public class CraftResource {
     public String toString() {
         return material.toString() + ": " + quantity;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CraftResource that = (CraftResource) o;
+
+        return material.equals(that.material);
+    }
+
+    @Override
+    public int hashCode() {
+        return material.hashCode();
+    }
 }
