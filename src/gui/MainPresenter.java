@@ -1,61 +1,22 @@
 package gui;
 
-import db.DatabaseHelper;
-import entitites.*;
-import entitites.armor.Armor;
-import entitites.armor.ArmorSlot;
-import entitites.armor.ArmorType;
-import repository.DatabaseRepository;
+import entitites.Item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import javax.swing.*;
 
 public class MainPresenter {
 
-    private final DatabaseRepository databaseRepository;
+    private final DefaultListModel<Item> itemsModel = new DefaultListModel<>();
 
-    public MainPresenter(DatabaseHelper databaseHelper){
-        databaseRepository = new DatabaseRepository(databaseHelper);
+    public void onNewItemCreated(Item item) {
+        itemsModel.addElement(item);
     }
 
-    public List<Item> getItemsList(){
-        ArrayList<Item> items = new ArrayList<>();
-        Armor armor = new Armor(
-                ArmorType.LIGHT,
-                ArmorSlot.HELMET,
-                databaseRepository.getTraitFor(TraitType.ARMOR).get(0),
-                databaseRepository.getMaterialFor(MaterialType.BASE_CLOTH),
-                Workbench.CLOTHING
-                );
-        armor.setQuality(QualityType.COMMON,
-                databaseRepository.getResourcesFor(QualityType.COMMON, Workbench.CLOTHING));
-        QualityType type = null;
-        armor.setQuality(type, null);
+    public void removeItem(int position) {
+        itemsModel.remove(position);
+    }
 
-        Armor armor1 = new Armor(
-                ArmorType.MEDIUM,
-                ArmorSlot.HELMET,
-                databaseRepository.getTraitFor(TraitType.ARMOR).get(0),
-                databaseRepository.getMaterialFor(MaterialType.BASE_LEATHER),
-                Workbench.CLOTHING
-        );
-        armor1.setQuality(QualityType.COMMON,
-                databaseRepository.getResourcesFor(QualityType.COMMON, Workbench.CLOTHING));
-
-        Armor armor2 = new Armor(
-                ArmorType.HEAVY,
-                ArmorSlot.HELMET,
-                databaseRepository.getTraitFor(TraitType.ARMOR).get(0),
-                databaseRepository.getMaterialFor(MaterialType.BASE_METAL),
-                Workbench.SMITHING
-        );
-        armor2.setQuality(QualityType.COMMON,
-                databaseRepository.getResourcesFor(QualityType.COMMON, Workbench.SMITHING));
-
-        items.addAll(Arrays.asList(armor, armor1, armor2));
-
-        return items;
+    public DefaultListModel<Item> getItemsModel() {
+        return itemsModel;
     }
 }

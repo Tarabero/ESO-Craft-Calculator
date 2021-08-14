@@ -1,12 +1,15 @@
 package entitites.weapon;
 
-import entitites.*;
+import entitites.CraftResource;
+import entitites.Item;
+import entitites.Material;
+import entitites.Trait;
 
 public class Weapon extends Item {
     private final WeaponType weaponType;
 
-    public Weapon(WeaponType weaponType, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(trait,baseMaterial, workbench);
+    public Weapon(WeaponType weaponType, Trait trait, Material baseMaterial) {
+        super(trait, baseMaterial);
         this.weaponType = weaponType;
     }
 
@@ -16,7 +19,7 @@ public class Weapon extends Item {
 
     @Override
     protected String createName() {
-        return super.createName() + weaponType.getName();
+        return super.createName() + weaponType.toString();
     }
 
     @Override

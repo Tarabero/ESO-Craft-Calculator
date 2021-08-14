@@ -9,24 +9,22 @@ public abstract class Item{
 
     private final Trait trait;
     private final Material baseMaterial;
-    private final Workbench workbench;
 
     private QualityType qualityType;
     private List<CraftResource> qualityMaterials;
 
-    public Item(Trait trait, Material baseMaterial, Workbench workbench) {
+    public Item(Trait trait, Material baseMaterial) {
         this.trait = trait;
         this.baseMaterial = baseMaterial;
-        this.workbench = workbench;
     }
 
     protected String createName(){
         StringBuilder nameBuilder = new StringBuilder();
         if (getQualityType() != null){
-            nameBuilder.append(getQualityType().getName()).append(" ");
+            nameBuilder.append(getQualityType().toString()).append(" ");
         }
         if (getTrait() != null){
-            nameBuilder.append(getTrait().getName()).append(" ");
+            nameBuilder.append(getTrait().toString()).append(" ");
         }
         return nameBuilder.toString();
     }
@@ -43,10 +41,6 @@ public abstract class Item{
             return QualityType.COMMON;
         }
         return qualityType;
-    }
-
-    public Workbench getWorkbench() {
-        return workbench;
     }
 
     public List<CraftResource> getAllCraftingResources() {

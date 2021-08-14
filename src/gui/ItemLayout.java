@@ -2,12 +2,9 @@ package gui;
 
 import entitites.CraftResource;
 import entitites.Item;
-import entitites.Material;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ItemLayout extends JPanel implements ListCellRenderer<Item> {
@@ -15,7 +12,6 @@ public class ItemLayout extends JPanel implements ListCellRenderer<Item> {
     private JTextField materialListDescription;
     private JPanel materialsListContainer;
     private JPanel container;
-    private int lastSelected = -1;
 
     public ItemLayout(LayoutManager layout) {
         super(layout);
@@ -33,22 +29,23 @@ public class ItemLayout extends JPanel implements ListCellRenderer<Item> {
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Item> list, Item value, final int index, boolean isSelected, boolean cellHasFocus) {
-        itemName.setText(value.toString());
+        itemName.setText(value.toString().trim());
         setMaterialsDescription(value.getAllCraftingResources());
 
         if (isSelected) {
-            materialListDescription.setBackground(list.getSelectionBackground());
-            materialListDescription.setForeground(list.getSelectionForeground());
-            lastSelected = index;
-        }
-        if (!isSelected){
-            materialListDescription.setBackground(list.getBackground());
-            materialListDescription.setForeground(list.getForeground());
+            changeBackgroundColor(list.getSelectionBackground(), list.getSelectionForeground());
+        } else {
+            changeBackgroundColor(list.getBackground(), list.getForeground());
         }
         return this;
     }
 
-    private void setMaterialsDescription(List<CraftResource> resources){
+    private void changeBackgroundColor(Color background, Color foreground) {
+        materialListDescription.setBackground(background);
+        materialListDescription.setForeground(foreground);
+    }
+
+    private void setMaterialsDescription(List<CraftResource> resources) {
         StringBuilder stringBuilder = new StringBuilder();
         for (CraftResource craftResource :
                 resources) {
@@ -58,7 +55,7 @@ public class ItemLayout extends JPanel implements ListCellRenderer<Item> {
         materialListDescription.setText(stringBuilder.toString());
     }
 
-    public void setMaterialsVisible(boolean isVisible){
+    public void setMaterialsVisible(boolean isVisible) {
         materialsListContainer.setVisible(isVisible);
     }
 }

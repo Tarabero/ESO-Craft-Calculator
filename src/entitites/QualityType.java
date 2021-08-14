@@ -9,11 +9,13 @@ public enum QualityType {
 
     private final String name;
 
-    QualityType(String name){
+    QualityType(String name) {
         this.name = name;
     }
 
-    public String getName() {
+
+    @Override
+    public String toString() {
         return name;
     }
 }

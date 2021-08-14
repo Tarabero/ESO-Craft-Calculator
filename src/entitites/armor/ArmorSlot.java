@@ -1,5 +1,8 @@
 package entitites.armor;
 
+import entitites.MaterialType;
+import entitites.Workbench;
+
 public enum ArmorSlot {
     HELMET("Helmet", 130),
     CHEST("Chest", 150),
@@ -18,11 +21,41 @@ public enum ArmorSlot {
         this.materialQuantity = materialQuantity;
     }
 
-    public String getName() {
+    @Override
+    public String toString() {
         return name;
     }
 
     public int getMaterialQuantity() {
         return materialQuantity;
+    }
+
+    public Workbench getWorkbench(ArmorType armorType) {
+        if (this == SHIELD) {
+            return Workbench.WOODWORKING;
+        }
+        switch (armorType) {
+            case LIGHT:
+            case MEDIUM:
+                return Workbench.CLOTHING;
+            case HEAVY:
+                return Workbench.SMITHING;
+        }
+        return null;
+    }
+
+    public MaterialType getBaseMaterialType(ArmorType armorType) {
+        if (this == SHIELD) {
+            return MaterialType.BASE_WOOD;
+        }
+        switch (armorType) {
+            case LIGHT:
+                return MaterialType.BASE_CLOTH;
+            case MEDIUM:
+                return MaterialType.BASE_LEATHER;
+            case HEAVY:
+                return MaterialType.BASE_METAL;
+        }
+        return null;
     }
 }

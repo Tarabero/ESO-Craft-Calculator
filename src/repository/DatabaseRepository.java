@@ -30,7 +30,7 @@ public class DatabaseRepository {
         return traitDao.getTraitsFor(traitType);
     }
 
-    public List<CraftResource> getResourcesFor(QualityType qualityType, Workbench workbench) {
+    public List<CraftResource> getUpgradeResourcesFor(QualityType qualityType, Workbench workbench) {
         return qualityResourceCollector.getResourcesFor(qualityType, workbench);
     }
 }

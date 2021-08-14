@@ -1,12 +1,15 @@
 package entitites.jewelries;
 
-import entitites.*;
+import entitites.CraftResource;
+import entitites.Item;
+import entitites.Material;
+import entitites.Trait;
 
 public class Jewelry extends Item {
     private final JewelryType jewelryType;
 
-    public Jewelry(JewelryType jewelryType, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(trait, baseMaterial, workbench);
+    public Jewelry(JewelryType jewelryType, Trait trait, Material baseMaterial) {
+        super(trait, baseMaterial);
         this.jewelryType = jewelryType;
     }
 
@@ -16,7 +19,7 @@ public class Jewelry extends Item {
 
     @Override
     protected String createName() {
-        return super.createName() + jewelryType.getName();
+        return super.createName() + jewelryType.toString();
     }
 
     @Override

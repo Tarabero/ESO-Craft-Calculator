@@ -1,6 +1,7 @@
 package gui;
 
 import entitites.Item;
+import gui.dialog.CreateItemDialog;
 import view.ToggleSelectionModel;
 
 import javax.swing.*;
@@ -10,31 +11,38 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUIMain extends JFrame{
+public class MainScreen extends JFrame {
     //Window components
     private JPanel panelMain;
     private JButton btnAddItem;
     private JList<Item> listItems;
     private JButton btnRemoveItem;
 
-    //Variables
-    private DefaultListModel<Item> listItemsModel = new DefaultListModel<>();
-
     private int selectedPosition = -1;
-
     private final MainPresenter presenter;
 
-    public GUIMain(MainPresenter presenter) {
+    private MainScreenActionsListener mainScreenActionsListener;
+
+    public interface MainScreenActionsListener {
+        void openItemCreationDialog(CreateItemDialog.CreateItemDialogActionListener itemCreationListener);
+    }
+
+    public MainScreen(MainPresenter presenter, MainScreenActionsListener mainScreenActionsListener) {
         super("ESO Crafting Calculator v.0");
         this.presenter = presenter;
+        this.mainScreenActionsListener = mainScreenActionsListener;
         setContentPane(this.panelMain);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setupList();
+        setupButtons();
+        panelMain.setSize(1000, 1000);
         pack();
+    }
 
+    private void setupList() {
         listItems.setSelectionModel(new ToggleSelectionModel());
         listItems.setCellRenderer(new ItemLayout(new BorderLayout()));
-        listItems.setModel(listItemsModel);
-
+        listItems.setModel(presenter.getItemsModel());
         listItems.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -43,41 +51,45 @@ public class GUIMain extends JFrame{
                 }
             }
         });
+    }
 
+    private void onSelectionChanged() {
+        selectedPosition = listItems.getSelectedIndex();
+    }
+
+    private void setupButtons() {
         btnRemoveItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (hasSelection()){
+                if (hasSelection()) {
                     removeItem();
                 }
             }
         });
-
         btnAddItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addItems();
+                openCreateNewItemDialog();
             }
         });
-
-        panelMain.setSize(1000, 1000);
     }
 
-    private void onSelectionChanged(){
-        selectedPosition = listItems.getSelectedIndex();
-    }
-
-    private void removeItem(){
-        listItemsModel.remove(selectedPosition);
-    }
-
-    private boolean hasSelection(){
+    private boolean hasSelection() {
         return selectedPosition != -1;
     }
 
-    private void addItems(){
-        for (Item item : presenter.getItemsList()) {
-            listItemsModel.addElement(item);
-        }
+    private void removeItem() {
+        presenter.removeItem(selectedPosition);
+    }
+
+    private void openCreateNewItemDialog() {
+        mainScreenActionsListener.openItemCreationDialog(new CreateItemDialog.CreateItemDialogActionListener() {
+            @Override
+            public void onItemCreated(Item item) {
+                if (item != null) {
+                    presenter.onNewItemCreated(item);
+                }
+            }
+        });
     }
 }
