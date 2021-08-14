@@ -12,7 +12,8 @@ public enum JewelryType {
         this.materialQuantity = materialQuantity;
     }
 
-    public String getName() {
+    @Override
+    public String toString() {
         return name;
     }
 

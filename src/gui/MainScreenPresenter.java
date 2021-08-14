@@ -1,0 +1,160 @@
+package gui;
+
+import db.DatabaseHelper;
+import db.dao.MaterialDaoImpl;
+import db.dao.TraitDaoImpl;
+import db.dao.interfaces.MaterialDao;
+import db.dao.interfaces.TraitDao;
+import entitites.*;
+import entitites.armor.Armor;
+import entitites.armor.ArmorSlot;
+import entitites.armor.ArmorType;
+import util.QualityResourceCollector;
+
+import javax.swing.*;
+import java.util.List;
+import java.util.Random;
+
+public class MainScreenPresenter {
+
+    private final DefaultListModel<CraftResource> craftResourcesModel;
+    private final DefaultListModel<Item> itemsModel;
+    private int totalPriceCounter;
+
+    public MainScreenPresenter() {
+        craftResourcesModel = new DefaultListModel<>();
+        itemsModel = new DefaultListModel<>();
+        totalPriceCounter = 0;
+    }
+
+
+    public void addItemToItemList(Item item) {
+        increaseTotalPrice(item);
+        addItemMaterialsToMaterialList(item);
+        itemsModel.addElement(item);
+    }
+
+    private void increaseTotalPrice(Item item) {
+        totalPriceCounter += item.getPrice();
+    }
+
+    private void addItemMaterialsToMaterialList(Item item) {
+        for (CraftResource craftResourceFromItem : item.getAllCraftingResources()) {
+            if (craftResourcesModel.contains(craftResourceFromItem)) {
+                int storedResourceIndex = craftResourcesModel.indexOf(craftResourceFromItem);
+                CraftResource storedCraftResource = craftResourcesModel.getElementAt(storedResourceIndex);
+                int quantityUpdated = storedCraftResource.getQuantity() + craftResourceFromItem.getQuantity();
+
+                storedCraftResource.setQuantity(quantityUpdated);
+                craftResourcesModel.set(storedResourceIndex, storedCraftResource);
+            } else {
+                craftResourcesModel.addElement(new CraftResource(craftResourceFromItem.getMaterial(), craftResourceFromItem.getQuantity()));
+            }
+        }
+    }
+
+    public void removeItemFromItemList(int itemPosition) {
+        if (itemsModel.size() > 0) {
+            if (itemPosition == -1) {
+                actionRemoveItem(itemsModel.lastElement());
+            } else {
+                actionRemoveItem(itemsModel.get(itemPosition));
+            }
+        }
+    }
+
+    private void actionRemoveItem(Item item) {
+        decreaseTotalPrice(item);
+        removeItemMaterialsFromMaterialList(item);
+        itemsModel.removeElement(item);
+    }
+
+    private void decreaseTotalPrice(Item item) {
+        totalPriceCounter -= item.getPrice();
+    }
+
+    private void removeItemMaterialsFromMaterialList(Item item) {
+        for (CraftResource craftResourceFromItem : item.getAllCraftingResources()) {
+            if (craftResourcesModel.contains(craftResourceFromItem)) {
+                int storedResourceIndex = craftResourcesModel.indexOf(craftResourceFromItem);
+                CraftResource storedCraftResource = craftResourcesModel.getElementAt(storedResourceIndex);
+                int quantitiesSub = storedCraftResource.getQuantity() - craftResourceFromItem.getQuantity();
+                if (quantitiesSub <= 0) {
+                    craftResourcesModel.remove(storedResourceIndex);
+                } else {
+                    storedCraftResource.setQuantity(quantitiesSub);
+                    craftResourcesModel.set(storedResourceIndex, storedCraftResource);
+                }
+            }
+        }
+    }
+
+    public DefaultListModel<CraftResource> getCraftResourcesModel() {
+        return craftResourcesModel;
+    }
+
+    public DefaultListModel<Item> getItemsModel() {
+        return itemsModel;
+    }
+
+    public Integer getTotalPriceCounter() {
+        return totalPriceCounter;
+    }
+
+    public Item getRandomItem() {
+        //Database Connect
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
+        databaseHelper.connect();
+        //Gathering Data from Database
+        TraitDao traitDao = new TraitDaoImpl(databaseHelper);
+        MaterialDao materialDao = new MaterialDaoImpl(databaseHelper);
+        List<Trait> traitsForItem = traitDao.getTraitFor(TraitType.ARMOR);
+        List<Material> materialsForItem = materialDao.getMaterials();
+        //Setting Item arguments
+        ArmorType itemType = getRandomArmorType();
+        ArmorSlot itemSlot = ArmorSlot.CHEST;
+        Trait itemTrait = traitsForItem.get(0);
+        Material itemBaseMaterial = materialDao.getMaterialFor(MaterialType.BASE_CLOTH);
+        Workbench itemWorkbench = Workbench.CLOTHING;
+        QualityType itemQualityType = getRandomQuality();
+        //Item (Armor) creation
+        Armor item = new Armor(itemType, itemSlot, itemTrait, itemBaseMaterial, itemWorkbench);
+        item.setQualityAndCreateName(itemQualityType, new QualityResourceCollector(materialDao).getResourcesFor(itemQualityType, itemWorkbench));
+        databaseHelper.close();
+        return item;
+    }
+
+    private QualityType getRandomQuality() {
+        Random random = new Random();
+        int rnd = random.nextInt(5);
+        switch (rnd) {
+            case 0:
+                return QualityType.COMMON;
+            case 1:
+                return QualityType.FINE;
+            case 2:
+                return QualityType.RARE;
+            case 3:
+                return QualityType.EPIC;
+            case 4:
+                return QualityType.LEGENDARY;
+        }
+        return QualityType.COMMON;
+    }
+
+    private ArmorType getRandomArmorType() {
+        Random random = new Random();
+        int rnd = random.nextInt(3);
+        switch (rnd) {
+            case 0:
+                return ArmorType.LIGHT;
+            case 1:
+                return ArmorType.MEDIUM;
+            case 2:
+                return ArmorType.HEAVY;
+        }
+        return ArmorType.LIGHT;
+    }
+
+}
+

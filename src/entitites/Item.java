@@ -3,7 +3,7 @@ package entitites;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Item extends Entity {
+public abstract class Item{
 
     private final Trait trait;
     private final Material baseMaterial;
@@ -11,17 +11,33 @@ public abstract class Item extends Entity {
 
     private QualityType qualityType;
     private List<CraftResource> qualityMaterials;
+    private String itemIconImagePass;
 
     public Item(Trait trait, Material baseMaterial, Workbench workbench) {
         this.trait = trait;
         this.baseMaterial = baseMaterial;
         this.workbench = workbench;
-        this.name = createName();
     }
 
-    protected abstract String createName();
+    protected String createName() {
+        StringBuilder nameStr = new StringBuilder("");
+        if(qualityType != null){
+            nameStr.append(qualityType.getName()).append(" ");
+        }
+        if(trait != null){
+            nameStr.append(trait.getName());
+        }
+        return nameStr.toString();
+    }
+
+    @Override
+    public String toString() {
+        return createName();
+    }
 
     public abstract CraftResource getBaseCraftResource();
+
+    protected abstract String getItemIconPath(Item item);
 
     public Trait getTrait() {
         return trait;
@@ -47,9 +63,22 @@ public abstract class Item extends Entity {
         return baseMaterial;
     }
 
-    public void setQuality(QualityType qualityType, List<CraftResource> qualityMaterials) {
+    public void setQualityAndCreateName(QualityType qualityType, List<CraftResource> qualityMaterials) {
         this.qualityType = qualityType;
         this.qualityMaterials = qualityMaterials;
+    }
+
+    public String getItemIconImagePath() {
+        return "images/Items/" + getItemIconPath(this) + ".png";
+    }
+
+    public int getPrice() {
+        int cost = 0;
+        for (CraftResource craftResource :
+                this.getAllCraftingResources()) {
+            cost += craftResource.getTotalPrice();
+        }
+        return cost;
     }
 }
 

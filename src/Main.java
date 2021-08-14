@@ -8,16 +8,17 @@ import entitites.armor.ArmorSlot;
 import entitites.armor.ArmorType;
 import entitites.jewelries.JewelryType;
 import entitites.weapon.WeaponType;
-import gui.GUIMain;
+import gui.MainScreen;
+import gui.MainScreenPresenter;
 import util.QualityResourceCollector;
+
 import java.util.List;
 
 public class Main {
     // VARs
 
     public static void main (String[] args) {
-        GUIMain GUIMainWindow = new GUIMain();
-        GUIMainWindow.setVisible(true);
+        MainScreen mainScreenWindow = new MainScreen(new MainScreenPresenter());
     }
 
     //CRAFT RESOURCE GETTERS (I DON'T KNOW WHY THEY ARE HERE T_T)
@@ -43,8 +44,7 @@ public class Main {
     // DAO GETTER FROM DATABASE (aka DB)
     public static QualityResourceCollector CollectQualityResourcesFromDB() {
         MaterialDao materialDao = GetMaterialDaoFromDB();
-        QualityResourceCollector qualityResourceCollector = new QualityResourceCollector(materialDao);
-        return qualityResourceCollector;
+        return new QualityResourceCollector(materialDao);
     }
     public static MaterialDao GetMaterialDaoFromDB() {
         DatabaseHelper databaseHelper = ConnectAndGetDatabase();
