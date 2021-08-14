@@ -1,8 +1,8 @@
 package db.parsers;
 
-import entitites.Material;
-import entitites.Trait;
-import entitites.TraitType;
+import db.entities.Material;
+import db.entities.Trait;
+import db.entities.TraitType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

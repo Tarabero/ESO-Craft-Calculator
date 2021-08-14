@@ -1,10 +1,14 @@
 package gui.dialog;
 
-import entitites.*;
-import entitites.armor.ArmorSlot;
-import entitites.armor.ArmorType;
-import entitites.jewelries.JewelryType;
-import entitites.weapon.WeaponType;
+import db.entities.Material;
+import db.entities.MaterialType;
+import db.entities.Trait;
+import db.entities.TraitType;
+import item.*;
+import item.armor.ArmorSlot;
+import item.armor.ArmorType;
+import item.jewelries.JewelryType;
+import item.weapon.WeaponType;
 import repository.DatabaseRepository;
 
 import javax.swing.*;

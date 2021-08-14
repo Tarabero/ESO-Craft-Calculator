@@ -1,10 +1,12 @@
 package gui;
 
 import db.DatabaseHelper;
-import gui.MainScreen.MainScreenActionsListener;
 import gui.dialog.CreateItemDialog;
 import gui.dialog.CreateItemDialog.CreateItemDialogActionListener;
 import gui.dialog.CreateItemDialogPresenter;
+import gui.main.MainPresenter;
+import gui.main.MainScreen;
+import gui.main.MainScreen.MainScreenActionsListener;
 import repository.DatabaseRepository;
 
 import java.awt.event.WindowEvent;

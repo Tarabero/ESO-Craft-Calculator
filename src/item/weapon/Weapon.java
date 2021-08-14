@@ -1,9 +1,9 @@
-package entitites.weapon;
+package item.weapon;
 
-import entitites.CraftResource;
-import entitites.Item;
-import entitites.Material;
-import entitites.Trait;
+import db.entities.Material;
+import db.entities.Trait;
+import item.CraftResource;
+import item.Item;
 
 public class Weapon extends Item {
     private final WeaponType weaponType;

@@ -1,12 +1,16 @@
 package util;
 
 import db.dao.interfaces.MaterialDao;
-import entitites.*;
+import db.entities.Material;
+import db.entities.MaterialType;
+import item.CraftResource;
+import item.QualityType;
+import item.Workbench;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static entitites.MaterialType.*;
+import static db.entities.MaterialType.*;
 
 public class QualityResourceCollector {
     private final static int FLAG_NULL_INTERRUPT = -1;

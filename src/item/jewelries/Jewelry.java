@@ -1,9 +1,9 @@
-package entitites.jewelries;
+package item.jewelries;
 
-import entitites.CraftResource;
-import entitites.Item;
-import entitites.Material;
-import entitites.Trait;
+import db.entities.Material;
+import db.entities.Trait;
+import item.CraftResource;
+import item.Item;
 
 public class Jewelry extends Item {
     private final JewelryType jewelryType;

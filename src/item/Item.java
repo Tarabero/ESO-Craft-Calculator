@@ -1,6 +1,8 @@
-package entitites;
+package item;
 
 import com.sun.istack.internal.Nullable;
+import db.entities.Material;
+import db.entities.Trait;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
 package gui.dialog;
 
-import entitites.Item;
-import entitites.QualityType;
-import entitites.Trait;
-import entitites.TraitType;
-import entitites.armor.ArmorType;
+import db.entities.Trait;
+import db.entities.TraitType;
+import item.Item;
+import item.QualityType;
+import item.armor.ArmorType;
 
 import javax.swing.*;
 import java.awt.event.*;

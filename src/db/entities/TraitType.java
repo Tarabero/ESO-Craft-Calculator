@@ -1,4 +1,4 @@
-package entitites;
+package db.entities;
 
 public enum TraitType {
     ARMOR("Armor"), WEAPON("Weapon"), JEWELRY("Jewelry");

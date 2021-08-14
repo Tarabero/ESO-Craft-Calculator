@@ -1,9 +1,9 @@
-package entitites.armor;
+package item.armor;
 
-import entitites.CraftResource;
-import entitites.Item;
-import entitites.Material;
-import entitites.Trait;
+import db.entities.Material;
+import db.entities.Trait;
+import item.CraftResource;
+import item.Item;
 
 public class Armor extends Item {
     private final ArmorSlot armorSlot;

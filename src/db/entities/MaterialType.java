@@ -1,4 +1,4 @@
-package entitites;
+package db.entities;
 
 public enum MaterialType {
     TRAIT_ARMOR,

@@ -1,6 +1,6 @@
-package gui;
+package gui.main;
 
-import entitites.Item;
+import item.Item;
 
 import javax.swing.*;
 

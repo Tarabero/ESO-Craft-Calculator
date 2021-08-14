@@ -1,13 +1,15 @@
-package entitites;
+package db.entities;
 
-public class Trait extends DatabaseEntity {
+import item.CraftResource;
+
+public class Trait extends Entity {
     private final static int MATERIAL_REQUIRED = 1;
 
     private TraitType traitType;
     private CraftResource craftResource;
 
     public Trait(String name, int id, TraitType traitType, Material material) {
-        super(name, id);
+        super(id, name);
         this.traitType = traitType;
         craftResource = new CraftResource(material, MATERIAL_REQUIRED);
     }

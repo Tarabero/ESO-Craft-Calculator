@@ -1,7 +1,7 @@
-package entitites.armor;
+package item.armor;
 
-import entitites.MaterialType;
-import entitites.Workbench;
+import db.entities.MaterialType;
+import item.Workbench;
 
 public enum ArmorSlot {
     HELMET("Helmet", 130),

@@ -1,4 +1,6 @@
-package entitites;
+package item;
+
+import db.entities.Material;
 
 public class CraftResource {
     private int quantity;

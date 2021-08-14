@@ -2,9 +2,9 @@ package db.dao;
 
 import db.DatabaseHelper;
 import db.dao.interfaces.MaterialDao;
+import db.entities.Material;
+import db.entities.MaterialType;
 import db.parsers.MaterialParser;
-import entitites.Material;
-import entitites.MaterialType;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package db.dao;
 
 import db.DatabaseHelper;
 import db.dao.interfaces.TraitDao;
+import db.entities.Trait;
+import db.entities.TraitType;
 import db.parsers.TraitParser;
-import entitites.Trait;
-import entitites.TraitType;
 
 import java.util.List;
 

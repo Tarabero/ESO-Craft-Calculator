@@ -1,7 +1,7 @@
 package db;
 
+import db.entities.Entity;
 import db.parsers.Parser;
-import entitites.DatabaseEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ public class DatabaseHelper {
     }
 
     // TO READ: generics <T extends smth>
-    public<T extends DatabaseEntity> List<T> executeStatementWithResult(String query, Parser<T> parser){
-        if (!isAlive()){
+    public <T extends Entity> List<T> executeStatementWithResult(String query, Parser<T> parser) {
+        if (!isAlive()) {
             logger.log(Level.WARNING, "Can't send query, connection is null");
             return null;
         }

@@ -1,7 +1,7 @@
 package db.dao.interfaces;
 
-import entitites.Trait;
-import entitites.TraitType;
+import db.entities.Trait;
+import db.entities.TraitType;
 
 import java.util.List;
 

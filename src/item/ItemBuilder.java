@@ -1,12 +1,15 @@
-package entitites;
+package item;
 
-import entitites.armor.Armor;
-import entitites.armor.ArmorSlot;
-import entitites.armor.ArmorType;
-import entitites.jewelries.Jewelry;
-import entitites.jewelries.JewelryType;
-import entitites.weapon.Weapon;
-import entitites.weapon.WeaponType;
+import db.entities.Material;
+import db.entities.Trait;
+import db.entities.TraitType;
+import item.armor.Armor;
+import item.armor.ArmorSlot;
+import item.armor.ArmorType;
+import item.jewelries.Jewelry;
+import item.jewelries.JewelryType;
+import item.weapon.Weapon;
+import item.weapon.WeaponType;
 
 import java.util.List;
 

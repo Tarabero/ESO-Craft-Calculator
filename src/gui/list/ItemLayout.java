@@ -1,7 +1,7 @@
-package gui;
+package gui.list;
 
-import entitites.CraftResource;
-import entitites.Item;
+import item.CraftResource;
+import item.Item;
 
 import javax.swing.*;
 import java.awt.*;

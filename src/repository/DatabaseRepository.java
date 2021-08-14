@@ -5,7 +5,13 @@ import db.dao.MaterialDaoImpl;
 import db.dao.TraitDaoImpl;
 import db.dao.interfaces.MaterialDao;
 import db.dao.interfaces.TraitDao;
-import entitites.*;
+import db.entities.Material;
+import db.entities.MaterialType;
+import db.entities.Trait;
+import db.entities.TraitType;
+import item.CraftResource;
+import item.QualityType;
+import item.Workbench;
 import util.QualityResourceCollector;
 
 import java.util.List;

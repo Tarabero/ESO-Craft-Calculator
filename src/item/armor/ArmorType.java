@@ -1,4 +1,4 @@
-package entitites.armor;
+package item.armor;
 
 public enum ArmorType {
     LIGHT("Light"),

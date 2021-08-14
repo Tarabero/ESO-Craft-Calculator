@@ -3,14 +3,17 @@ package util;
 import db.DatabaseHelper;
 import db.dao.MaterialDaoImpl;
 import db.dao.interfaces.MaterialDao;
-import entitites.*;
+import db.entities.MaterialType;
+import item.CraftResource;
+import item.QualityType;
+import item.Workbench;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static entitites.MaterialType.*;
+import static db.entities.MaterialType.*;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.*;

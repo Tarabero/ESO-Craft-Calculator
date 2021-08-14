@@ -1,7 +1,7 @@
-package entitites.weapon;
+package item.weapon;
 
-import entitites.MaterialType;
-import entitites.Workbench;
+import db.entities.MaterialType;
+import item.Workbench;
 
 public enum WeaponType {
     TWO_HANDED_SWORD("Two-handed sword", 140),

@@ -1,12 +1,16 @@
-package entitites;
+package db.entities;
 
 public class Entity {
+    private int id;
     private String name;
 
-    public Entity(){}
-
-    public Entity(String name){
+    public Entity(int id, String name) {
         this.name = name;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override

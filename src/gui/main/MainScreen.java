@@ -1,7 +1,8 @@
-package gui;
+package gui.main;
 
-import entitites.Item;
 import gui.dialog.CreateItemDialog;
+import gui.list.ItemLayout;
+import item.Item;
 import view.ToggleSelectionModel;
 
 import javax.swing.*;
