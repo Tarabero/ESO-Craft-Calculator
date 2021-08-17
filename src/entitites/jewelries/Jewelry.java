@@ -20,11 +20,19 @@ public class Jewelry extends Item {
                 + " "
                 + getTrait().getName()
                 + " "
-                + jewelryType.getName();
+                + jewelryType.toString();
     }
 
     @Override
     public CraftResource getBaseCraftResource() {
         return new CraftResource(getBaseMaterial(), jewelryType.getMaterialQuantity());
+    }
+
+    @Override
+    protected String getItemIconPath(Item item) {
+        StringBuilder itemParameters = new StringBuilder("Jewelry/");
+        Jewelry jewelry = (Jewelry) item;
+        itemParameters.append(jewelry.getJewelryType().toString());
+        return itemParameters.toString();
     }
 }

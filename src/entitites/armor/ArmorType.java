@@ -7,11 +7,12 @@ public enum ArmorType {
 
     private String name;
 
-    ArmorType(String name){
+    ArmorType(String name) {
         this.name = name;
     }
 
-    public String getName() {
+    @Override
+    public String toString() {
         return name;
     }
 }

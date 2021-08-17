@@ -24,4 +24,21 @@ public class CraftResource {
     public Material getMaterial() {
         return material;
     }
+
+    public String toString() {
+        return quantity + " " + material.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CraftResource that = (CraftResource) o;
+        return getMaterial().equals(that.getMaterial());
+    }
+
+    @Override
+    public int hashCode() {
+        return getMaterial().hashCode();
+    }
 }

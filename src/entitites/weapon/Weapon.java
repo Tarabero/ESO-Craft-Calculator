@@ -20,11 +20,19 @@ public class Weapon extends Item {
                 + " "
                 + getTrait().getName()
                 + " "
-                + weaponType.getName();
+                + weaponType.toString();
     }
 
     @Override
     public CraftResource getBaseCraftResource() {
         return new CraftResource(getBaseMaterial(), weaponType.getMaterialQuantity());
+    }
+
+    @Override
+    protected String getItemIconPath(Item item) {
+        StringBuilder itemParameters = new StringBuilder("Weapon/");
+        Weapon armor = (Weapon) item;
+        itemParameters.append(armor.getWeaponType().toString());
+        return itemParameters.toString();
     }
 }

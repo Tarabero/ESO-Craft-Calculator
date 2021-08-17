@@ -12,23 +12,34 @@ public class Armor extends Item {
         this.armorType = armorType;
     }
 
-    public ArmorSlot getArmorType() {
+    public ArmorType getArmorType() {
+        return armorType;
+    }
+
+    public ArmorSlot getArmorSlot() {
         return armorSlot;
     }
 
     @Override
     protected String createName() {
-        return getQualityType().getName()
-                + " "
-                + getTrait().getName()
-                + " "
-                + armorType.getName()
-                + " "
-                + armorSlot.getName();
+        return super.createName()
+                + " " + armorType.toString()
+                + " " + armorSlot.toString();
     }
 
     @Override
     public CraftResource getBaseCraftResource() {
         return new CraftResource(getBaseMaterial(), armorSlot.getMaterialQuantity());
     }
+
+    @Override
+    protected String getItemIconPath(Item item) {
+        StringBuilder itemParameters = new StringBuilder("Armor/");
+        Armor armor = (Armor) item;
+        itemParameters.append(armor.getArmorType().toString()).append("/").append(armor.getArmorSlot().toString());
+        return itemParameters.toString();
+    }
+
 }
+
+
