@@ -33,13 +33,13 @@ public class Armor extends Item {
     }
 
     @Override
-    protected String getItemIconPath(Item item) {
-        StringBuilder itemParameters = new StringBuilder("Armor/");
-        Armor armor = (Armor) item;
-        itemParameters.append(armor.getArmorType().toString()).append("/").append(armor.getArmorSlot().toString());
-        return itemParameters.toString();
+    protected String getItemIconPath() {
+        return new StringBuilder("Armor/")
+                .append(getArmorType().toString())
+                .append("/")
+                .append(getArmorSlot().toString())
+                .toString();
     }
-
 }
 
 

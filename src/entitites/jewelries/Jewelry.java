@@ -16,9 +16,9 @@ public class Jewelry extends Item {
 
     @Override
     protected String createName() {
-        return getQualityType().getName()
+        return getQualityType().toString()
                 + " "
-                + getTrait().getName()
+                + getTrait().toString()
                 + " "
                 + jewelryType.toString();
     }
@@ -29,10 +29,7 @@ public class Jewelry extends Item {
     }
 
     @Override
-    protected String getItemIconPath(Item item) {
-        StringBuilder itemParameters = new StringBuilder("Jewelry/");
-        Jewelry jewelry = (Jewelry) item;
-        itemParameters.append(jewelry.getJewelryType().toString());
-        return itemParameters.toString();
+    protected String getItemIconPath() {
+        return "Jewelry/" + getJewelryType().toString();
     }
 }

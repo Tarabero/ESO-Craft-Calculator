@@ -16,9 +16,9 @@ public class Weapon extends Item {
 
     @Override
     protected String createName() {
-        return getQualityType().getName()
+        return getQualityType().toString()
                 + " "
-                + getTrait().getName()
+                + getTrait().toString()
                 + " "
                 + weaponType.toString();
     }
@@ -29,10 +29,7 @@ public class Weapon extends Item {
     }
 
     @Override
-    protected String getItemIconPath(Item item) {
-        StringBuilder itemParameters = new StringBuilder("Weapon/");
-        Weapon armor = (Weapon) item;
-        itemParameters.append(armor.getWeaponType().toString());
-        return itemParameters.toString();
+    protected String getItemIconPath() {
+        return "Weapon/" + getWeaponType().toString();
     }
 }

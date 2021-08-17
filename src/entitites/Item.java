@@ -22,10 +22,10 @@ public abstract class Item{
     protected String createName() {
         StringBuilder nameStr = new StringBuilder("");
         if(qualityType != null){
-            nameStr.append(qualityType.getName()).append(" ");
+            nameStr.append(qualityType.toString()).append(" ");
         }
         if(trait != null){
-            nameStr.append(trait.getName());
+            nameStr.append(trait.toString());
         }
         return nameStr.toString();
     }
@@ -37,7 +37,7 @@ public abstract class Item{
 
     public abstract CraftResource getBaseCraftResource();
 
-    protected abstract String getItemIconPath(Item item);
+    protected abstract String getItemIconPath();
 
     public Trait getTrait() {
         return trait;
@@ -69,7 +69,7 @@ public abstract class Item{
     }
 
     public String getItemIconImagePath() {
-        return "images/Items/" + getItemIconPath(this) + ".png";
+        return "images/Items/" + getItemIconPath() + ".png";
     }
 
     public int getPrice() {
