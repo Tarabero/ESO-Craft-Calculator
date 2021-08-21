@@ -1,32 +1,35 @@
 package gui;
 
-import db.DatabaseHelper;
-import db.dao.MaterialDaoImpl;
-import db.dao.TraitDaoImpl;
-import db.dao.interfaces.MaterialDao;
-import db.dao.interfaces.TraitDao;
+
 import entitites.*;
 import entitites.armor.Armor;
 import entitites.armor.ArmorSlot;
 import entitites.armor.ArmorType;
-import util.QualityResourceCollector;
+import util.DatabaseRepository;
 
 import javax.swing.*;
 import java.util.List;
 import java.util.Random;
 
 public class MainScreenPresenter {
-
+    //Models
     private final DefaultListModel<CraftResource> craftResourcesModel;
     private final DefaultListModel<Item> itemsModel;
+    //Database
+    private final DatabaseRepository databaseRepository;
+    //Variables
     private int totalPriceCounter;
 
-    public MainScreenPresenter() {
+    public MainScreenPresenter(DatabaseRepository databaseRepositoryInput) {
         craftResourcesModel = new DefaultListModel<>();
         itemsModel = new DefaultListModel<>();
         totalPriceCounter = 0;
+        databaseRepository = databaseRepositoryInput;
     }
 
+    public void eventsOnMainScreenExit() {
+        databaseRepository.databaseDisconnect();
+    }
 
     public void addItemToItemList(Item item) {
         increaseTotalPrice(item);
@@ -101,26 +104,21 @@ public class MainScreenPresenter {
         return totalPriceCounter;
     }
 
+    // Random item getter and it's methods (SHOULD BE REMOVED AFTER ADDING A PROPER ITEM CREATOR)
+
     public Item getRandomItem() {
-        //Database Connect
-        DatabaseHelper databaseHelper = DatabaseHelper.getInstance();
-        databaseHelper.connect();
-        //Gathering Data from Database
-        TraitDao traitDao = new TraitDaoImpl(databaseHelper);
-        MaterialDao materialDao = new MaterialDaoImpl(databaseHelper);
-        List<Trait> traitsForItem = traitDao.getTraitFor(TraitType.ARMOR);
-        List<Material> materialsForItem = materialDao.getMaterials();
-        //Setting Item arguments
+        //Gathering Data from Database Repository
+        List<Trait> traitsForItem = databaseRepository.getTraitFor(TraitType.ARMOR);
+        List<Material> materialsForItem = databaseRepository.getAllMaterials();
         ArmorType itemType = getRandomArmorType();
         ArmorSlot itemSlot = ArmorSlot.CHEST;
         Trait itemTrait = traitsForItem.get(0);
-        Material itemBaseMaterial = materialDao.getMaterialFor(MaterialType.BASE_CLOTH);
+        Material itemBaseMaterial = databaseRepository.getMaterialFor(MaterialType.BASE_CLOTH);
         Workbench itemWorkbench = Workbench.CLOTHING;
         QualityType itemQualityType = getRandomQuality();
         //Item (Armor) creation
         Armor item = new Armor(itemType, itemSlot, itemTrait, itemBaseMaterial, itemWorkbench);
-        item.setQualityAndCreateName(itemQualityType, new QualityResourceCollector(materialDao).getResourcesFor(itemQualityType, itemWorkbench));
-        databaseHelper.close();
+        item.setQualityAndCreateName(itemQualityType, databaseRepository.getQualityResourcesFor(itemQualityType, itemWorkbench));
         return item;
     }
 

@@ -11,6 +11,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MainScreen extends JFrame {
     private JScrollPane listItemContainer;
@@ -27,16 +29,18 @@ public class MainScreen extends JFrame {
     private JLabel goldIcon;
     private JLabel totalPriceLabel;
 
-    private int selectedPosition;
-    private MainScreenPresenter presenter;
+    private int selectedPosition = -1;
+    private final MainScreenPresenter presenter;
 
     public MainScreen(final MainScreenPresenter mainScreenPresenter) {
         presenter = mainScreenPresenter;
         setupBasicElements();
+        setupWindowClothingListener();
         setupListItems();
         setupListCraftResources();
         setupTotalPrice();
         setupButtonListeners();
+
     }
 
     private void setupBasicElements() {
@@ -45,6 +49,16 @@ public class MainScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         pack();
+    }
+
+    private void setupWindowClothingListener() {
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                presenter.eventsOnMainScreenExit();
+                e.getWindow().dispose();
+            }
+        });
     }
 
     private void setupListItems() {
