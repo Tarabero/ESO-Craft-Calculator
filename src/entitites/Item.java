@@ -63,7 +63,7 @@ public abstract class Item{
         return baseMaterial;
     }
 
-    public void setQualityAndCreateName(QualityType qualityType, List<CraftResource> qualityMaterials) {
+    public void setQuality(QualityType qualityType, List<CraftResource> qualityMaterials) {
         this.qualityType = qualityType;
         this.qualityMaterials = qualityMaterials;
     }
