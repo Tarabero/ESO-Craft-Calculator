@@ -118,7 +118,7 @@ public class MainScreenPresenter {
         QualityType itemQualityType = getRandomQuality();
         //Item (Armor) creation
         Armor item = new Armor(itemType, itemSlot, itemTrait, itemBaseMaterial, itemWorkbench);
-        item.setQualityAndCreateName(itemQualityType, databaseRepository.getQualityResourcesFor(itemQualityType, itemWorkbench));
+        item.setQuality(itemQualityType, databaseRepository.getQualityResourcesFor(itemQualityType, itemWorkbench));
         return item;
     }
 

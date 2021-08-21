@@ -35,7 +35,7 @@ public class MainScreen extends JFrame {
     public MainScreen(final MainScreenPresenter mainScreenPresenter) {
         presenter = mainScreenPresenter;
         setupBasicElements();
-        setupWindowClothingListener();
+        setupWindowClosingListener();
         setupListItems();
         setupListCraftResources();
         setupTotalPrice();
@@ -51,7 +51,7 @@ public class MainScreen extends JFrame {
         pack();
     }
 
-    private void setupWindowClothingListener() {
+    private void setupWindowClosingListener() {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
