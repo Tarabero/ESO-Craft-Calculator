@@ -52,7 +52,7 @@ public class MainPresenter {
                 int newQuantity = storedQuantity - craftResource.getQuantity();
                 if (newQuantity <= 0) {
                     materialsModel.remove(savedResourceIndex);
-                    return;
+                    continue;
                 }
                 storedCraftResource.setQuantity(newQuantity);
                 materialsModel.set(savedResourceIndex, storedCraftResource);

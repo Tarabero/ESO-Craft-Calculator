@@ -15,7 +15,7 @@ public class Armor extends Item {
         this.armorType = armorType;
     }
 
-    public ArmorSlot getArmorType() {
+    public ArmorSlot getArmorSlot() {
         return armorSlot;
     }
 
