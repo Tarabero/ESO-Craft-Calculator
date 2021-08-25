@@ -1,4 +1,4 @@
-package entitites;
+package entities;
 
 public class Material extends DatabaseEntity {
 
@@ -29,9 +29,9 @@ public class Material extends DatabaseEntity {
     public String getMaterialIconImagePath() {
         if (materialIconImagePass == null) {
             // TODO: 16.08.2021 UNCOMMENT NEXT STRING WHEN PROPER ICONS WILL BE CREATED
-//            materialIconImagePass = "images/Materials/"+this.toString()+".png";
+//            materialIconImagePass = "/images/Materials/"+this.toString()+".png";
             // TODO: 16.08.2021 DELETE NEXT STRING WHEN PROPER ICONS WILL BE CREATED
-            materialIconImagePass = "images/Materials/DefaultIcon.png";
+            materialIconImagePass = "/images/Materials/DefaultIcon.png";
         }
         return materialIconImagePass;
     }

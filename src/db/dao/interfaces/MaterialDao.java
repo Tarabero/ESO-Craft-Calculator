@@ -1,9 +1,7 @@
 package db.dao.interfaces;
 
-import db.DatabaseHelper;
-import db.parsers.Parser;
-import entitites.Material;
-import entitites.MaterialType;
+import entities.Material;
+import entities.MaterialType;
 
 import java.util.List;
 

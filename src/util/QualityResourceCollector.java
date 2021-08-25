@@ -1,12 +1,12 @@
 package util;
 
 import db.dao.interfaces.MaterialDao;
-import entitites.*;
+import entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static entitites.MaterialType.*;
+import static entities.MaterialType.*;
 
 public class QualityResourceCollector {
     private final static int FLAG_NULL_INTERRUPT = -1;

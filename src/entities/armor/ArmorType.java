@@ -1,6 +1,6 @@
-package entitites.armor;
+package entities.armor;
 
-import entitites.Workbench;
+import entities.Workbench;
 
 public enum ArmorType {
     LIGHT("Light"),

@@ -1,4 +1,4 @@
-package entitites;
+package entities;
 
 public class Trait extends DatabaseEntity {
     private final static int MATERIAL_REQUIRED = 1;

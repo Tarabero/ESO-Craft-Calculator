@@ -1,6 +1,6 @@
-package entitites.jewelries;
+package entities.jewelries;
 
-import entitites.*;
+import entities.*;
 
 public class Jewelry extends Item {
     private final JewelryType jewelryType;

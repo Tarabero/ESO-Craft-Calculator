@@ -3,8 +3,8 @@ package db.dao;
 import db.DatabaseHelper;
 import db.dao.interfaces.MaterialDao;
 import db.parsers.MaterialParser;
-import entitites.Material;
-import entitites.MaterialType;
+import entities.Material;
+import entities.MaterialType;
 
 import java.util.List;
 

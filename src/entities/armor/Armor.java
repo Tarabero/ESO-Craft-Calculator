@@ -1,6 +1,6 @@
-package entitites.armor;
+package entities.armor;
 
-import entitites.*;
+import entities.*;
 
 public class Armor extends Item {
     private final ArmorSlot armorSlot;

@@ -1,4 +1,4 @@
-package entitites;
+package entities;
 
 public enum Workbench {
     CLOTHING,

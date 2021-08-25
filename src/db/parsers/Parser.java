@@ -1,6 +1,6 @@
 package db.parsers;
 
-import entitites.DatabaseEntity;
+import entities.DatabaseEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

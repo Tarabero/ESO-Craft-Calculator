@@ -1,4 +1,4 @@
-package entitites;
+package entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ public abstract class Item{
 
     private QualityType qualityType;
     private List<CraftResource> qualityMaterials;
-    private String itemIconImagePass;
 
     public Item(Trait trait, Material baseMaterial, Workbench workbench) {
         this.trait = trait;
@@ -69,7 +68,7 @@ public abstract class Item{
     }
 
     public String getItemIconImagePath() {
-        return "images/Items/" + getItemIconPath() + ".png";
+        return "/images/Items/" + getItemIconPath() + ".png";
     }
 
     public int getPrice() {

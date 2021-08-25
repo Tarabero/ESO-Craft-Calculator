@@ -1,4 +1,4 @@
-package entitites;
+package entities;
 
 public class DatabaseEntity extends Entity {
     private int id;

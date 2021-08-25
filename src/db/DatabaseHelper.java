@@ -1,7 +1,7 @@
 package db;
 
 import db.parsers.Parser;
-import entitites.DatabaseEntity;
+import entities.DatabaseEntity;
 
 import java.sql.*;
 import java.util.ArrayList;

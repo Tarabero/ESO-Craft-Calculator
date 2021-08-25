@@ -1,6 +1,6 @@
-package entitites.jewelries;
+package entities.jewelries;
 
-import entitites.Workbench;
+import entities.Workbench;
 
 public enum JewelryType {
     RING("Ring", 100),

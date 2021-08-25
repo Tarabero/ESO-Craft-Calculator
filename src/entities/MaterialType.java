@@ -1,9 +1,9 @@
-package entitites;
+package entities;
 
-import entitites.armor.ArmorSlot;
-import entitites.armor.ArmorType;
-import entitites.jewelries.JewelryType;
-import entitites.weapon.WeaponType;
+import entities.armor.ArmorSlot;
+import entities.armor.ArmorType;
+import entities.jewelries.JewelryType;
+import entities.weapon.WeaponType;
 
 public enum MaterialType {
     TRAIT_ARMOR,

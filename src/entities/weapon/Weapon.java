@@ -1,6 +1,6 @@
-package entitites.weapon;
+package entities.weapon;
 
-import entitites.*;
+import entities.*;
 
 public class Weapon extends Item {
     private final WeaponType weaponType;

@@ -1,7 +1,7 @@
 package gui.main;
 
-import entitites.CraftResource;
-import entitites.Item;
+import entities.CraftResource;
+import entities.Item;
 import gui.dialog.NewItemDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
@@ -12,6 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class MainScreen extends JFrame {
     private JPanel panelMain;
@@ -67,7 +68,8 @@ public class MainScreen extends JFrame {
 
     private void setupTotalPrice() {
         goldIcon.setText("");
-        goldIcon.setIcon(new ImageIcon(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH));
+        URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
+        goldIcon.setIcon(new ImageIcon(goldIconPath));
         totalPrice.setText(presenter.getTotalPriceCounter().toString());
     }
 

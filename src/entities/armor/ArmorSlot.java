@@ -1,4 +1,4 @@
-package entitites.armor;
+package entities.armor;
 
 public enum ArmorSlot {
     HELMET("Helmet", 130),

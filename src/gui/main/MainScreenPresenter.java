@@ -1,8 +1,8 @@
 package gui.main;
 
 
-import entitites.CraftResource;
-import entitites.Item;
+import entities.CraftResource;
+import entities.Item;
 
 import javax.swing.*;
 
