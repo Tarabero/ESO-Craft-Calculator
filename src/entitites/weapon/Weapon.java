@@ -30,6 +30,6 @@ public class Weapon extends Item {
 
     @Override
     protected String getItemIconPath() {
-        return "Weapon/" + getWeaponType().toString();
+        return "Weapon/" + getWeaponType().toString().toLowerCase().replace(" ", "_");
     }
 }

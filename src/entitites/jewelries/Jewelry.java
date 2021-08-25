@@ -30,6 +30,6 @@ public class Jewelry extends Item {
 
     @Override
     protected String getItemIconPath() {
-        return "Jewelry/" + getJewelryType().toString();
+        return "Jewelry/" + getJewelryType().toString().toLowerCase();
     }
 }
