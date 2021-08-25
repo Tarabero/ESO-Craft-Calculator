@@ -22,9 +22,12 @@ public class Armor extends Item {
 
     @Override
     protected String createName() {
-        return super.createName()
-                + " " + armorType.toString()
-                + " " + armorSlot.toString();
+        StringBuilder name = new StringBuilder(super.createName());
+        if (armorSlot != ArmorSlot.SHIELD) {
+            name.append(" ").append(armorType.toString());
+        }
+        name.append(" ").append(armorSlot.toString());
+        return name.toString();
     }
 
     @Override
@@ -34,11 +37,12 @@ public class Armor extends Item {
 
     @Override
     protected String getItemIconPath() {
-        return new StringBuilder("Armor/")
-                .append(getArmorType().toString())
-                .append("/")
-                .append(getArmorSlot().toString())
-                .toString();
+        StringBuilder itemIconPath = new StringBuilder("Armor/");
+        if (armorSlot != ArmorSlot.SHIELD) {
+            itemIconPath.append(getArmorType().toString()).append("/");
+        }
+        itemIconPath.append(getArmorSlot().toString());
+        return itemIconPath.toString();
     }
 }
 

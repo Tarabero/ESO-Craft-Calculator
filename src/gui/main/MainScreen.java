@@ -1,7 +1,8 @@
-package gui;
+package gui.main;
 
 import entitites.CraftResource;
 import entitites.Item;
+import gui.dialog.NewItemDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
 import util.GlobalConstants;
@@ -11,15 +12,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class MainScreen extends JFrame {
-    private JScrollPane listItemContainer;
-    private JScrollPane listCraftResourceContainer;
-    private JPanel btnContainer;
-    private JPanel miscContainer;
-
     private JPanel panelMain;
     private JButton btnAddItem;
     private JButton btnRemoveItem;
@@ -31,34 +25,22 @@ public class MainScreen extends JFrame {
 
     private int selectedPosition = -1;
     private final MainScreenPresenter presenter;
+    private final MainScreenActionListener listener;
 
-    public MainScreen(final MainScreenPresenter mainScreenPresenter) {
-        presenter = mainScreenPresenter;
+    public MainScreen(final MainScreenPresenter presenter, final MainScreenActionListener listener) {
+        this.presenter = presenter;
+        this.listener = listener;
         setupBasicElements();
-        setupWindowClosingListener();
         setupListItems();
         setupListCraftResources();
         setupTotalPrice();
         setupButtonListeners();
-
     }
 
     private void setupBasicElements() {
         setTitle("ESO Crafting Calculator v.00");
-        setContentPane(this.panelMain);
+        setContentPane(panelMain);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        pack();
-    }
-
-    private void setupWindowClosingListener() {
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                presenter.eventsOnMainScreenExit();
-                e.getWindow().dispose();
-            }
-        });
     }
 
     private void setupListItems() {
@@ -106,9 +88,7 @@ public class MainScreen extends JFrame {
     }
 
     private void btnAddItemAction() {
-        Item item = presenter.getRandomItem();
-        presenter.addItemToItemList(item);
-        updateTotalPrice();
+        openNewItemDialog();
     }
 
     private void updateTotalPrice() {
@@ -118,5 +98,17 @@ public class MainScreen extends JFrame {
     private void btnRemoveItemAction() {
         presenter.removeItemFromItemList(selectedPosition);
         updateTotalPrice();
+    }
+
+    private void openNewItemDialog() {
+        listener.startNewItemDialog(new NewItemDialog.NewItemDialogActionListener() {
+            @Override
+            public void itemCreationAction(Item item) {
+                if (item != null) {
+                    presenter.addItemToItemList(item);
+                    updateTotalPrice();
+                }
+            }
+        });
     }
 }

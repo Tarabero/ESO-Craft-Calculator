@@ -1,5 +1,7 @@
 package entitites.armor;
 
+import entitites.Workbench;
+
 public enum ArmorType {
     LIGHT("Light"),
     MEDIUM("Medium"),
@@ -9,6 +11,18 @@ public enum ArmorType {
 
     ArmorType(String name) {
         this.name = name;
+    }
+
+    public Workbench getWorkbench() {
+        switch (this) {
+            case LIGHT:
+            case MEDIUM:
+                return Workbench.CLOTHING;
+            case HEAVY:
+                return Workbench.SMITHING;
+            default: //In case of Shield
+                return Workbench.WOODWORKING;
+        }
     }
 
     @Override

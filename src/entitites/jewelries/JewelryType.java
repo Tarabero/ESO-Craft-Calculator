@@ -1,5 +1,7 @@
 package entitites.jewelries;
 
+import entitites.Workbench;
+
 public enum JewelryType {
     RING("Ring", 100),
     AMULET("Amulet", 150);
@@ -19,5 +21,9 @@ public enum JewelryType {
 
     public int getMaterialQuantity() {
         return materialQuantity;
+    }
+
+    public Workbench getWorkbench() {
+        return Workbench.JEWELRY;
     }
 }

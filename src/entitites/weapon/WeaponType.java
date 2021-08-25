@@ -1,5 +1,7 @@
 package entitites.weapon;
 
+import entitites.Workbench;
+
 public enum WeaponType {
     TWO_HANDED_SWORD("Two-handed sword", 140),
     TWO_HANDED_AXE("Two-handed axe", 140),
@@ -29,5 +31,25 @@ public enum WeaponType {
 
     public int getMaterialQuantity() {
         return materialQuantity;
+    }
+
+    public Workbench getWorkbench() {
+        switch (this) {
+            case STAFF_RESTORATION:
+            case STAFF_LIGHTNING:
+            case STAFF_FROST:
+            case STAFF_FLAME:
+            case BOW:
+                return Workbench.WOODWORKING;
+            case DAGGER:
+            case TWO_HANDED_SWORD:
+            case ONE_HANDED_SWORD:
+            case TWO_HANDED_MAUL:
+            case ONE_HANDED_MAUL:
+            case TWO_HANDED_AXE:
+            case ONE_HANDED_AXE:
+                return Workbench.SMITHING;
+        }
+        return null;
     }
 }

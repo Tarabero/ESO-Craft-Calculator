@@ -9,7 +9,6 @@ import java.awt.*;
 public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
     private JPanel container;
     private JPanel nameContainer;
-    private JPanel craftResourceContainer;
 
     private JLabel priceField;
     private JTextField itemCraftResourcesField;
