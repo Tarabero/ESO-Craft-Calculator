@@ -25,8 +25,9 @@ public class NewItemDialogPresenter {
 
     public NewItemDialogPresenter(final DatabaseRepository databaseRepository) {
         this.databaseRepository = databaseRepository;
-    }
+        onItemTypeChanged();
 
+    }
     //Item creation tools
 
     public Item createItem() {
@@ -81,13 +82,13 @@ public class NewItemDialogPresenter {
 
     //Combo boxes models updater
 
-    public void updateComboBoxesModels() {
+    public void onItemTypeChanged() {
         TraitType selectedItemType = (TraitType) comboItemTypeModel.getSelectedItem();
         setComboItemSlotModel(selectedItemType);
         setComboTraitModel(selectedItemType);
     }
 
-    public boolean armorSlotMustBeVisible() {
+    public boolean shouldArmorSlotBeVisible() {
         Object armorSlot = comboItemSlotModel.getSelectedItem();
         return comboItemTypeModel.getSelectedItem() == TraitType.ARMOR && armorSlot != ArmorSlot.SHIELD;
     }
@@ -99,32 +100,27 @@ public class NewItemDialogPresenter {
     }
 
     public DefaultComboBoxModel<Object> getComboItemSlotModel() {
-        TraitType selectedItemType = (TraitType) comboItemTypeModel.getSelectedItem();
-        setComboItemSlotModel(selectedItemType);
         return comboItemSlotModel;
     }
 
     private void setComboItemSlotModel(TraitType itemType) {
-        comboItemSlotModel.removeAllElements();
+        Object[] valuesToAdd = null;
         switch (itemType) {
             case ARMOR:
-                for (ArmorSlot itemSlot :
-                        ArmorSlot.values()) {
-                    comboItemSlotModel.addElement(itemSlot);
-                }
+                valuesToAdd = ArmorSlot.values();
                 break;
             case WEAPON:
-                for (WeaponType itemSlot :
-                        WeaponType.values()) {
-                    comboItemSlotModel.addElement(itemSlot);
-                }
+                valuesToAdd = WeaponType.values();
                 break;
             case JEWELRY:
-                for (JewelryType itemSlot :
-                        JewelryType.values()) {
-                    comboItemSlotModel.addElement(itemSlot);
-                }
-                break;
+                valuesToAdd = JewelryType.values();
+        }
+        comboItemSlotModel.removeAllElements();
+        if (valuesToAdd != null) {
+            for (Object value :
+                    valuesToAdd) {
+                comboItemSlotModel.addElement(value);
+            }
         }
     }
 
@@ -133,16 +129,11 @@ public class NewItemDialogPresenter {
     }
 
     public ComboBoxModel<Trait> getComboTraitModel() {
-        TraitType selectedItemType = (TraitType) comboItemTypeModel.getSelectedItem();
-        setComboTraitModel(selectedItemType);
         return comboTraitModel;
     }
 
     private void setComboTraitModel(TraitType traitType) {
-        if (comboTraitModel.getSize() > 0) {
-            comboTraitModel.removeAllElements();
-            addTraitsToComboTraitModel(traitType);
-        }
+        comboTraitModel.removeAllElements();
         addTraitsToComboTraitModel(traitType);
     }
 
