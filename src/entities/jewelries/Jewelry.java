@@ -1,12 +1,15 @@
 package entities.jewelries;
 
-import entities.*;
+import entities.CraftResource;
+import entities.Item;
+import entities.Material;
+import entities.Trait;
 
 public class Jewelry extends Item {
     private final JewelryType jewelryType;
 
-    public Jewelry(JewelryType jewelryType, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(trait, baseMaterial, workbench);
+    public Jewelry(JewelryType jewelryType, Trait trait, Material baseMaterial) {
+        super(trait, baseMaterial);
         this.jewelryType = jewelryType;
     }
 

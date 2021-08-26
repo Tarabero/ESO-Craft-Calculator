@@ -13,7 +13,6 @@ import java.util.List;
 public class NewItemDialogPresenter {
 
     private final DatabaseRepository databaseRepository;
-    private final ItemBuilder itemBuilder;
 
     private final DefaultComboBoxModel<TraitType> comboItemTypeModel = new DefaultComboBoxModel<>(TraitType.values());
     private final DefaultComboBoxModel<Object> comboItemSlotModel = new DefaultComboBoxModel<>();
@@ -25,13 +24,78 @@ public class NewItemDialogPresenter {
     public NewItemDialogPresenter(final DatabaseRepository databaseRepository) {
         this.databaseRepository = databaseRepository;
         onItemTypeChanged();
-        itemBuilder = new ItemBuilder(this);
 
     }
-    //Item creation tools
+
+    //Item creation call
 
     public Item createItem() {
-        return itemBuilder.createItem();
+        ItemBuilder itemBuilder = new ItemBuilder();
+        return itemBuilder
+                .setItemType(getItemType())
+                .setItemSlot(getItemSlot())
+                .setArmorType(getArmorType())
+                .setItemTrait(getItemTrait())
+                .setItemBaseMaterial(getItemBaseMaterial())
+                .setItemQuality(getItemQualityType(), getItemQualityResources())
+                .buildItem();
+    }
+
+    // Item data gathering
+
+    private TraitType getItemType() {
+        return (TraitType) comboItemTypeModel.getSelectedItem();
+    }
+
+    private Object getItemSlot() {
+        return comboItemSlotModel.getSelectedItem();
+    }
+
+    private ArmorType getArmorType() {
+        return (ArmorType) comboArmorTypeModel.getSelectedItem();
+    }
+
+    private Trait getItemTrait() {
+        return (Trait) comboTraitModel.getSelectedItem();
+    }
+
+    private Material getItemBaseMaterial() {
+        return databaseRepository.getMaterialFor(getItemBaseMaterialType());
+    }
+
+    private MaterialType getItemBaseMaterialType() {
+        TraitType selectedItemType = getItemType();
+        switch (selectedItemType) {
+            case WEAPON:
+                return MaterialType.getBaseMaterialTypeFor((WeaponType) getItemSlot());
+            case ARMOR:
+                return MaterialType.getBaseMaterialTypeFor(getArmorType(), (ArmorSlot) getItemSlot());
+            case JEWELRY:
+                return MaterialType.getBaseMaterialTypeFor((JewelryType) getItemSlot());
+        }
+        return null;
+    }
+
+    private QualityType getItemQualityType() {
+        return (QualityType) comboQualityModel.getSelectedItem();
+    }
+
+    private List<CraftResource> getItemQualityResources() {
+        return databaseRepository.getQualityResourcesFor(getItemQualityType(), getItemWorkbench());
+    }
+
+    private Workbench getItemWorkbench() {
+        Object selectedItemSlot = getItemSlot();
+        if (selectedItemSlot instanceof WeaponType) {
+            return ((WeaponType) selectedItemSlot).getWorkbench();
+        }
+        if (selectedItemSlot instanceof ArmorSlot) {
+            return getArmorType().getWorkbench();
+        }
+        if (selectedItemSlot instanceof JewelryType) {
+            return ((JewelryType) selectedItemSlot).getWorkbench();
+        }
+        return null;
     }
 
     //Combo boxes models updater
@@ -47,7 +111,7 @@ public class NewItemDialogPresenter {
         return comboItemTypeModel.getSelectedItem() == TraitType.ARMOR && armorSlot != ArmorSlot.SHIELD;
     }
 
-    //Getters
+    //Models getters
 
     public ComboBoxModel<TraitType> getComboItemTypeModel() {
         return comboItemTypeModel;
@@ -100,13 +164,5 @@ public class NewItemDialogPresenter {
 
     public ComboBoxModel<QualityType> getComboQualityModel() {
         return comboQualityModel;
-    }
-
-    public Material getMaterialFor(MaterialType materialType) {
-        return databaseRepository.getMaterialFor(materialType);
-    }
-
-    public List<CraftResource> getQualityUpgradeMaterials(QualityType qualityType, Workbench workbench) {
-        return databaseRepository.getQualityResourcesFor(qualityType, workbench);
     }
 }

@@ -1,13 +1,16 @@
 package entities.armor;
 
-import entities.*;
+import entities.CraftResource;
+import entities.Item;
+import entities.Material;
+import entities.Trait;
 
 public class Armor extends Item {
     private final ArmorSlot armorSlot;
     private final ArmorType armorType;
 
-    public Armor(ArmorType armorType, ArmorSlot armorSlot, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(trait, baseMaterial, workbench);
+    public Armor(ArmorType armorType, ArmorSlot armorSlot, Trait trait, Material baseMaterial) {
+        super(trait, baseMaterial);
         this.armorSlot = armorSlot;
         this.armorType = armorType;
     }

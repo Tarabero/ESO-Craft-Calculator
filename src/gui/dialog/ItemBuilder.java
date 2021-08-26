@@ -13,15 +13,53 @@ import java.util.List;
 
 public class ItemBuilder {
 
-    private final NewItemDialogPresenter presenter;
+    private TraitType itemType;
+    private Object itemSlot;
+    private ArmorType armorType;
+    private Trait itemTrait;
+    private Material itemBaseMaterial;
+    private QualityType itemQuality;
+    private List<CraftResource> itemQualityMaterials;
 
-    public ItemBuilder(NewItemDialogPresenter presenter) {
-        this.presenter = presenter;
+    public ItemBuilder setItemType(TraitType itemType) {
+        this.itemType = itemType;
+        return this;
     }
 
-    public Item createItem() {
-        TraitType selectedItemType = (TraitType) presenter.getComboItemTypeModel().getSelectedItem();
-        switch (selectedItemType) {
+    public ItemBuilder setItemSlot(Object itemSlot) {
+        this.itemSlot = itemSlot;
+        return this;
+    }
+
+    public ItemBuilder setArmorType(ArmorType armorType) {
+        this.armorType = armorType;
+        return this;
+    }
+
+    public ItemBuilder setItemTrait(Trait itemTrait) {
+        this.itemTrait = itemTrait;
+        return this;
+    }
+
+    public ItemBuilder setItemBaseMaterial(Material itemBaseMaterial) {
+        this.itemBaseMaterial = itemBaseMaterial;
+        return this;
+    }
+
+    public ItemBuilder setItemQuality(QualityType itemQuality, List<CraftResource> itemQualityMaterials) {
+        this.itemQualityMaterials = itemQualityMaterials;
+        this.itemQuality = itemQuality;
+        return this;
+    }
+
+    public Item buildItem() {
+        Item newItem = createNewItem();
+        newItem.setQuality(itemQuality, itemQualityMaterials);
+        return newItem;
+    }
+
+    private Item createNewItem() {
+        switch (itemType) {
             case ARMOR:
                 return createNewArmor();
             case WEAPON:
@@ -33,114 +71,27 @@ public class ItemBuilder {
     }
 
     private Armor createNewArmor() {
-        ArmorType armorType = getArmorType();
-        ArmorSlot armorSlot = (ArmorSlot) getItemSlot();
-        Trait armorTrait = getItemTrait();
-        Material armorBaseMaterial = getBaseMaterial(armorTrait, armorSlot);
-        Workbench armorWorkbench = getWorkbench(armorType);
-        QualityType armorQuality = getQualityType();
-        List<CraftResource> armorQualityMaterials = getQualityMaterials(armorQuality, armorWorkbench);
-        Armor newArmor = new Armor(
+        return new Armor(
                 armorType,
-                armorSlot,
-                armorTrait,
-                armorBaseMaterial,
-                armorWorkbench
+                (ArmorSlot) itemSlot,
+                itemTrait,
+                itemBaseMaterial
         );
-        newArmor.setQuality(
-                armorQuality,
-                armorQualityMaterials
-        );
-        return newArmor;
-    }
-
-    private ArmorType getArmorType() {
-        return (ArmorType) presenter.getComboArmorTypeModel().getSelectedItem();
-    }
-
-    private Object getItemSlot() {
-        return presenter.getComboItemSlotModel().getSelectedItem();
-    }
-
-    private Trait getItemTrait() {
-        return (Trait) presenter.getComboTraitModel().getSelectedItem();
-    }
-
-    private Material getBaseMaterial(Trait trait, Object itemSlot) {
-        MaterialType materialType = null;
-        TraitType traitType = trait.getTraitType();
-        switch (traitType) {
-            case WEAPON:
-                materialType = MaterialType.getBaseMaterialTypeFor((WeaponType) itemSlot);
-                break;
-            case ARMOR:
-                materialType = MaterialType.getBaseMaterialTypeFor(getArmorType(), (ArmorSlot) itemSlot);
-                break;
-            case JEWELRY:
-                materialType = MaterialType.getBaseMaterialTypeFor((JewelryType) itemSlot);
-        }
-        return presenter.getMaterialFor(materialType);
-    }
-
-    private Workbench getWorkbench(WeaponType weaponType) {
-        return weaponType.getWorkbench();
-    }
-
-    private Workbench getWorkbench(ArmorType armorType) {
-        return armorType.getWorkbench();
-    }
-
-    private Workbench getWorkbench(JewelryType jewelryType) {
-        return jewelryType.getWorkbench();
-    }
-
-    private QualityType getQualityType() {
-        return (QualityType) presenter.getComboQualityModel().getSelectedItem();
-    }
-
-    private List<CraftResource> getQualityMaterials(QualityType qualityType, Workbench workbench) {
-        return presenter.getQualityUpgradeMaterials(qualityType, workbench);
     }
 
     private Weapon createNewWeapon() {
-        WeaponType weaponType = (WeaponType) getItemSlot();
-        Trait weaponTrait = getItemTrait();
-        Material weaponBaseMaterial = getBaseMaterial(weaponTrait, weaponType);
-        Workbench weaponWorkbench = getWorkbench(weaponType);
-        QualityType weaponQuality = getQualityType();
-        List<CraftResource> weaponQualityMaterials = getQualityMaterials(weaponQuality, weaponWorkbench);
-
-        Weapon newWeapon = new Weapon(
-                weaponType,
-                weaponTrait,
-                weaponBaseMaterial,
-                weaponWorkbench
+        return new Weapon(
+                (WeaponType) itemSlot,
+                itemTrait,
+                itemBaseMaterial
         );
-        newWeapon.setQuality(
-                weaponQuality,
-                weaponQualityMaterials
-        );
-        return newWeapon;
     }
 
     private Jewelry createNewJewelry() {
-        JewelryType jewelryType = (JewelryType) getItemSlot();
-        Trait jewelryTrait = getItemTrait();
-        Material jewelryBaseMaterial = getBaseMaterial(jewelryTrait, jewelryType);
-        Workbench jewelryWorkbench = getWorkbench(jewelryType);
-        QualityType jewelryQuality = getQualityType();
-        List<CraftResource> jewelryQualityMaterials = getQualityMaterials(jewelryQuality, jewelryWorkbench);
-
-        Jewelry newJewelry = new Jewelry(
-                jewelryType,
-                jewelryTrait,
-                jewelryBaseMaterial,
-                jewelryWorkbench
+        return new Jewelry(
+                (JewelryType) itemSlot,
+                itemTrait,
+                itemBaseMaterial
         );
-        newJewelry.setQuality(
-                jewelryQuality,
-                jewelryQualityMaterials
-        );
-        return newJewelry;
     }
 }

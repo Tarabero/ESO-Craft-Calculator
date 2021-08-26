@@ -1,12 +1,15 @@
 package entities.weapon;
 
-import entities.*;
+import entities.CraftResource;
+import entities.Item;
+import entities.Material;
+import entities.Trait;
 
 public class Weapon extends Item {
     private final WeaponType weaponType;
 
-    public Weapon(WeaponType weaponType, Trait trait, Material baseMaterial, Workbench workbench) {
-        super(trait,baseMaterial, workbench);
+    public Weapon(WeaponType weaponType, Trait trait, Material baseMaterial) {
+        super(trait, baseMaterial);
         this.weaponType = weaponType;
     }
 
