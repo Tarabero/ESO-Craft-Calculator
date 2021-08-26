@@ -1,20 +1,19 @@
 package gui.dialog;
 
 import entities.*;
-import entities.armor.Armor;
 import entities.armor.ArmorSlot;
 import entities.armor.ArmorType;
-import entities.jewelries.Jewelry;
 import entities.jewelries.JewelryType;
-import entities.weapon.Weapon;
 import entities.weapon.WeaponType;
 import util.DatabaseRepository;
 
 import javax.swing.*;
+import java.util.List;
 
 public class NewItemDialogPresenter {
 
     private final DatabaseRepository databaseRepository;
+    private final ItemBuilder itemBuilder;
 
     private final DefaultComboBoxModel<TraitType> comboItemTypeModel = new DefaultComboBoxModel<>(TraitType.values());
     private final DefaultComboBoxModel<Object> comboItemSlotModel = new DefaultComboBoxModel<>();
@@ -26,58 +25,13 @@ public class NewItemDialogPresenter {
     public NewItemDialogPresenter(final DatabaseRepository databaseRepository) {
         this.databaseRepository = databaseRepository;
         onItemTypeChanged();
+        itemBuilder = new ItemBuilder(this);
 
     }
     //Item creation tools
 
     public Item createItem() {
-        TraitType selected = (TraitType) comboItemTypeModel.getSelectedItem();
-        switch (selected) {
-            case ARMOR:
-                return createNewArmor();
-            case WEAPON:
-                return createNewWeapon();
-            case JEWELRY:
-                return createNewJewelry();
-        }
-        return null;
-    }
-
-    private Armor createNewArmor() {
-        ArmorSlot armorSlot = (ArmorSlot) comboItemSlotModel.getSelectedItem();
-        Trait armorTrait = (Trait) comboTraitModel.getSelectedItem();
-        ArmorType armorType = (ArmorType) comboArmorTypeModel.getSelectedItem();
-        Workbench workbench = armorType.getWorkbench();
-        Material itemBaseMaterial = databaseRepository.getMaterialFor(MaterialType.getBaseMaterialTypeFor(armorType, armorSlot));
-        QualityType qualityType = (QualityType) comboQualityModel.getSelectedItem();
-
-        Armor newArmor = new Armor(armorType, armorSlot, armorTrait, itemBaseMaterial, workbench);
-        newArmor.setQuality(qualityType, databaseRepository.getQualityResourcesFor(qualityType, workbench));
-        return newArmor;
-    }
-
-    private Weapon createNewWeapon() {
-        WeaponType weaponType = (WeaponType) comboItemSlotModel.getSelectedItem();
-        Trait weaponTrait = (Trait) comboTraitModel.getSelectedItem();
-        Workbench workbench = weaponType.getWorkbench();
-        Material itemBaseMaterial = databaseRepository.getMaterialFor(MaterialType.getBaseMaterialTypeFor(weaponType));
-        QualityType qualityType = (QualityType) comboQualityModel.getSelectedItem();
-
-        Weapon newWeapon = new Weapon(weaponType, weaponTrait, itemBaseMaterial, workbench);
-        newWeapon.setQuality(qualityType, databaseRepository.getQualityResourcesFor(qualityType, workbench));
-        return newWeapon;
-    }
-
-    private Jewelry createNewJewelry() {
-        JewelryType jewelryType = (JewelryType) comboItemSlotModel.getSelectedItem();
-        Trait weaponTrait = (Trait) comboTraitModel.getSelectedItem();
-        Workbench workbench = jewelryType.getWorkbench();
-        Material itemBaseMaterial = databaseRepository.getMaterialFor(MaterialType.getBaseMaterialTypeFor(jewelryType));
-        QualityType qualityType = (QualityType) comboQualityModel.getSelectedItem();
-
-        Jewelry newJewelry = new Jewelry(jewelryType, weaponTrait, itemBaseMaterial, workbench);
-        newJewelry.setQuality(qualityType, databaseRepository.getQualityResourcesFor(qualityType, workbench));
-        return newJewelry;
+        return itemBuilder.createItem();
     }
 
     //Combo boxes models updater
@@ -146,5 +100,13 @@ public class NewItemDialogPresenter {
 
     public ComboBoxModel<QualityType> getComboQualityModel() {
         return comboQualityModel;
+    }
+
+    public Material getMaterialFor(MaterialType materialType) {
+        return databaseRepository.getMaterialFor(materialType);
+    }
+
+    public List<CraftResource> getQualityUpgradeMaterials(QualityType qualityType, Workbench workbench) {
+        return databaseRepository.getQualityResourcesFor(qualityType, workbench);
     }
 }

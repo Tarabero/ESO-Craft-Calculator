@@ -40,7 +40,7 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
     private void setupPriceField(CraftResource craftResource) {
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
         priceField.setIcon(new ImageIcon(goldIconPath));
-        priceField.setText("Price: " + craftResource.getTotalPrice());
+        priceField.setText(String.valueOf(craftResource.getTotalPrice()));
     }
 
     private void setSelectionColours(Color background, Color foreground) {

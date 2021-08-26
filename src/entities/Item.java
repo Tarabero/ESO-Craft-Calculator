@@ -21,10 +21,10 @@ public abstract class Item{
     protected String createName() {
         StringBuilder nameStr = new StringBuilder("");
         if(qualityType != null){
-            nameStr.append(qualityType.toString()).append(" ");
+            nameStr.append(qualityType).append(" ");
         }
         if(trait != null){
-            nameStr.append(trait.toString());
+            nameStr.append(trait);
         }
         return nameStr.toString();
     }

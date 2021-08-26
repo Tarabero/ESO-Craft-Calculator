@@ -37,7 +37,7 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
     private void setupPriceField(Item item) {
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
         priceField.setIcon(new ImageIcon(goldIconPath));
-        priceField.setText("Cost: " + item.getPrice());
+        priceField.setText(String.valueOf(item.getPrice()));
     }
 
     private void setupItemField(Item item) {
