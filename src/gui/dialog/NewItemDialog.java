@@ -103,7 +103,7 @@ public class NewItemDialog extends JDialog {
 
     private void updateComboBoxes() {
         presenter.onItemTypeChanged();
-        comboArmorType.setVisible(presenter.shouldArmorSlotBeVisible());
+        comboArmorType.setVisible(presenter.shouldArmorTypeBeVisible());
         pack();
     }
 
@@ -118,7 +118,7 @@ public class NewItemDialog extends JDialog {
     }
 
     private void shieldArmorSlotCheck() {
-        comboArmorType.setVisible(presenter.shouldArmorSlotBeVisible());
+        comboArmorType.setVisible(presenter.shouldArmorTypeBeVisible());
         pack();
     }
 

@@ -90,7 +90,7 @@ public class NewItemDialogPresenter {
             return ((WeaponType) selectedItemSlot).getWorkbench();
         }
         if (selectedItemSlot instanceof ArmorSlot) {
-            return getArmorType().getWorkbench();
+            return ((ArmorSlot) selectedItemSlot).getWorkbench(getArmorType());
         }
         if (selectedItemSlot instanceof JewelryType) {
             return ((JewelryType) selectedItemSlot).getWorkbench();
@@ -102,26 +102,11 @@ public class NewItemDialogPresenter {
 
     public void onItemTypeChanged() {
         TraitType selectedItemType = (TraitType) comboItemTypeModel.getSelectedItem();
-        setComboItemSlotModel(selectedItemType);
-        setComboTraitModel(selectedItemType);
+        updateComboItemSlotModel(selectedItemType);
+        updateComboTraitModel(selectedItemType);
     }
 
-    public boolean shouldArmorSlotBeVisible() {
-        Object armorSlot = comboItemSlotModel.getSelectedItem();
-        return comboItemTypeModel.getSelectedItem() == TraitType.ARMOR && armorSlot != ArmorSlot.SHIELD;
-    }
-
-    //Models getters
-
-    public ComboBoxModel<TraitType> getComboItemTypeModel() {
-        return comboItemTypeModel;
-    }
-
-    public DefaultComboBoxModel<Object> getComboItemSlotModel() {
-        return comboItemSlotModel;
-    }
-
-    private void setComboItemSlotModel(TraitType itemType) {
+    private void updateComboItemSlotModel(TraitType itemType) {
         Object[] valuesToAdd = null;
         switch (itemType) {
             case ARMOR:
@@ -142,24 +127,35 @@ public class NewItemDialogPresenter {
         }
     }
 
+    private void updateComboTraitModel(TraitType traitType) {
+        comboTraitModel.removeAllElements();
+        for (Trait trait :
+                databaseRepository.getTraitFor(traitType)) {
+            comboTraitModel.addElement(trait);
+        }
+    }
+
+    public boolean shouldArmorTypeBeVisible() {
+        Object armorSlot = comboItemSlotModel.getSelectedItem();
+        return comboItemTypeModel.getSelectedItem() == TraitType.ARMOR && armorSlot != ArmorSlot.SHIELD;
+    }
+
+    //Models getters
+
+    public ComboBoxModel<TraitType> getComboItemTypeModel() {
+        return comboItemTypeModel;
+    }
+
+    public DefaultComboBoxModel<Object> getComboItemSlotModel() {
+        return comboItemSlotModel;
+    }
+
     public ComboBoxModel<ArmorType> getComboArmorTypeModel() {
         return comboArmorTypeModel;
     }
 
     public ComboBoxModel<Trait> getComboTraitModel() {
         return comboTraitModel;
-    }
-
-    private void setComboTraitModel(TraitType traitType) {
-        comboTraitModel.removeAllElements();
-        addTraitsToComboTraitModel(traitType);
-    }
-
-    private void addTraitsToComboTraitModel(TraitType traitType) {
-        for (Trait trait :
-                databaseRepository.getTraitFor(traitType)) {
-            comboTraitModel.addElement(trait);
-        }
     }
 
     public ComboBoxModel<QualityType> getComboQualityModel() {

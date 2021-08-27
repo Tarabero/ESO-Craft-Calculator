@@ -1,5 +1,7 @@
 package entities.armor;
 
+import entities.Workbench;
+
 public enum ArmorSlot {
     HELMET("Helmet", 130),
     CHEST("Chest", 150),
@@ -21,6 +23,13 @@ public enum ArmorSlot {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Workbench getWorkbench(ArmorType armorType) {
+        if (this == SHIELD) {
+            return Workbench.WOODWORKING;
+        }
+        return armorType.getWorkbench();
     }
 
     public int getMaterialQuantity() {

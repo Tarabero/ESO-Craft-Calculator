@@ -14,15 +14,10 @@ public enum ArmorType {
     }
 
     public Workbench getWorkbench() {
-        switch (this) {
-            case LIGHT:
-            case MEDIUM:
-                return Workbench.CLOTHING;
-            case HEAVY:
-                return Workbench.SMITHING;
-            default: //In case of Shield
-                return Workbench.WOODWORKING;
+        if (this == HEAVY) {
+            return Workbench.SMITHING;
         }
+        return Workbench.CLOTHING;
     }
 
     @Override
