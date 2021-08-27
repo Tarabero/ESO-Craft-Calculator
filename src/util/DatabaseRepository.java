@@ -5,7 +5,7 @@ import db.dao.MaterialDaoImpl;
 import db.dao.TraitDaoImpl;
 import db.dao.interfaces.MaterialDao;
 import db.dao.interfaces.TraitDao;
-import entitites.*;
+import entities.*;
 
 import java.util.List;
 

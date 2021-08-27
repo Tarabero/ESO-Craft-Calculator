@@ -1,15 +1,15 @@
 package gui.renderers;
 
-import entitites.Item;
+import entities.Item;
 import util.GlobalConstants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
     private JPanel container;
     private JPanel nameContainer;
-    private JPanel craftResourceContainer;
 
     private JLabel priceField;
     private JTextField itemCraftResourcesField;
@@ -35,12 +35,14 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
     }
 
     private void setupPriceField(Item item) {
-        priceField.setIcon(new ImageIcon(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH));
-        priceField.setText("Cost: " + item.getPrice());
+        URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
+        priceField.setIcon(new ImageIcon(goldIconPath));
+        priceField.setText(String.valueOf(item.getPrice()));
     }
 
     private void setupItemField(Item item) {
-        itemField.setIcon(new ImageIcon(item.getItemIconImagePath()));
+        URL itemIconPath = getClass().getResource(item.getItemIconImagePath());
+        itemField.setIcon(new ImageIcon(itemIconPath));
         itemField.setText(item.toString());
     }
 

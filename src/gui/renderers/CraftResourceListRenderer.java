@@ -1,10 +1,11 @@
 package gui.renderers;
 
-import entitites.CraftResource;
+import entities.CraftResource;
 import util.GlobalConstants;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class CraftResourceListRenderer extends JPanel implements ListCellRenderer<CraftResource> {
 
@@ -30,14 +31,16 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
     }
 
     private void setupCraftResourceField(CraftResource craftResource) {
-        ImageIcon craftResourceIcon = new ImageIcon(craftResource.getMaterial().getMaterialIconImagePath());
+        URL materialIconPath = getClass().getResource(craftResource.getMaterial().getMaterialIconImagePath());
+        ImageIcon craftResourceIcon = new ImageIcon(materialIconPath);
         craftResourceField.setIcon(craftResourceIcon);
         craftResourceField.setText(craftResource.toString());
     }
 
     private void setupPriceField(CraftResource craftResource) {
-        priceField.setIcon(new ImageIcon(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH));
-        priceField.setText("Price: " + craftResource.getTotalPrice());
+        URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
+        priceField.setIcon(new ImageIcon(goldIconPath));
+        priceField.setText(String.valueOf(craftResource.getTotalPrice()));
     }
 
     private void setSelectionColours(Color background, Color foreground) {

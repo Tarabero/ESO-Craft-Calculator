@@ -1,7 +1,7 @@
 package db;
 
 import db.parsers.Parser;
-import entitites.DatabaseEntity;
+import entities.DatabaseEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class DatabaseHelper {
     private final static String DIRECTORY_PROPERTY = "user.dir";
     private final static String JDBC_CONFIGURATION = "jdbc:sqlite:";
-    private final static String DATABASE_LOCAL_PATH = "/src/db/teso_craft_database.s3db";
+    private final static String DATABASE_LOCAL_PATH = "/db/teso_craft_database.s3db";
     private final static Logger logger = Logger.getLogger(DatabaseHelper.class.getSimpleName());
 
     private static DatabaseHelper instance;
@@ -32,6 +32,9 @@ public class DatabaseHelper {
     public void connect() {
         try {
             String projectDir = System.getProperty(DIRECTORY_PROPERTY);
+            if (!projectDir.endsWith("src")) {
+                projectDir = projectDir + "/src";
+            }
             String databasePath = projectDir + DATABASE_LOCAL_PATH;
             connection = DriverManager.getConnection(JDBC_CONFIGURATION + databasePath);
             logger.log(Level.INFO, "Established database connection");

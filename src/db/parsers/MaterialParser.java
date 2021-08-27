@@ -1,7 +1,7 @@
 package db.parsers;
 
-import entitites.Material;
-import entitites.MaterialType;
+import entities.Material;
+import entities.MaterialType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
