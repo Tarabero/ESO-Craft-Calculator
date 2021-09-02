@@ -45,5 +45,9 @@ public class DatabaseRepository {
         return qualityResourceCollector.getResourcesFor(qualityType, workbench);
     }
 
+    public void updateMaterial(Material updatedMaterial) {
+        materialDao.setMaterial(updatedMaterial);
+    }
+
 
 }

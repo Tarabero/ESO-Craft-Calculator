@@ -62,12 +62,21 @@ public class MaterialTableModel extends AbstractTableModel {
         if (columnIndex == 2) {
             row.setPrice((Integer) aValue);
         }
-        changedMaterialsList.add(getMaterialAt(rowIndex));
+        noteTheChange(getMaterialAt(rowIndex));
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex == 2;
+    }
+
+    private void noteTheChange(Material material) {
+        if (changedMaterialsList.contains(material)) {
+            int materialIndex = changedMaterialsList.indexOf(material);
+            changedMaterialsList.set(materialIndex, material);
+        } else {
+            changedMaterialsList.add(material);
+        }
     }
 
     private Material getMaterialAt(int rowIndex) {

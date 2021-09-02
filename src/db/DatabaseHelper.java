@@ -72,16 +72,18 @@ public class DatabaseHelper {
         ResultSet resultSet = null;
         try {
             statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-            resultSet = statement.executeQuery(query);
 
             if (parser != null) {
+                statement.setQueryTimeout(30);
+                resultSet = statement.executeQuery(query);
                 List<T> resultList = new ArrayList();
                 while (resultSet.next()) {
                     resultList.add(parser.parse(resultSet));
                 }
                 return resultList;
             }
+
+            statement.executeUpdate(query);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

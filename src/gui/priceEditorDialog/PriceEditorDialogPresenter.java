@@ -34,7 +34,7 @@ public class PriceEditorDialogPresenter {
             for (Material material :
                     changedMaterialList) {
                 int materialIndex = material.getId();
-                if (!databaseMaterialsList.get(materialIndex).equals(material)) {
+                if (databaseMaterialsList.get(materialIndex).getPrice() != material.getPrice()) {
                     editedMaterials.add(material);
                 }
             }
@@ -43,6 +43,7 @@ public class PriceEditorDialogPresenter {
         if (editedMaterials.size() > 0) {
             for (Material material :
                     editedMaterials) {
+                databaseRepository.updateMaterial(material);
                 System.out.println(material.getMaterialType().toString()
                         + " " + material.getMaterialName()
                         + " " + material.getPrice());

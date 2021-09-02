@@ -20,9 +20,18 @@ public class MaterialDaoImpl implements MaterialDao {
             "ON materials.type_id = material_types.id " +
             "WHERE material_types.material_type_name = \"";
 
+    private static final String UPDATE_MATERIAL_SELECT_AND_SET =
+            //"SELECT materials.id, materials.material_name, materials.price " +
+            //"FROM materials; " +
+            "UPDATE materials " +
+                    "SET price = \"";
+    private static final String UPDATE_MATERIAL_WHERE =
+            "WHERE id = \"";
+
+
     private DatabaseHelper databaseHelper;
 
-    public MaterialDaoImpl(DatabaseHelper databaseHelper){
+    public MaterialDaoImpl(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
     }
 
@@ -33,9 +42,17 @@ public class MaterialDaoImpl implements MaterialDao {
     @Override
     public Material getMaterialFor(MaterialType type) {
         List<Material> result = databaseHelper.executeStatementWithResult(QUERY_SEARCH_MATERIAL + type.name() + "\"", new MaterialParser());
-        if (result != null && !result.isEmpty()){
+        if (result != null && !result.isEmpty()) {
             return result.get(0);
         }
         return null;
+    }
+
+    @Override
+    public void setMaterial(Material material) {
+        databaseHelper.executeStatement(UPDATE_MATERIAL_SELECT_AND_SET
+                + material.getPrice() + "\""
+                + UPDATE_MATERIAL_WHERE
+                + material.getId() + "\";");
     }
 }

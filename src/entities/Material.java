@@ -53,7 +53,7 @@ public class Material extends DatabaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return (id == material.id) && (price == material.price);
+        return (id == material.id);
     }
 
     @Override

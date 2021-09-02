@@ -8,4 +8,6 @@ import java.util.List;
 public interface MaterialDao {
     List<Material> getMaterials();
     Material getMaterialFor(MaterialType type);
+
+    void setMaterial(Material material);
 }
