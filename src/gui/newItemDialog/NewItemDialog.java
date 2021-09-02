@@ -1,4 +1,4 @@
-package gui.dialog;
+package gui.newItemDialog;
 
 import entities.Item;
 import entities.QualityType;

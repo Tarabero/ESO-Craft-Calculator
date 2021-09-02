@@ -1,4 +1,4 @@
-package gui.dialog;
+package gui.newItemDialog;
 
 import entities.*;
 import entities.armor.Armor;

@@ -3,23 +3,35 @@ package entities;
 public class Material extends DatabaseEntity {
 
     private final int id;
-    private final int price;
+    private int price;
     private final MaterialType materialType;
     private String materialIconImagePass;
 
-    public Material(int id, String name, int price, MaterialType materialType){
+    public Material(int id, String name, int price, MaterialType materialType) {
         super(name, id);
         this.id = id;
         this.price = price;
         this.materialType = materialType;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public int getPrice() {
         return price;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public MaterialType getMaterialType() {
         return materialType;
+    }
+
+    public String getMaterialName() {
+        return name;
     }
 
     public String toString() {
@@ -41,7 +53,7 @@ public class Material extends DatabaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return id == material.id;
+        return (id == material.id) && (price == material.price);
     }
 
     @Override

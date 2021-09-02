@@ -2,7 +2,8 @@ package gui.main;
 
 import entities.CraftResource;
 import entities.Item;
-import gui.dialog.NewItemDialog;
+import gui.newItemDialog.NewItemDialog;
+import gui.priceEditorDialog.PriceEditorDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
 import util.GlobalConstants;
@@ -18,6 +19,7 @@ public class MainScreen extends JFrame {
     private JPanel panelMain;
     private JButton btnAddItem;
     private JButton btnRemoveItem;
+    private JButton btnPriceEditor;
     private JList<CraftResource> listCraftResources;
     private JList<Item> listItems;
     private JLabel totalPrice;
@@ -87,10 +89,21 @@ public class MainScreen extends JFrame {
                 btnRemoveItemAction();
             }
         });
+
+        btnPriceEditor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnPriceEditorAction();
+            }
+        });
     }
 
     private void btnAddItemAction() {
         openNewItemDialog();
+    }
+
+    private void btnPriceEditorAction() {
+        openPriceEditorDialog();
     }
 
     private void updateTotalPrice() {
@@ -110,6 +123,15 @@ public class MainScreen extends JFrame {
                     presenter.addItemToItemList(item);
                     updateTotalPrice();
                 }
+            }
+        });
+    }
+
+    private void openPriceEditorDialog() {
+        listener.startPriceEditorDialog(new PriceEditorDialog.PriceEditorDialogActionListener() {
+            @Override
+            public void PriceConfirmedAction() {
+
             }
         });
     }
