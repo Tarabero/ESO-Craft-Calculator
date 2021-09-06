@@ -1,13 +1,13 @@
 package gui;
 
 import db.DatabaseHelper;
+import gui.dialog.newitem.NewItemDialog;
+import gui.dialog.newitem.NewItemDialogPresenter;
+import gui.dialog.priceeditor.PriceEditorDialog;
+import gui.dialog.priceeditor.PriceEditorDialogPresenter;
 import gui.main.MainScreen;
 import gui.main.MainScreenActionListener;
 import gui.main.MainScreenPresenter;
-import gui.newItemDialog.NewItemDialog;
-import gui.newItemDialog.NewItemDialogPresenter;
-import gui.priceEditorDialog.PriceEditorDialog;
-import gui.priceEditorDialog.PriceEditorDialogPresenter;
 import util.DatabaseRepository;
 
 import java.awt.event.WindowEvent;
@@ -18,7 +18,6 @@ public class WindowController implements MainScreenActionListener {
     private final DatabaseHelper databaseHelper;
     private final DatabaseRepository databaseRepository;
     private NewItemDialogPresenter newItemDialogPresenter;
-    private PriceEditorDialogPresenter priceEditorDialogPresenter;
 
     private final WindowListener windowListener = new WindowListener() {
         @Override
@@ -91,10 +90,8 @@ public class WindowController implements MainScreenActionListener {
     }
 
     private void openPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
-        if (priceEditorDialogPresenter == null) {
-            priceEditorDialogPresenter = new PriceEditorDialogPresenter(databaseRepository);
-        }
-        PriceEditorDialog dialog = new PriceEditorDialog(priceEditorDialogPresenter, listener);
+        PriceEditorDialogPresenter presenter = new PriceEditorDialogPresenter(databaseRepository);
+        PriceEditorDialog dialog = new PriceEditorDialog(presenter, listener);
         dialog.pack();
         dialog.setVisible(true);
     }

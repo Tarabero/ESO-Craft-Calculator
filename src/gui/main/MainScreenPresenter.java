@@ -85,6 +85,15 @@ public class MainScreenPresenter {
         return craftResourcesModel;
     }
 
+    public void recalculateTotalPrice() {
+        totalPriceCounter = 0;
+        if (itemsModel.size() > 0) {
+            for (int i = 0; i < itemsModel.size(); i++) {
+                totalPriceCounter += itemsModel.get(i).getPrice();
+            }
+        }
+    }
+
     public DefaultListModel<Item> getItemsModel() {
         return itemsModel;
     }

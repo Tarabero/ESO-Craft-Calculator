@@ -59,7 +59,7 @@ public class Material extends DatabaseEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + price;
+        //result = 31 * result + price;
         result = 31 * result + materialType.hashCode();
         return result;
     }

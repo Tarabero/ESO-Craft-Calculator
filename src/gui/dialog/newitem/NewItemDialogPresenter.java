@@ -1,4 +1,4 @@
-package gui.newItemDialog;
+package gui.dialog.newitem;
 
 import entities.*;
 import entities.armor.ArmorSlot;

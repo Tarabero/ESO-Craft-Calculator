@@ -2,6 +2,7 @@ package db.parsers;
 
 import entities.Material;
 import entities.MaterialType;
+import util.MaterialCache;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,12 @@ public class MaterialParser implements Parser<Material> {
         MaterialType type = MaterialType.valueOf(resultSet.getString(KEY_MATERIAL_TYPE));
         int price = resultSet.getInt(KEY_PRICE);
 
-        return new Material(id, name, price, type);
+        Material materialFromDB = new Material(id, name, price, type);
+        if (MaterialCache.contains(materialFromDB)) {
+            return MaterialCache.get(id);
+        }
+        MaterialCache.add(materialFromDB);
+
+        return materialFromDB;
     }
 }

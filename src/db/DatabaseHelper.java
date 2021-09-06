@@ -59,7 +59,24 @@ public class DatabaseHelper {
     }
 
     public void executeStatement(String query){
-        executeStatementWithResult(query, null);
+        //executeStatementWithResult(query,null);
+        if (!isAlive()) {
+            logger.log(Level.WARNING, "Can't send query, connection is null");
+        }
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                closeStatement(statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // TO READ: generics <T extends smth>
@@ -72,18 +89,16 @@ public class DatabaseHelper {
         ResultSet resultSet = null;
         try {
             statement = connection.createStatement();
+            statement.setQueryTimeout(30);
+            resultSet = statement.executeQuery(query);
 
             if (parser != null) {
-                statement.setQueryTimeout(30);
-                resultSet = statement.executeQuery(query);
                 List<T> resultList = new ArrayList();
                 while (resultSet.next()) {
                     resultList.add(parser.parse(resultSet));
                 }
                 return resultList;
             }
-
-            statement.executeUpdate(query);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

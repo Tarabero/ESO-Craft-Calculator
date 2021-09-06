@@ -2,8 +2,8 @@ package gui.main;
 
 import entities.CraftResource;
 import entities.Item;
-import gui.newItemDialog.NewItemDialog;
-import gui.priceEditorDialog.PriceEditorDialog;
+import gui.dialog.newitem.NewItemDialog;
+import gui.dialog.priceeditor.PriceEditorDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
 import util.GlobalConstants;
@@ -110,6 +110,11 @@ public class MainScreen extends JFrame {
         totalPrice.setText(presenter.getTotalPriceCounter().toString());
     }
 
+    private void refreshRenderers() {
+        listItems.setCellRenderer(new ItemListRenderer());
+        listCraftResources.setCellRenderer(new CraftResourceListRenderer());
+    }
+
     private void btnRemoveItemAction() {
         presenter.removeItemFromItemList(selectedPosition);
         updateTotalPrice();
@@ -130,8 +135,10 @@ public class MainScreen extends JFrame {
     private void openPriceEditorDialog() {
         listener.startPriceEditorDialog(new PriceEditorDialog.PriceEditorDialogActionListener() {
             @Override
-            public void PriceConfirmedAction() {
-
+            public void onMaterialPriceChanged() {
+                refreshRenderers();
+                presenter.recalculateTotalPrice();
+                updateTotalPrice();
             }
         });
     }

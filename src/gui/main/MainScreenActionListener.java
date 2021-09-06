@@ -1,7 +1,7 @@
 package gui.main;
 
-import gui.newItemDialog.NewItemDialog;
-import gui.priceEditorDialog.PriceEditorDialog;
+import gui.dialog.newitem.NewItemDialog;
+import gui.dialog.priceeditor.PriceEditorDialog;
 
 public interface MainScreenActionListener {
     void startNewItemDialog(NewItemDialog.NewItemDialogActionListener listener);

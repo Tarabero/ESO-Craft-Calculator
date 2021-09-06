@@ -1,4 +1,4 @@
-package gui.priceEditorDialog;
+package gui.dialog.priceeditor;
 
 import entities.Material;
 
@@ -10,8 +10,12 @@ public class MaterialTableModel extends AbstractTableModel {
     private final List<Material> materialList;
     private final List<Material> changedMaterialsList = new ArrayList<>();
 
+    private final int materialColumnIndex = 0;
+    private final int materialTypeColumnIndex = 1;
+    private final int priceColumnIndex = 2;
+
     private final String[] columnNames = new String[]{
-            "Material Type", "Material", "Price"
+            "Material", "Material Type", "Price"
     };
 
     private final Class[] columnClass = new Class[]{
@@ -46,11 +50,11 @@ public class MaterialTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Material row = materialList.get(rowIndex);
         switch (columnIndex) {
-            case 0:
-                return row.getMaterialType().toString();
-            case 1:
+            case materialColumnIndex:
                 return row.getMaterialName();
-            case 2:
+            case materialTypeColumnIndex:
+                return row.getMaterialType().toString();
+            case priceColumnIndex:
                 return row.getPrice();
         }
         return null;
@@ -59,7 +63,7 @@ public class MaterialTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Material row = materialList.get(rowIndex);
-        if (columnIndex == 2) {
+        if (columnIndex == priceColumnIndex) {
             row.setPrice((Integer) aValue);
         }
         noteTheChange(getMaterialAt(rowIndex));
@@ -67,7 +71,7 @@ public class MaterialTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 2;
+        return columnIndex == priceColumnIndex;
     }
 
     private void noteTheChange(Material material) {

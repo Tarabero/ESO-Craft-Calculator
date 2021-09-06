@@ -18,16 +18,12 @@ public class MaterialDaoImpl implements MaterialDao {
             "FROM materials " +
             "JOIN material_types " +
             "ON materials.type_id = material_types.id " +
-            "WHERE material_types.material_type_name = \"";
+            "WHERE material_types.material_type_name = \"%1$s\"";
 
-    private static final String UPDATE_MATERIAL_SELECT_AND_SET =
-            //"SELECT materials.id, materials.material_name, materials.price " +
-            //"FROM materials; " +
+    private static final String UPDATE_MATERIAL =
             "UPDATE materials " +
-                    "SET price = \"";
-    private static final String UPDATE_MATERIAL_WHERE =
-            "WHERE id = \"";
-
+                    "SET price = %1$d " +
+                    "WHERE id = %2$d ;";
 
     private DatabaseHelper databaseHelper;
 
@@ -35,13 +31,15 @@ public class MaterialDaoImpl implements MaterialDao {
         this.databaseHelper = databaseHelper;
     }
 
+    @Override
     public List<Material> getMaterials() {
         return databaseHelper.executeStatementWithResult(QUERY_ALL_MATERIALS, new MaterialParser());
     }
 
     @Override
     public Material getMaterialFor(MaterialType type) {
-        List<Material> result = databaseHelper.executeStatementWithResult(QUERY_SEARCH_MATERIAL + type.name() + "\"", new MaterialParser());
+        List<Material> result = databaseHelper.executeStatementWithResult(String.format(QUERY_SEARCH_MATERIAL, type.name()),
+                new MaterialParser());
         if (result != null && !result.isEmpty()) {
             return result.get(0);
         }
@@ -50,9 +48,7 @@ public class MaterialDaoImpl implements MaterialDao {
 
     @Override
     public void setMaterial(Material material) {
-        databaseHelper.executeStatement(UPDATE_MATERIAL_SELECT_AND_SET
-                + material.getPrice() + "\""
-                + UPDATE_MATERIAL_WHERE
-                + material.getId() + "\";");
+        databaseHelper.executeStatement(String.format(UPDATE_MATERIAL, material.getPrice(), material.getId()));
     }
 }
+

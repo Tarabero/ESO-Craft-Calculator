@@ -1,4 +1,4 @@
-package gui.priceEditorDialog;
+package gui.dialog.priceeditor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class PriceEditorDialog extends JDialog {
     private final PriceEditorDialogActionListener listener;
 
     public interface PriceEditorDialogActionListener {
-        void PriceConfirmedAction();
+        void onMaterialPriceChanged();
     }
 
     public PriceEditorDialog(PriceEditorDialogPresenter presenter, PriceEditorDialogActionListener listener) {
@@ -23,7 +23,6 @@ public class PriceEditorDialog extends JDialog {
         setupBasicElements();
         setupButtonListeners();
         setupTable();
-
     }
 
     private void setupBasicElements() {
@@ -36,25 +35,24 @@ public class PriceEditorDialog extends JDialog {
     private void setupButtonListeners() {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnConfirmAction();
+                onConfirmAction();
             }
         });
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         });
         setupAlternativeCancelListeners();
     }
 
-    private void btnConfirmAction() {
-        presenter.updateMaterialsPrice();
-        listener.PriceConfirmedAction();
+    private void onConfirmAction() {
+        presenter.updateMaterialsPrice(listener);
         dispose();
     }
 
-    private void btnCancelAction() {
+    private void onCancelAction() {
         dispose();
     }
 
@@ -63,14 +61,14 @@ public class PriceEditorDialog extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }

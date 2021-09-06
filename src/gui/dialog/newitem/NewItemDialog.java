@@ -1,4 +1,4 @@
-package gui.newItemDialog;
+package gui.dialog.newitem;
 
 import entities.Item;
 import entities.QualityType;
@@ -46,24 +46,24 @@ public class NewItemDialog extends JDialog {
     private void setupButtonListeners() {
         btnAddNewItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnAddNewItemAction();
+                onNewItemButtonPressed();
             }
         });
 
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         });
         setupAlternativeCancelListeners();
     }
 
-    private void btnAddNewItemAction() {
+    private void onNewItemButtonPressed() {
         listener.itemCreationAction(presenter.createItem());
         dispose();
     }
 
-    private void btnCancelAction() {
+    private void onCancelAction() {
         dispose();
     }
 
@@ -72,14 +72,14 @@ public class NewItemDialog extends JDialog {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
