@@ -14,18 +14,28 @@ public class MaterialParser implements Parser<Material> {
     private final static String KEY_PRICE = "price";
     private final static String KEY_MATERIAL_TYPE = "material_type_name";
 
+    private MaterialCache cache = null;
+
+    public MaterialParser(MaterialCache cache) {
+        this.cache = cache;
+    }
+
+    public MaterialParser() {
+    }
+
     public Material parse(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(KEY_ID);
         String name = resultSet.getString(KEY_NAME);
-        MaterialType type = MaterialType.valueOf(resultSet.getString(KEY_MATERIAL_TYPE));
         int price = resultSet.getInt(KEY_PRICE);
+        MaterialType type = MaterialType.valueOf(resultSet.getString(KEY_MATERIAL_TYPE));
 
         Material materialFromDB = new Material(id, name, price, type);
-        if (MaterialCache.contains(materialFromDB)) {
-            return MaterialCache.get(id);
+        if (cache != null) {
+            if (cache.contains(materialFromDB)) {
+                return cache.get(id);
+            }
+            cache.add(materialFromDB);
         }
-        MaterialCache.add(materialFromDB);
-
         return materialFromDB;
     }
 }

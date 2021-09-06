@@ -4,15 +4,16 @@ import entities.Material;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class MaterialTableModel extends AbstractTableModel {
-    private final List<Material> materialList;
-    private final List<Material> changedMaterialsList = new ArrayList<>();
+    private final static int MATERIAL_COLUMN_INDEX = 0;
+    private final static int MATERIAL_TYPE_COLUMN_INDEX = 1;
+    private final static int PRICE_COLUMN_INDEX = 2;
 
-    private final int materialColumnIndex = 0;
-    private final int materialTypeColumnIndex = 1;
-    private final int priceColumnIndex = 2;
+    private final List<Material> materialList;
+    private final HashSet<Material> changedMaterials = new HashSet<>();
 
     private final String[] columnNames = new String[]{
             "Material", "Material Type", "Price"
@@ -50,37 +51,33 @@ public class MaterialTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Material row = materialList.get(rowIndex);
         switch (columnIndex) {
-            case materialColumnIndex:
+            case MATERIAL_COLUMN_INDEX:
                 return row.getMaterialName();
-            case materialTypeColumnIndex:
+            case MATERIAL_TYPE_COLUMN_INDEX:
                 return row.getMaterialType().toString();
-            case priceColumnIndex:
+            case PRICE_COLUMN_INDEX:
                 return row.getPrice();
         }
         return null;
     }
 
     @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Material row = materialList.get(rowIndex);
-        if (columnIndex == priceColumnIndex) {
-            row.setPrice((Integer) aValue);
+    public void setValueAt(Object changedPrice, int rowIndex, int columnIndex) {
+        Material material = materialList.get(rowIndex);
+        if (columnIndex == PRICE_COLUMN_INDEX && material.getPrice() != (Integer) changedPrice) {
+            material.setPrice((Integer) changedPrice);
+            noteTheChange(getMaterialAt(rowIndex));
         }
-        noteTheChange(getMaterialAt(rowIndex));
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == priceColumnIndex;
+        return columnIndex == PRICE_COLUMN_INDEX;
     }
 
     private void noteTheChange(Material material) {
-        if (changedMaterialsList.contains(material)) {
-            int materialIndex = changedMaterialsList.indexOf(material);
-            changedMaterialsList.set(materialIndex, material);
-        } else {
-            changedMaterialsList.add(material);
-        }
+        changedMaterials.remove(material);
+        changedMaterials.add(material);
     }
 
     private Material getMaterialAt(int rowIndex) {
@@ -88,6 +85,6 @@ public class MaterialTableModel extends AbstractTableModel {
     }
 
     public List<Material> getChangedMaterialPriceList() {
-        return changedMaterialsList;
+        return new ArrayList<>(changedMaterials);
     }
 }

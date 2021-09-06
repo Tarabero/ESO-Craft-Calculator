@@ -22,7 +22,6 @@ public class DatabaseRepository {
         materialDao = new MaterialDaoImpl(database);
         traitDao = new TraitDaoImpl(database);
         qualityResourceCollector = new QualityResourceCollector(materialDao);
-
     }
 
     public void databaseDisconnect() {
@@ -34,7 +33,7 @@ public class DatabaseRepository {
     }
 
     public List<Material> getAllMaterials() {
-        return materialDao.getMaterials();
+        return materialDao.getAllMaterials();
     }
 
     public List<Trait> getTraitFor(TraitType traitType) {

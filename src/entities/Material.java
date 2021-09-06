@@ -3,7 +3,7 @@ package entities;
 public class Material extends DatabaseEntity {
 
     private final int id;
-    private int price;
+    private Integer price;
     private final MaterialType materialType;
     private String materialIconImagePass;
 
@@ -59,7 +59,6 @@ public class Material extends DatabaseEntity {
     @Override
     public int hashCode() {
         int result = id;
-        //result = 31 * result + price;
         result = 31 * result + materialType.hashCode();
         return result;
     }

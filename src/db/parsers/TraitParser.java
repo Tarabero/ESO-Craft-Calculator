@@ -3,6 +3,7 @@ package db.parsers;
 import entities.Material;
 import entities.Trait;
 import entities.TraitType;
+import util.MaterialCache;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,7 @@ public class TraitParser implements Parser<Trait> {
         int id = resultSet.getInt(KEY_ID);
         String name = resultSet.getString(KEY_NAME);
         TraitType traitType = TraitType.valueOf(resultSet.getString(KEY_TYPE));
-        Material material = new MaterialParser().parse(resultSet);
-
+        Material material = new MaterialParser(MaterialCache.getInstance()).parse(resultSet);
         return new Trait(name, id, traitType, material);
     }
 }

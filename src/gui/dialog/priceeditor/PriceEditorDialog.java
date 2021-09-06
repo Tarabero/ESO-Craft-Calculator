@@ -48,7 +48,10 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void onConfirmAction() {
-        presenter.updateMaterialsPrice(listener);
+        presenter.updateMaterialsPrice();
+        if (presenter.hasPriceChanged()) {
+            listener.onMaterialPriceChanged();
+        }
         dispose();
     }
 

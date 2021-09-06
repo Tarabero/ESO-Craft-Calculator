@@ -5,6 +5,7 @@ import db.dao.interfaces.MaterialDao;
 import db.parsers.MaterialParser;
 import entities.Material;
 import entities.MaterialType;
+import util.MaterialCache;
 
 import java.util.List;
 
@@ -32,14 +33,14 @@ public class MaterialDaoImpl implements MaterialDao {
     }
 
     @Override
-    public List<Material> getMaterials() {
+    public List<Material> getAllMaterials() {
         return databaseHelper.executeStatementWithResult(QUERY_ALL_MATERIALS, new MaterialParser());
     }
 
     @Override
     public Material getMaterialFor(MaterialType type) {
         List<Material> result = databaseHelper.executeStatementWithResult(String.format(QUERY_SEARCH_MATERIAL, type.name()),
-                new MaterialParser());
+                new MaterialParser(MaterialCache.getInstance()));
         if (result != null && !result.isEmpty()) {
             return result.get(0);
         }

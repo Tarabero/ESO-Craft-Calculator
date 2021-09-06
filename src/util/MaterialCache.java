@@ -1,37 +1,42 @@
 package util;
 
+import com.sun.istack.internal.Nullable;
 import entities.Material;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 public class MaterialCache {
 
-    private static final LinkedList<Material> materialCacheList = new LinkedList<>();
+    private static final HashMap<Integer, Material> materialsCache = new HashMap<>();
+    private static MaterialCache materialCacheInstance = null;
 
     public MaterialCache() {
-
     }
 
-    public static void add(Material material) {
-        materialCacheList.add(material);
-    }
-
-    public static boolean contains(Material material) {
-        return materialCacheList.contains(material);
-    }
-
-    public static Material get(int materialId) {
-        for (Material material :
-                materialCacheList) {
-            if (material.getId() == materialId) {
-                return material;
-            }
+    public static MaterialCache getInstance() {
+        if (materialCacheInstance == null) {
+            materialCacheInstance = new MaterialCache();
         }
-        return null;
+        return materialCacheInstance;
     }
 
-    public static void update(Material material) {
-        int materialIndex = materialCacheList.indexOf(material);
-        materialCacheList.set(materialIndex, material);
+    public void add(Material material) {
+        materialsCache.put(material.getId(), material);
+    }
+
+    public boolean contains(Material material) {
+        return materialsCache.containsKey(material.getId());
+    }
+
+    @Nullable
+    public Material get(int materialId) {
+        return materialsCache.get(materialId);
+    }
+
+    public void update(Material material) {
+        Material cachedMaterial = materialsCache.get(material.getId());
+        if (cachedMaterial != null) {
+            cachedMaterial.setPrice(material.getPrice());
+        }
     }
 }
