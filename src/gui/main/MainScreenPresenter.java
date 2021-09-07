@@ -24,7 +24,7 @@ public class MainScreenPresenter {
     private SpinnerNumberModel createSpinnerModel() {
         double value = 15;
         double min = 0;
-        double max = 9999;
+        double max = 10000;
         double step = 1;
         return new SpinnerNumberModel(value, min, max, step);
     }

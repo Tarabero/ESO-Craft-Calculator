@@ -10,6 +10,7 @@ import gui.main.MainScreenActionListener;
 import gui.main.MainScreenPresenter;
 import util.DatabaseRepository;
 
+import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -60,11 +61,38 @@ public class WindowController implements MainScreenActionListener {
         databaseHelper = DatabaseHelper.getInstance();
         databaseHelper.connect();
         databaseRepository = new DatabaseRepository(databaseHelper);
+        setProgramLookAndFeelTheme("Metal"); //Metal, Nimbus, Motif, Windows, Windows Classic
         openMainScreen();
     }
 
     private void mainScreenClosingAction() {
         databaseHelper.close();
+    }
+
+    private void setProgramLookAndFeelTheme(String themeName) {
+        try {
+            UIManager.setLookAndFeel(getLookAndFeelTheme(themeName));
+        } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getLookAndFeelTheme(String themeName) {
+        switch (themeName) {
+            case "Metal": //Java default
+                return "javax.swing.plaf.metal.MetalLookAndFeel";
+            case "Nimbus":
+                return "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+            case "Motif":
+                return "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+            case "Windows":
+                return "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+            case "Windows Classic":
+                return "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
+            default: // return cross-platform Metal theme on default
+                return "javax.swing.plaf.metal.MetalLookAndFeel";
+        }
+
     }
 
     private void openMainScreen() {
