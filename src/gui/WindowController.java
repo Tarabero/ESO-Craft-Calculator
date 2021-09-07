@@ -63,14 +63,8 @@ public class WindowController implements MainScreenActionListener {
         openMainScreen();
     }
 
-    @Override
-    public void startNewItemDialog(NewItemDialog.NewItemDialogActionListener listener) {
-        openNewItemDialog(listener);
-    }
-
-    @Override
-    public void startPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
-        openPriceEditorDialog(listener);
+    private void mainScreenClosingAction() {
+        databaseHelper.close();
     }
 
     private void openMainScreen() {
@@ -78,6 +72,11 @@ public class WindowController implements MainScreenActionListener {
         mainScreenWindow.addWindowListener(windowListener);
         mainScreenWindow.setVisible(true);
         mainScreenWindow.pack();
+    }
+
+    @Override
+    public void startNewItemDialog(NewItemDialog.NewItemDialogActionListener listener) {
+        openNewItemDialog(listener);
     }
 
     private void openNewItemDialog(NewItemDialog.NewItemDialogActionListener listener) {
@@ -89,14 +88,15 @@ public class WindowController implements MainScreenActionListener {
         newItemDialog.setVisible(true);
     }
 
+    @Override
+    public void startPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
+        openPriceEditorDialog(listener);
+    }
+
     private void openPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
         PriceEditorDialogPresenter presenter = new PriceEditorDialogPresenter(databaseRepository);
         PriceEditorDialog dialog = new PriceEditorDialog(presenter, listener);
         dialog.pack();
         dialog.setVisible(true);
-    }
-
-    private void mainScreenClosingAction() {
-        databaseHelper.close();
     }
 }

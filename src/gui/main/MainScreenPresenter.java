@@ -7,17 +7,16 @@ import entities.Item;
 import javax.swing.*;
 
 public class MainScreenPresenter {
-    //Models
+
     private final DefaultListModel<CraftResource> craftResourcesModel;
     private final DefaultListModel<Item> itemsModel;
-    //Variables
+
     private int totalPriceCounter;
 
     public MainScreenPresenter() {
         craftResourcesModel = new DefaultListModel<>();
         itemsModel = new DefaultListModel<>();
         totalPriceCounter = 0;
-
     }
 
     public void addItemToItemList(Item item) {
@@ -36,7 +35,6 @@ public class MainScreenPresenter {
                 int storedResourceIndex = craftResourcesModel.indexOf(craftResourceFromItem);
                 CraftResource storedCraftResource = craftResourcesModel.getElementAt(storedResourceIndex);
                 int quantityUpdated = storedCraftResource.getQuantity() + craftResourceFromItem.getQuantity();
-
                 storedCraftResource.setQuantity(quantityUpdated);
                 craftResourcesModel.set(storedResourceIndex, storedCraftResource);
             } else {

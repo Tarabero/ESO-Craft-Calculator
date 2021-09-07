@@ -1,7 +1,7 @@
 package db;
 
 import db.parsers.Parser;
-import entities.DatabaseEntity;
+import entities.Entity;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -80,8 +80,8 @@ public class DatabaseHelper {
     }
 
     // TO READ: generics <T extends smth>
-    public<T extends DatabaseEntity> List<T> executeStatementWithResult(String query, Parser<T> parser){
-        if (!isAlive()){
+    public <T extends Entity> List<T> executeStatementWithResult(String query, Parser<T> parser) {
+        if (!isAlive()) {
             logger.log(Level.WARNING, "Can't send query, connection is null");
             return null;
         }
@@ -128,36 +128,5 @@ public class DatabaseHelper {
 
     private boolean isAlive(){
         return connection != null;
-    }
-
-    // TODO: 12.07.2021 remove later
-    public void testStatement() {
-        if (connection == null) {
-            return;
-        }
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            statement.setQueryTimeout(30);
-
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM materials");
-            while (resultSet.next()) {
-                System.out.println("Material id: " + resultSet.getInt("id")
-                        + ", name: " + resultSet.getString("material_name")
-                        + ", price: " + resultSet.getInt("price"));
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

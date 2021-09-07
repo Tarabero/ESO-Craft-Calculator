@@ -1,6 +1,6 @@
 package entities;
 
-public class Trait extends DatabaseEntity {
+public class Trait extends Entity {
     private final static int MATERIAL_REQUIRED = 1;
 
     private TraitType traitType;

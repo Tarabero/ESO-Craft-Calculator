@@ -16,7 +16,6 @@ public class DatabaseRepository {
     private final QualityResourceCollector qualityResourceCollector;
     private final DatabaseHelper database;
 
-
     public DatabaseRepository(DatabaseHelper databaseInstance) {
         database = databaseInstance;
         materialDao = new MaterialDaoImpl(database);

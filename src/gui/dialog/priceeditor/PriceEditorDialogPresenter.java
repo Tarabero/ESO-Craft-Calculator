@@ -27,9 +27,7 @@ public class PriceEditorDialogPresenter {
 
     public void updateMaterialsPrice() {
         List<Material> editedMaterials = materialTableModel.getChangedMaterialPriceList();
-
         consoleMaterialsOutLog("MATERIALS EDITED:", editedMaterials);
-
         for (Material material :
                 editedMaterials) {
             MaterialCache materialCache = MaterialCache.getInstance();
@@ -38,10 +36,6 @@ public class PriceEditorDialogPresenter {
             }
             databaseRepository.updateMaterial(material);
         }
-    }
-
-    public boolean hasPriceChanged() {
-        return !materialTableModel.getChangedMaterialPriceList().isEmpty();
     }
 
     private void consoleMaterialsOutLog(String header, List<Material> materialList) {
@@ -54,7 +48,10 @@ public class PriceEditorDialogPresenter {
         }
     }
 
-    //Getters
+    public boolean hasPriceChanged() {
+        return !materialTableModel.getChangedMaterialPriceList().isEmpty();
+    }
+
     public MaterialTableModel getMaterialTableModel() {
         return materialTableModel;
     }

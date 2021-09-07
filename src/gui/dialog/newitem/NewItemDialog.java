@@ -117,14 +117,14 @@ public class NewItemDialog extends JDialog {
         });
     }
 
-    private void shieldArmorSlotCheck() {
-        comboArmorType.setVisible(presenter.shouldArmorTypeBeVisible());
-        pack();
-    }
-
     private void setupOtherComboBoxes() {
         comboArmorType.setModel(presenter.getComboArmorTypeModel());
         comboTrait.setModel(presenter.getComboTraitModel());
         comboQuality.setModel(presenter.getComboQualityModel());
+    }
+
+    private void shieldArmorSlotCheck() {
+        comboArmorType.setVisible(presenter.shouldArmorTypeBeVisible());
+        pack();
     }
 }

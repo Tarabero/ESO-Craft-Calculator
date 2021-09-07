@@ -79,45 +79,27 @@ public class MainScreen extends JFrame {
         btnAddItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnAddItemAction();
+                onAddItemAction();
             }
         });
 
         btnRemoveItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnRemoveItemAction();
+                onRemoveItemAction();
             }
         });
 
         btnPriceEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnPriceEditorAction();
+                onPriceEditorCall();
             }
         });
     }
 
-    private void btnAddItemAction() {
+    private void onAddItemAction() {
         openNewItemDialog();
-    }
-
-    private void btnPriceEditorAction() {
-        openPriceEditorDialog();
-    }
-
-    private void updateTotalPrice() {
-        totalPrice.setText(presenter.getTotalPriceCounter().toString());
-    }
-
-    private void refreshRenderers() {
-        listItems.setCellRenderer(new ItemListRenderer());
-        listCraftResources.setCellRenderer(new CraftResourceListRenderer());
-    }
-
-    private void btnRemoveItemAction() {
-        presenter.removeItemFromItemList(selectedPosition);
-        updateTotalPrice();
     }
 
     private void openNewItemDialog() {
@@ -132,6 +114,19 @@ public class MainScreen extends JFrame {
         });
     }
 
+    private void onRemoveItemAction() {
+        presenter.removeItemFromItemList(selectedPosition);
+        updateTotalPrice();
+    }
+
+    private void updateTotalPrice() {
+        totalPrice.setText(presenter.getTotalPriceCounter().toString());
+    }
+
+    private void onPriceEditorCall() {
+        openPriceEditorDialog();
+    }
+
     private void openPriceEditorDialog() {
         listener.startPriceEditorDialog(new PriceEditorDialog.PriceEditorDialogActionListener() {
             @Override
@@ -141,5 +136,10 @@ public class MainScreen extends JFrame {
                 updateTotalPrice();
             }
         });
+    }
+
+    private void refreshRenderers() {
+        listItems.setCellRenderer(new ItemListRenderer());
+        listCraftResources.setCellRenderer(new CraftResourceListRenderer());
     }
 }
