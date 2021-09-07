@@ -10,13 +10,23 @@ public class MainScreenPresenter {
 
     private final DefaultListModel<CraftResource> craftResourcesModel;
     private final DefaultListModel<Item> itemsModel;
+    private final SpinnerNumberModel spinnerModel;
 
     private int totalPriceCounter;
 
     public MainScreenPresenter() {
         craftResourcesModel = new DefaultListModel<>();
         itemsModel = new DefaultListModel<>();
+        spinnerModel = createSpinnerModel();
         totalPriceCounter = 0;
+    }
+
+    private SpinnerNumberModel createSpinnerModel() {
+        double value = 15;
+        double min = 0;
+        double max = 9999;
+        double step = 1;
+        return new SpinnerNumberModel(value, min, max, step);
     }
 
     public void addItemToItemList(Item item) {
@@ -96,8 +106,19 @@ public class MainScreenPresenter {
         return itemsModel;
     }
 
+    public SpinnerNumberModel getSpinnerModel() {
+        return spinnerModel;
+    }
+
     public Integer getTotalPriceCounter() {
-        return totalPriceCounter;
+        return getTotalPriceWithSurplusValue();
+    }
+
+    private int getTotalPriceWithSurplusValue() {
+        Double surplusValuePercentage = (Double) spinnerModel.getNumber() * 0.01;
+        Double result = Double.valueOf(totalPriceCounter);
+        result += result * surplusValuePercentage;
+        return (int) Math.round(result);
     }
 }
 

@@ -9,6 +9,8 @@ import gui.renderers.ItemListRenderer;
 import util.GlobalConstants;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
@@ -25,6 +27,7 @@ public class MainScreen extends JFrame {
     private JLabel totalPrice;
     private JLabel goldIcon;
     private JLabel totalPriceLabel;
+    private JSpinner spinnerSurplusValue;
 
     private int selectedPosition = -1;
     private final MainScreenPresenter presenter;
@@ -36,12 +39,13 @@ public class MainScreen extends JFrame {
         setupBasicElements();
         setupListItems();
         setupListCraftResources();
+        setupSurplusValueSpinner();
         setupTotalPrice();
         setupButtonListeners();
     }
 
     private void setupBasicElements() {
-        setTitle("ESO Crafting Calculator v.00");
+        setTitle("ESO Crafting Calculator v0.01 (Alpha)");
         setContentPane(panelMain);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -66,6 +70,16 @@ public class MainScreen extends JFrame {
     private void setupListCraftResources() {
         listCraftResources.setModel(presenter.getCraftResourcesModel());
         listCraftResources.setCellRenderer(new CraftResourceListRenderer());
+    }
+
+    private void setupSurplusValueSpinner() {
+        spinnerSurplusValue.setModel(presenter.getSpinnerModel());
+        spinnerSurplusValue.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                updateTotalPrice();
+            }
+        });
     }
 
     private void setupTotalPrice() {
