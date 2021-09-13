@@ -34,10 +34,7 @@ public class Material extends Entity {
 
     public String getMaterialIconImagePath() {
         if (materialIconImagePass == null) {
-            // TODO: 16.08.2021 UNCOMMENT NEXT STRING WHEN PROPER ICONS WILL BE CREATED
-//            materialIconImagePass = "/images/Materials/"+getMaterialIconImageName()+".png";
-            // TODO: 16.08.2021 DELETE NEXT STRING WHEN PROPER ICONS WILL BE CREATED
-            materialIconImagePass = "/images/Materials/DefaultIcon.png";
+            materialIconImagePass = "/images/Materials/" + getMaterialIconImageName() + ".png";
         }
         return materialIconImagePass;
     }

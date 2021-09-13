@@ -30,7 +30,6 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
         } else {
             setSelectionColours(list.getBackground(), list.getForeground());
         }
-
         return this;
     }
 
