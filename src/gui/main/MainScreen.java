@@ -115,7 +115,7 @@ public class MainScreen extends JFrame {
     private void openNewItemDialog() {
         listener.startNewItemDialog(new NewItemDialog.NewItemDialogActionListener() {
             @Override
-            public void itemCreationAction(Item item) {
+            public void onItemCreated(Item item) {
                 if (item != null) {
                     presenter.addItemToItemList(item);
                     updateTotalPrice();

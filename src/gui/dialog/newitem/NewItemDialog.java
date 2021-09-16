@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 public class NewItemDialog extends JDialog {
     private JPanel contentPane;
-    private JButton btnAddNewItem;
+    private JButton btnAddItem;
     private JButton btnCancel;
     private JComboBox<TraitType> comboItemType;
     private JComboBox<Object> comboItemSlot;
@@ -20,12 +20,11 @@ public class NewItemDialog extends JDialog {
     private JComboBox<Trait> comboTrait;
     private JComboBox<QualityType> comboQuality;
 
-
     private final NewItemDialogPresenter presenter;
     private final NewItemDialogActionListener listener;
 
     public interface NewItemDialogActionListener {
-        void itemCreationAction(Item item);
+        void onItemCreated(Item item);
     }
 
     public NewItemDialog(NewItemDialogPresenter presenter, NewItemDialogActionListener listener) {
@@ -39,14 +38,14 @@ public class NewItemDialog extends JDialog {
     private void setupBasicElements() {
         setTitle("Specify Item");
         setContentPane(contentPane);
-        getRootPane().setDefaultButton(btnAddNewItem);
+        getRootPane().setDefaultButton(btnAddItem);
         setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
     }
 
     private void setupButtonListeners() {
-        btnAddNewItem.addActionListener(new ActionListener() {
+        btnAddItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onNewItemButtonPressed();
+                onAddItemAction();
             }
         });
 
@@ -58,8 +57,8 @@ public class NewItemDialog extends JDialog {
         setupAlternativeCancelListeners();
     }
 
-    private void onNewItemButtonPressed() {
-        listener.itemCreationAction(presenter.createItem());
+    private void onAddItemAction() {
+        listener.onItemCreated(presenter.createItem());
         dispose();
     }
 
@@ -68,14 +67,7 @@ public class NewItemDialog extends JDialog {
     }
 
     private void setupAlternativeCancelListeners() {
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancelAction();
-            }
-        });
-
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
