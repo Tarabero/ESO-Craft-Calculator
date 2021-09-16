@@ -61,45 +61,44 @@ public class WindowController implements MainScreenActionListener {
         databaseHelper = DatabaseHelper.getInstance();
         databaseHelper.connect();
         databaseRepository = new DatabaseRepository(databaseHelper);
-        setProgramLookAndFeelTheme("Metal"); //Metal, Nimbus, Motif, Windows, Windows Classic
-        openMainScreen();
+        setProgramLookAndFeelTheme(LookAndFeelThemes.METAL);
+        openMainScreenWindow();
     }
 
     private void mainScreenClosingAction() {
         databaseHelper.close();
     }
 
-    private void setProgramLookAndFeelTheme(String themeName) {
+    private void setProgramLookAndFeelTheme(LookAndFeelThemes theme) {
         try {
-            UIManager.setLookAndFeel(getLookAndFeelTheme(themeName));
+            UIManager.setLookAndFeel(getLookAndFeelTheme(theme));
         } catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private String getLookAndFeelTheme(String themeName) {
-        switch (themeName) {
-            case "Metal": //Java default
-                return "javax.swing.plaf.metal.MetalLookAndFeel";
-            case "Nimbus":
-                return "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-            case "Motif":
-                return "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
-            case "Windows":
-                return "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-            case "Windows Classic":
-                return "com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel";
-            default: // return cross-platform Metal theme on default
-                return "javax.swing.plaf.metal.MetalLookAndFeel";
+    private String getLookAndFeelTheme(LookAndFeelThemes theme) {
+        switch (theme) {
+            case NIMBUS:
+                return LookAndFeelThemes.NIMBUS.getThemeCall();
+            case MOTIF:
+                return LookAndFeelThemes.MOTIF.getThemeCall();
+            case WINDOWS:
+                return LookAndFeelThemes.WINDOWS.getThemeCall();
+            case WINDOWS_CLASSIC:
+                return LookAndFeelThemes.WINDOWS_CLASSIC.getThemeCall();
+            case METAL:
+            default: // return cross-platform default Java Metal theme on default
+                return LookAndFeelThemes.METAL.getThemeCall();
         }
-
     }
 
-    private void openMainScreen() {
-        MainScreen mainScreenWindow = new MainScreen(new MainScreenPresenter(), this);
-        mainScreenWindow.addWindowListener(windowListener);
-        mainScreenWindow.setVisible(true);
-        mainScreenWindow.pack();
+    private void openMainScreenWindow() {
+        MainScreen window = new MainScreen(new MainScreenPresenter(), this);
+        window.addWindowListener(windowListener);
+        window.setLocationRelativeTo(null);
+        window.pack();
+        window.setVisible(true);
     }
 
     @Override
@@ -111,9 +110,10 @@ public class WindowController implements MainScreenActionListener {
         if (newItemDialogPresenter == null) {
             newItemDialogPresenter = new NewItemDialogPresenter(databaseRepository);
         }
-        NewItemDialog newItemDialog = new NewItemDialog(newItemDialogPresenter, listener);
-        newItemDialog.pack();
-        newItemDialog.setVisible(true);
+        NewItemDialog dialog = new NewItemDialog(newItemDialogPresenter, listener);
+        dialog.setLocationRelativeTo(null);
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     @Override
@@ -124,6 +124,7 @@ public class WindowController implements MainScreenActionListener {
     private void openPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
         PriceEditorDialogPresenter presenter = new PriceEditorDialogPresenter(databaseRepository);
         PriceEditorDialog dialog = new PriceEditorDialog(presenter, listener);
+        dialog.setLocationRelativeTo(null);
         dialog.pack();
         dialog.setVisible(true);
     }

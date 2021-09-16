@@ -93,7 +93,7 @@ public class MainScreen extends JFrame {
         btnAddItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                onAddItemAction();
+                openNewItemDialog();
             }
         });
 
@@ -107,13 +107,9 @@ public class MainScreen extends JFrame {
         btnPriceEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                onPriceEditorCall();
+                openPriceEditorDialog();
             }
         });
-    }
-
-    private void onAddItemAction() {
-        openNewItemDialog();
     }
 
     private void openNewItemDialog() {
@@ -135,10 +131,6 @@ public class MainScreen extends JFrame {
 
     private void updateTotalPrice() {
         totalPrice.setText(presenter.getTotalPriceCounter().toString());
-    }
-
-    private void onPriceEditorCall() {
-        openPriceEditorDialog();
     }
 
     private void openPriceEditorDialog() {
