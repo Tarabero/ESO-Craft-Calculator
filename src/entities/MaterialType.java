@@ -6,30 +6,41 @@ import entities.jewelries.JewelryType;
 import entities.weapon.WeaponType;
 
 public enum MaterialType {
-    TRAIT_ARMOR,
-    TRAIT_WEAPON,
-    TRAIT_JEWELRY,
-    BASE_CLOTH,
-    BASE_LEATHER,
-    BASE_METAL,
-    BASE_JEWELRY,
-    BASE_WOOD,
-    FINE_CLOTHING,
-    RARE_CLOTHING,
-    EPIC_CLOTHING,
-    LEGENDARY_CLOTHING,
-    FINE_SMITHING,
-    RARE_SMITHING,
-    EPIC_SMITHING,
-    LEGENDARY_SMITHING,
-    FINE_JEWELRY,
-    RARE_JEWELRY,
-    EPIC_JEWELRY,
-    LEGENDARY_JEWELRY,
-    FINE_WOODWORK,
-    RARE_WOODWORK,
-    EPIC_WOODWORK,
-    LEGENDARY_WOODWORK;
+    TRAIT_ARMOR("Trait Armor"),
+    TRAIT_WEAPON("Trait Weapon"),
+    TRAIT_JEWELRY("Trait Jewelry"),
+    BASE_CLOTH("Basic Clothing Light"),
+    BASE_LEATHER("Basic Clothing Medium"),
+    BASE_METAL("Basic Metalwork"),
+    BASE_JEWELRY("Basic Jewelry"),
+    BASE_WOOD("Basic Woodwork"),
+    FINE_CLOTHING("Upgrade Clothing Fine"),
+    RARE_CLOTHING("Upgrade Clothing Superior"),
+    EPIC_CLOTHING("Upgrade Clothing Epic"),
+    LEGENDARY_CLOTHING("Upgrade Clothing Legendary"),
+    FINE_SMITHING("Upgrade Metalwork Fine"),
+    RARE_SMITHING("Upgrade Metalwork Superior"),
+    EPIC_SMITHING("Upgrade Metalwork Epic"),
+    LEGENDARY_SMITHING("Upgrade Metalwork Legendary"),
+    FINE_JEWELRY("Upgrade Jewelry Fine"),
+    RARE_JEWELRY("Upgrade Jewelry Superior"),
+    EPIC_JEWELRY("Upgrade Jewelry Epic"),
+    LEGENDARY_JEWELRY("Upgrade Jewelry Legendary"),
+    FINE_WOODWORK("Upgrade Woodwork Fine"),
+    RARE_WOODWORK("Upgrade Woodwork Superior"),
+    EPIC_WOODWORK("Upgrade Woodwork Epic"),
+    LEGENDARY_WOODWORK("Upgrade Woodwork Legendary");
+
+    private final String name;
+
+    MaterialType(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 
     public static MaterialType getBaseMaterialTypeFor(ArmorType armorType, ArmorSlot armorSlot) {
         if (armorSlot == ArmorSlot.SHIELD) {

@@ -42,9 +42,10 @@ public class Armor extends Item {
     protected String getItemIconPath() {
         StringBuilder itemIconPath = new StringBuilder("Armor/");
         if (armorSlot != ArmorSlot.SHIELD) {
-            itemIconPath.append(getArmorType().toString().toLowerCase()).append("/");
+            itemIconPath.append(getArmorType().toString()).append("/");
         }
-        itemIconPath.append(getArmorSlot().toString());
+        itemIconPath.append(getArmorSlot().toString().toLowerCase());
+        System.out.println(itemIconPath.toString());
         return itemIconPath.toString();
     }
 }

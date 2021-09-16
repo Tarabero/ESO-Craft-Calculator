@@ -1,4 +1,4 @@
-package gui.dialog;
+package gui.dialog.newitem;
 
 import entities.Item;
 import entities.QualityType;
@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 public class NewItemDialog extends JDialog {
     private JPanel contentPane;
-    private JButton btnAddNewItem;
+    private JButton btnAddItem;
     private JButton btnCancel;
     private JComboBox<TraitType> comboItemType;
     private JComboBox<Object> comboItemSlot;
@@ -20,12 +20,11 @@ public class NewItemDialog extends JDialog {
     private JComboBox<Trait> comboTrait;
     private JComboBox<QualityType> comboQuality;
 
-
     private final NewItemDialogPresenter presenter;
     private final NewItemDialogActionListener listener;
 
     public interface NewItemDialogActionListener {
-        void itemCreationAction(Item item);
+        void onItemCreated(Item item);
     }
 
     public NewItemDialog(NewItemDialogPresenter presenter, NewItemDialogActionListener listener) {
@@ -39,47 +38,40 @@ public class NewItemDialog extends JDialog {
     private void setupBasicElements() {
         setTitle("Specify Item");
         setContentPane(contentPane);
-        getRootPane().setDefaultButton(btnAddNewItem);
+        getRootPane().setDefaultButton(btnAddItem);
         setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
     }
 
     private void setupButtonListeners() {
-        btnAddNewItem.addActionListener(new ActionListener() {
+        btnAddItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnAddNewItemAction();
+                onAddItemAction();
             }
         });
 
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         });
         setupAlternativeCancelListeners();
     }
 
-    private void btnAddNewItemAction() {
-        listener.itemCreationAction(presenter.createItem());
+    private void onAddItemAction() {
+        listener.onItemCreated(presenter.createItem());
         dispose();
     }
 
-    private void btnCancelAction() {
+    private void onCancelAction() {
         dispose();
     }
 
     private void setupAlternativeCancelListeners() {
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                btnCancelAction();
-            }
-        });
-
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                btnCancelAction();
+                onCancelAction();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
@@ -117,14 +109,14 @@ public class NewItemDialog extends JDialog {
         });
     }
 
-    private void shieldArmorSlotCheck() {
-        comboArmorType.setVisible(presenter.shouldArmorTypeBeVisible());
-        pack();
-    }
-
     private void setupOtherComboBoxes() {
         comboArmorType.setModel(presenter.getComboArmorTypeModel());
         comboTrait.setModel(presenter.getComboTraitModel());
         comboQuality.setModel(presenter.getComboQualityModel());
+    }
+
+    private void shieldArmorSlotCheck() {
+        comboArmorType.setVisible(presenter.shouldArmorTypeBeVisible());
+        pack();
     }
 }

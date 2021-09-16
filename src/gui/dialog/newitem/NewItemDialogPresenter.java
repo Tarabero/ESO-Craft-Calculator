@@ -1,4 +1,4 @@
-package gui.dialog;
+package gui.dialog.newitem;
 
 import entities.*;
 import entities.armor.ArmorSlot;
@@ -19,7 +19,6 @@ public class NewItemDialogPresenter {
     private final DefaultComboBoxModel<ArmorType> comboArmorTypeModel = new DefaultComboBoxModel<>(ArmorType.values());
     private final DefaultComboBoxModel<Trait> comboTraitModel = new DefaultComboBoxModel<>();
     private final DefaultComboBoxModel<QualityType> comboQualityModel = new DefaultComboBoxModel<>(QualityType.values());
-
 
     public NewItemDialogPresenter(final DatabaseRepository databaseRepository) {
         this.databaseRepository = databaseRepository;

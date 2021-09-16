@@ -16,13 +16,11 @@ public class DatabaseRepository {
     private final QualityResourceCollector qualityResourceCollector;
     private final DatabaseHelper database;
 
-
     public DatabaseRepository(DatabaseHelper databaseInstance) {
         database = databaseInstance;
         materialDao = new MaterialDaoImpl(database);
         traitDao = new TraitDaoImpl(database);
         qualityResourceCollector = new QualityResourceCollector(materialDao);
-
     }
 
     public void databaseDisconnect() {
@@ -34,7 +32,7 @@ public class DatabaseRepository {
     }
 
     public List<Material> getAllMaterials() {
-        return materialDao.getMaterials();
+        return materialDao.getAllMaterials();
     }
 
     public List<Trait> getTraitFor(TraitType traitType) {
@@ -43,6 +41,10 @@ public class DatabaseRepository {
 
     public List<CraftResource> getQualityResourcesFor(QualityType qualityType, Workbench workbench) {
         return qualityResourceCollector.getResourcesFor(qualityType, workbench);
+    }
+
+    public void updateMaterial(Material updatedMaterial) {
+        materialDao.setMaterial(updatedMaterial);
     }
 
 

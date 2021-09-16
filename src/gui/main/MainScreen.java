@@ -2,12 +2,15 @@ package gui.main;
 
 import entities.CraftResource;
 import entities.Item;
-import gui.dialog.NewItemDialog;
+import gui.dialog.newitem.NewItemDialog;
+import gui.dialog.priceeditor.PriceEditorDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
 import util.GlobalConstants;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
@@ -18,11 +21,13 @@ public class MainScreen extends JFrame {
     private JPanel panelMain;
     private JButton btnAddItem;
     private JButton btnRemoveItem;
+    private JButton btnPriceEditor;
     private JList<CraftResource> listCraftResources;
     private JList<Item> listItems;
     private JLabel totalPrice;
     private JLabel goldIcon;
     private JLabel totalPriceLabel;
+    private JSpinner spinnerSurplusValue;
 
     private int selectedPosition = -1;
     private final MainScreenPresenter presenter;
@@ -34,12 +39,13 @@ public class MainScreen extends JFrame {
         setupBasicElements();
         setupListItems();
         setupListCraftResources();
+        setupSurplusValueSpinner();
         setupTotalPrice();
         setupButtonListeners();
     }
 
     private void setupBasicElements() {
-        setTitle("ESO Crafting Calculator v.00");
+        setTitle("ESO Crafting Calculator v0.01 (Alpha)");
         setContentPane(panelMain);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -66,6 +72,16 @@ public class MainScreen extends JFrame {
         listCraftResources.setCellRenderer(new CraftResourceListRenderer());
     }
 
+    private void setupSurplusValueSpinner() {
+        spinnerSurplusValue.setModel(presenter.getSpinnerModel());
+        spinnerSurplusValue.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                updateTotalPrice();
+            }
+        });
+    }
+
     private void setupTotalPrice() {
         goldIcon.setText("");
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
@@ -77,40 +93,59 @@ public class MainScreen extends JFrame {
         btnAddItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnAddItemAction();
+                openNewItemDialog();
             }
         });
 
         btnRemoveItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                btnRemoveItemAction();
+                onRemoveItemAction();
             }
         });
-    }
 
-    private void btnAddItemAction() {
-        openNewItemDialog();
-    }
-
-    private void updateTotalPrice() {
-        totalPrice.setText(presenter.getTotalPriceCounter().toString());
-    }
-
-    private void btnRemoveItemAction() {
-        presenter.removeItemFromItemList(selectedPosition);
-        updateTotalPrice();
+        btnPriceEditor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openPriceEditorDialog();
+            }
+        });
     }
 
     private void openNewItemDialog() {
         listener.startNewItemDialog(new NewItemDialog.NewItemDialogActionListener() {
             @Override
-            public void itemCreationAction(Item item) {
+            public void onItemCreated(Item item) {
                 if (item != null) {
                     presenter.addItemToItemList(item);
                     updateTotalPrice();
                 }
             }
         });
+    }
+
+    private void onRemoveItemAction() {
+        presenter.removeItemFromItemList(selectedPosition);
+        updateTotalPrice();
+    }
+
+    private void updateTotalPrice() {
+        totalPrice.setText(presenter.getTotalPriceCounter().toString());
+    }
+
+    private void openPriceEditorDialog() {
+        listener.startPriceEditorDialog(new PriceEditorDialog.PriceEditorDialogActionListener() {
+            @Override
+            public void onMaterialPriceChanged() {
+                refreshRenderers();
+                presenter.recalculateTotalPrice();
+                updateTotalPrice();
+            }
+        });
+    }
+
+    private void refreshRenderers() {
+        listItems.setCellRenderer(new ItemListRenderer());
+        listCraftResources.setCellRenderer(new CraftResourceListRenderer());
     }
 }

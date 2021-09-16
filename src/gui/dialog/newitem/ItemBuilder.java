@@ -1,4 +1,4 @@
-package gui.dialog;
+package gui.dialog.newitem;
 
 import entities.*;
 import entities.armor.Armor;

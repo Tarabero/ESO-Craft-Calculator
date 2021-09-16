@@ -30,7 +30,6 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
         } else {
             setSelectionColours(list.getBackground(), list.getForeground());
         }
-
         return this;
     }
 
@@ -44,6 +43,26 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
         URL itemIconPath = getClass().getResource(item.getItemIconImagePath());
         itemField.setIcon(new ImageIcon(itemIconPath));
         itemField.setText(item.toString());
+        itemField.setForeground(getRarityColourFrom(item));
+    }
+
+    private Color getRarityColourFrom(Item item) {
+        Color colorLegendary = new Color(170, 120, 0);
+        Color colorEpic = new Color(150, 0, 150);
+        Color colorRare = new Color(0, 100, 150);
+        Color colorFine = new Color(0, 150, 0);
+        switch (item.getQualityType()) {
+            case LEGENDARY:
+                return colorLegendary;
+            case EPIC:
+                return colorEpic;
+            case RARE:
+                return colorRare;
+            case FINE:
+                return colorFine;
+            default:
+                return Color.black;
+        }
     }
 
     private void setupCraftResourcesField(Item item) {

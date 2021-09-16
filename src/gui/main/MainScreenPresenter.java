@@ -7,17 +7,26 @@ import entities.Item;
 import javax.swing.*;
 
 public class MainScreenPresenter {
-    //Models
+
     private final DefaultListModel<CraftResource> craftResourcesModel;
     private final DefaultListModel<Item> itemsModel;
-    //Variables
+    private final SpinnerNumberModel spinnerModel;
+
     private int totalPriceCounter;
 
     public MainScreenPresenter() {
         craftResourcesModel = new DefaultListModel<>();
         itemsModel = new DefaultListModel<>();
+        spinnerModel = createSpinnerModel();
         totalPriceCounter = 0;
+    }
 
+    private SpinnerNumberModel createSpinnerModel() {
+        double value = 15;
+        double min = 0;
+        double max = 10000;
+        double step = 1;
+        return new SpinnerNumberModel(value, min, max, step);
     }
 
     public void addItemToItemList(Item item) {
@@ -36,7 +45,6 @@ public class MainScreenPresenter {
                 int storedResourceIndex = craftResourcesModel.indexOf(craftResourceFromItem);
                 CraftResource storedCraftResource = craftResourcesModel.getElementAt(storedResourceIndex);
                 int quantityUpdated = storedCraftResource.getQuantity() + craftResourceFromItem.getQuantity();
-
                 storedCraftResource.setQuantity(quantityUpdated);
                 craftResourcesModel.set(storedResourceIndex, storedCraftResource);
             } else {
@@ -85,12 +93,32 @@ public class MainScreenPresenter {
         return craftResourcesModel;
     }
 
+    public void recalculateTotalPrice() {
+        totalPriceCounter = 0;
+        if (itemsModel.size() > 0) {
+            for (int i = 0; i < itemsModel.size(); i++) {
+                totalPriceCounter += itemsModel.get(i).getPrice();
+            }
+        }
+    }
+
     public DefaultListModel<Item> getItemsModel() {
         return itemsModel;
     }
 
+    public SpinnerNumberModel getSpinnerModel() {
+        return spinnerModel;
+    }
+
     public Integer getTotalPriceCounter() {
-        return totalPriceCounter;
+        return getTotalPriceWithSurplusValue();
+    }
+
+    private int getTotalPriceWithSurplusValue() {
+        Double surplusValuePercentage = (Double) spinnerModel.getNumber() * 0.01;
+        Double result = Double.valueOf(totalPriceCounter);
+        result += result * surplusValuePercentage;
+        return (int) Math.round(result);
     }
 }
 

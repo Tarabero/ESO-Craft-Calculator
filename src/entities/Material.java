@@ -1,15 +1,13 @@
 package entities;
 
-public class Material extends DatabaseEntity {
+public class Material extends Entity {
 
-    private final int id;
-    private final int price;
+    private Integer price;
     private final MaterialType materialType;
     private String materialIconImagePass;
 
-    public Material(int id, String name, int price, MaterialType materialType){
+    public Material(int id, String name, int price, MaterialType materialType) {
         super(name, id);
-        this.id = id;
         this.price = price;
         this.materialType = materialType;
     }
@@ -18,8 +16,16 @@ public class Material extends DatabaseEntity {
         return price;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public MaterialType getMaterialType() {
         return materialType;
+    }
+
+    public String getMaterialName() {
+        return name;
     }
 
     public String toString() {
@@ -28,12 +34,13 @@ public class Material extends DatabaseEntity {
 
     public String getMaterialIconImagePath() {
         if (materialIconImagePass == null) {
-            // TODO: 16.08.2021 UNCOMMENT NEXT STRING WHEN PROPER ICONS WILL BE CREATED
-//            materialIconImagePass = "/images/Materials/"+this.toString()+".png";
-            // TODO: 16.08.2021 DELETE NEXT STRING WHEN PROPER ICONS WILL BE CREATED
-            materialIconImagePass = "/images/Materials/DefaultIcon.png";
+            materialIconImagePass = "/images/Materials/" + getMaterialIconImageName() + ".png";
         }
         return materialIconImagePass;
+    }
+
+    private String getMaterialIconImageName() {
+        return toString().toLowerCase().replace(" ", "_");
     }
 
     @Override
@@ -41,13 +48,12 @@ public class Material extends DatabaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return id == material.id;
+        return (getId() == material.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + price;
+        int result = getId();
         result = 31 * result + materialType.hashCode();
         return result;
     }
