@@ -45,7 +45,6 @@ public class Armor extends Item {
             itemIconPath.append(getArmorType().toString()).append("/");
         }
         itemIconPath.append(getArmorSlot().toString().toLowerCase());
-        System.out.println(itemIconPath.toString());
         return itemIconPath.toString();
     }
 }
