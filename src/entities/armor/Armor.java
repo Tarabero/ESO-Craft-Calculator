@@ -6,7 +6,7 @@ import entities.Material;
 import entities.Trait;
 
 public class Armor extends Item {
-    private static final String ARMOR_ICON_IMAGE_DIRECTORY_PATH = "Armor/";
+    private static final String ARMOR_ICON_IMAGE_DIRECTORY_PATH_BASE = "Armor/";
     private static final String FILE_SEPARATOR = "/";
 
     private final ArmorSlot armorSlot;
@@ -43,7 +43,7 @@ public class Armor extends Item {
 
     @Override
     protected String getItemIconPath() {
-        StringBuilder itemIconPath = new StringBuilder(ARMOR_ICON_IMAGE_DIRECTORY_PATH);
+        StringBuilder itemIconPath = new StringBuilder(ARMOR_ICON_IMAGE_DIRECTORY_PATH_BASE);
         if (armorSlot != ArmorSlot.SHIELD) {
             itemIconPath.append(getArmorType().toString()).append(FILE_SEPARATOR);
         }

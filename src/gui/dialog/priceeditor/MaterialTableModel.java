@@ -80,7 +80,7 @@ public class MaterialTableModel extends AbstractTableModel {
                 materials) {
             noteTheChange(material);
         }
-        this.fireTableDataChanged();
+        fireTableDataChanged();
     }
 
     private void noteTheChange(Material material) {

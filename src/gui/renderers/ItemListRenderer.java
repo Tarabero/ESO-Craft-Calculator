@@ -8,7 +8,6 @@ import java.awt.*;
 import java.net.URL;
 
 public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
-    private static final Color COLOR_SELECTION_BACKGROUND = new Color(200, 240, 250);
     private static final Color COLOR_LEGENDARY = new Color(170, 120, 0);
     private static final Color COLOR_EPIC = new Color(150, 0, 150);
     private static final Color COLOR_RARE = new Color(0, 100, 150);
@@ -32,7 +31,7 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
         setupItemField(item);
         setupCraftResourcesField(item);
         if (isSelected) {
-            setSelectionColours(COLOR_SELECTION_BACKGROUND, list.getForeground());
+            setSelectionColours(list.getSelectionBackground(), list.getSelectionForeground());
         } else {
             setSelectionColours(list.getBackground(), list.getForeground());
         }

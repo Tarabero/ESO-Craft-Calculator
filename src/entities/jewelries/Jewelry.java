@@ -6,7 +6,7 @@ import entities.Material;
 import entities.Trait;
 
 public class Jewelry extends Item {
-    private static final String JEWELRY_ICON_IMAGE_DIRECTORY_PATH = "Jewelry/";
+    private static final String JEWELRY_ICON_IMAGE_DIRECTORY_PATH_BASE = "Jewelry/";
 
     private final JewelryType jewelryType;
 
@@ -35,6 +35,6 @@ public class Jewelry extends Item {
 
     @Override
     protected String getItemIconPath() {
-        return JEWELRY_ICON_IMAGE_DIRECTORY_PATH + getJewelryType().toString().toLowerCase();
+        return JEWELRY_ICON_IMAGE_DIRECTORY_PATH_BASE + getJewelryType().toString().toLowerCase();
     }
 }

@@ -40,6 +40,8 @@
                     <constraints/>
                     <properties>
                       <model/>
+                      <selectionBackground color="-3608326"/>
+                      <selectionForeground color="-16777216"/>
                     </properties>
                   </component>
                 </children>
@@ -53,7 +55,10 @@
                 <children>
                   <component id="989b2" class="javax.swing.JList" binding="listCraftResources">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <selectionBackground color="-3608326"/>
+                      <selectionForeground color="-16777216"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

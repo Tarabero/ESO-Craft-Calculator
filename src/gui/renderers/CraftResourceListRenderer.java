@@ -8,8 +8,6 @@ import java.awt.*;
 import java.net.URL;
 
 public class CraftResourceListRenderer extends JPanel implements ListCellRenderer<CraftResource> {
-    private static final Color COLOR_SELECTION_BACKGROUND = new Color(200, 240, 250);
-
     private JPanel container;
     private JLabel craftResourceField;
     private JLabel priceField;
@@ -24,7 +22,7 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
         setupCraftResourceField(craftResource);
         setupPriceField(craftResource);
         if (isSelected) {
-            setSelectionColours(COLOR_SELECTION_BACKGROUND, list.getForeground());
+            setSelectionColours(list.getSelectionBackground(), list.getSelectionForeground());
         } else {
             setSelectionColours(list.getBackground(), list.getForeground());
         }

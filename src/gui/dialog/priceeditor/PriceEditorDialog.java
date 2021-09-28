@@ -1,7 +1,8 @@
 package gui.dialog.priceeditor;
 
+import util.LuaFileFilter;
+
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -12,8 +13,8 @@ public class PriceEditorDialog extends JDialog {
     private static final String DIRECTORY_PROPERTY = "user.dir";
     private static final String FILE_CHOOSER_DIALOG_TITLE = "Open Tamriel Trade Center price table";
     private static final String FILE_CHOOSER_DEFAULT_FILE_NAME = "PriceTable.lua";
-    private static final String LUA_FILE_EXTENSION = ".lua";
-    private static final String LUA_FILE_FILTER_DESCRIPTION = "Lua source File (*.lua)";
+    private static final String FILE_ERROR_DIALOG_TITLE = "File read error";
+    private static final String FILE_ERROR_DIALOG_MESSAGE = "Error occurred while reading selected file!";
 
     private JPanel contentPane;
     private JButton buttonOK;
@@ -57,6 +58,7 @@ public class PriceEditorDialog extends JDialog {
                     onTamrielTradeCenterDataCall();
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
+                    showFileErrorDialog();
                 }
             }
         });
@@ -67,6 +69,13 @@ public class PriceEditorDialog extends JDialog {
             }
         });
         setupAlternativeCancelListeners();
+    }
+
+    private void showFileErrorDialog() {
+        JOptionPane.showMessageDialog(null,
+                FILE_ERROR_DIALOG_MESSAGE,
+                FILE_ERROR_DIALOG_TITLE,
+                JOptionPane.WARNING_MESSAGE);
     }
 
     private void onConfirmAction() {
@@ -81,18 +90,7 @@ public class PriceEditorDialog extends JDialog {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle(FILE_CHOOSER_DIALOG_TITLE);
         fileChooser.setCurrentDirectory(new File(System.getProperty(DIRECTORY_PROPERTY)));
-        FileFilter fileFilter = new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                return f.getName().endsWith(LUA_FILE_EXTENSION) || f.isDirectory();
-            }
-
-            @Override
-            public String getDescription() {
-                return LUA_FILE_FILTER_DESCRIPTION;
-            }
-        };
-        fileChooser.setFileFilter(fileFilter);
+        fileChooser.setFileFilter(new LuaFileFilter());
         fileChooser.setSelectedFile(new File(FILE_CHOOSER_DEFAULT_FILE_NAME));
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
