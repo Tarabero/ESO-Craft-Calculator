@@ -6,6 +6,7 @@ import gui.dialog.newitem.NewItemDialog;
 import gui.dialog.priceeditor.PriceEditorDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
+import gui.renderers.ToggleSelectionModel;
 import util.GlobalConstants;
 
 import javax.swing.*;
@@ -18,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 
 public class MainScreen extends JFrame {
+    private static final String MAIN_SCREEN_TITLE = "ESO Crafting Calculator v0.01 (Alpha)";
+
     private JPanel panelMain;
     private JButton btnAddItem;
     private JButton btnRemoveItem;
@@ -45,13 +48,14 @@ public class MainScreen extends JFrame {
     }
 
     private void setupBasicElements() {
-        setTitle("ESO Crafting Calculator v0.01 (Alpha)");
+        setTitle(MAIN_SCREEN_TITLE);
         setContentPane(panelMain);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void setupListItems() {
         listItems.setModel(presenter.getItemsModel());
+        listItems.setSelectionModel(new ToggleSelectionModel());
         listItems.setCellRenderer(new ItemListRenderer());
         listItems.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -69,6 +73,7 @@ public class MainScreen extends JFrame {
 
     private void setupListCraftResources() {
         listCraftResources.setModel(presenter.getCraftResourcesModel());
+        listCraftResources.setSelectionModel(new ToggleSelectionModel());
         listCraftResources.setCellRenderer(new CraftResourceListRenderer());
     }
 
@@ -85,7 +90,9 @@ public class MainScreen extends JFrame {
     private void setupTotalPrice() {
         goldIcon.setText("");
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
-        goldIcon.setIcon(new ImageIcon(goldIconPath));
+        if (goldIconPath != null) {
+            goldIcon.setIcon(new ImageIcon(goldIconPath));
+        }
         totalPrice.setText(presenter.getTotalPriceCounter().toString());
     }
 

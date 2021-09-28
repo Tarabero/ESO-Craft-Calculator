@@ -3,13 +3,18 @@ package gui.dialog.priceeditor;
 import entities.Material;
 import util.DatabaseRepository;
 import util.MaterialCache;
-import util.TTCParser;
+import util.TtcParser;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 public class PriceEditorDialogPresenter {
+    private static final String LUA_FILE_EXTENSION = ".lua";
+    private static final String MATERIALS_IMPORTED_DIALOG_TITLE = "Price import successful";
+    private static final String MATERIALS_IMPORTED_DIALOG_MESSAGE = "%1$s of %2$s materials updated successfully!";
+    private static final String FILE_ERROR_DIALOG_TITLE = "File error";
+    private static final String FILE_ERROR_DIALOG_MESSAGE = "Chosen file is not valid!";
 
     private final DatabaseRepository databaseRepository;
     private MaterialTableModel materialTableModel;
@@ -25,41 +30,48 @@ public class PriceEditorDialogPresenter {
         materialTableModel = new MaterialTableModel(listMaterials);
     }
 
-    public void updateTableWithTTCPrices(String ttcPriceListPath) throws FileNotFoundException {
-        if (ttcPriceListPath.endsWith(".lua")) {
-            TTCParser parser = new TTCParser(ttcPriceListPath);
-            if (parser.chosenFileIsTTCPriceTable()) {
-                int materialsQuantity = listMaterials.size();
-                int successfullyEdited = 0;
-                for (Material material :
-                        listMaterials) {
-                    int ttcID = material.getTtcId();
-                    int newPrice = (int) Math.round(parser.getSuggestedPriceFromTTCFor(ttcID));
-                    if (newPrice == -1) {
-                        continue;
-                    }
-                    material.setPrice(newPrice);
-                    successfullyEdited++;
-                }
-                materialTableModel.updateMaterials(listMaterials);
-                fireSuccessfulMaterialsPriceTTCUpdate(successfullyEdited, materialsQuantity);
-                parser = null; //cleaning instance
-            } else fireWrongFileDialog();
-        } else fireWrongFileDialog();
+    public void updateTableWithTtcPrices(String ttcPriceListPath) throws FileNotFoundException {
+        if (ttcPriceListPath.endsWith(LUA_FILE_EXTENSION)) {
+            parseTtcFile(ttcPriceListPath);
+        } else showFileErrorDialog();
     }
 
-    private void fireSuccessfulMaterialsPriceTTCUpdate(int successfullyEdited, int overallQuantity) {
-        String message = "%1$s of %2$s materials updated successfully!";
+    private void parseTtcFile(String ttcPriceListPath) throws FileNotFoundException {
+        TtcParser parser = new TtcParser(ttcPriceListPath);
+        if (parser.isTtcPriceTable()) {
+            updateMaterialsPricesWith(parser);
+        } else showFileErrorDialog();
+    }
+
+    private void updateMaterialsPricesWith(TtcParser parser) {
+        int materialsQuantity = listMaterials.size();
+        int successfullyEditedQuantity = 0;
+        for (Material material :
+                listMaterials) {
+            int ttcID = material.getTtcId();
+            int newPrice = (int) Math.round(parser.getSuggestedPriceFromTtcFor(ttcID));
+            if (newPrice == TtcParser.PARSE_ERROR) {
+                continue;
+            }
+            material.setPrice(newPrice);
+            successfullyEditedQuantity++;
+        }
+        materialTableModel.updateMaterials(listMaterials);
+        showMaterialsImportedDialog(successfullyEditedQuantity, materialsQuantity);
+        parser = null; //cleaning instance
+    }
+
+    private void showMaterialsImportedDialog(int successfullyEdited, int overallQuantity) {
         JOptionPane.showMessageDialog(null,
-                String.format(message, successfullyEdited, overallQuantity),
-                "Price import successful",
+                String.format(MATERIALS_IMPORTED_DIALOG_MESSAGE, successfullyEdited, overallQuantity),
+                MATERIALS_IMPORTED_DIALOG_TITLE,
                 JOptionPane.PLAIN_MESSAGE);
     }
 
-    private void fireWrongFileDialog() {
+    private void showFileErrorDialog() {
         JOptionPane.showMessageDialog(null,
-                "This is not a valid file!",
-                "File error",
+                FILE_ERROR_DIALOG_MESSAGE,
+                FILE_ERROR_DIALOG_TITLE,
                 JOptionPane.WARNING_MESSAGE);
     }
 
@@ -73,7 +85,6 @@ public class PriceEditorDialogPresenter {
     }
 
     private void updateMaterialsData(List<Material> editedMaterials) {
-        consoleMaterialsOutLog("MATERIALS EDITED:", editedMaterials);
         for (Material material :
                 editedMaterials) {
             MaterialCache materialCache = MaterialCache.getInstance();
@@ -81,16 +92,6 @@ public class PriceEditorDialogPresenter {
                 materialCache.update(material);
             }
             databaseRepository.updateMaterial(material);
-        }
-    }
-
-    private void consoleMaterialsOutLog(String header, List<Material> materialList) {
-        System.out.println(header);
-        for (Material material :
-                materialList) {
-            System.out.println(material.getMaterialType().toString()
-                    + " " + material.getMaterialName()
-                    + " " + material.getPrice());
         }
     }
 

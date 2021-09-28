@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Item{
+    private static final String ITEM_ICON_IMAGE_PATH = "/images/Items/%s.png";
 
     private final Trait trait;
     private final Material baseMaterial;
@@ -18,7 +19,7 @@ public abstract class Item{
     }
 
     protected String createName() {
-        StringBuilder nameStr = new StringBuilder("");
+        StringBuilder nameStr = new StringBuilder();
         if(qualityType != null){
             nameStr.append(qualityType).append(" ");
         }
@@ -63,7 +64,7 @@ public abstract class Item{
     }
 
     public String getItemIconImagePath() {
-        return "/images/Items/" + getItemIconPath() + ".png";
+        return String.format(ITEM_ICON_IMAGE_PATH, getItemIconPath());
     }
 
     public int getPrice() {

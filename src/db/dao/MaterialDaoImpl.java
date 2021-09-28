@@ -26,7 +26,7 @@ public class MaterialDaoImpl implements MaterialDao {
                     "SET price = %1$d " +
                     "WHERE id = %2$d ;";
 
-    private DatabaseHelper databaseHelper;
+    private final DatabaseHelper databaseHelper;
 
     public MaterialDaoImpl(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;

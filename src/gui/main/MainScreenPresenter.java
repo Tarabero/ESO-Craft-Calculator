@@ -115,8 +115,9 @@ public class MainScreenPresenter {
     }
 
     private int getTotalPriceWithSurplusValue() {
-        Double surplusValuePercentage = (Double) spinnerModel.getNumber() * 0.01;
-        Double result = Double.valueOf(totalPriceCounter);
+        double percentToCoefficient = 0.01;
+        double surplusValuePercentage = (Double) spinnerModel.getNumber() * percentToCoefficient;
+        double result = totalPriceCounter;
         result += result * surplusValuePercentage;
         return (int) Math.round(result);
     }

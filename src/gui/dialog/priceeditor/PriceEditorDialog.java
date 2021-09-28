@@ -8,11 +8,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class PriceEditorDialog extends JDialog {
+    private static final String PRICE_EDITOR_WINDOW_TITLE = "Material Price Editor";
+    private static final String DIRECTORY_PROPERTY = "user.dir";
+    private static final String FILE_CHOOSER_DIALOG_TITLE = "Open Tamriel Trade Center price table";
+    private static final String FILE_CHOOSER_DEFAULT_FILE_NAME = "PriceTable.lua";
+    private static final String LUA_FILE_EXTENSION = ".lua";
+    private static final String LUA_FILE_FILTER_DESCRIPTION = "Lua source File (*.lua)";
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTable materialsTable;
-    private JButton buttonGetPricesFromTTC;
+    private JButton buttonGetPricesFromTtc;
 
     private final PriceEditorDialogPresenter presenter;
     private final PriceEditorDialogActionListener listener;
@@ -30,7 +37,7 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void setupBasicElements() {
-        setTitle("Material Price Editor");
+        setTitle(PRICE_EDITOR_WINDOW_TITLE);
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonOK);
         setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
@@ -43,7 +50,7 @@ public class PriceEditorDialog extends JDialog {
             }
         });
 
-        buttonGetPricesFromTTC.addActionListener(new ActionListener() {
+        buttonGetPricesFromTtc.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -71,27 +78,26 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void onTamrielTradeCenterDataCall() throws FileNotFoundException {
-        String dialogTitle = "Open Tamriel Trade Center price list";
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle(dialogTitle);
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        fileChooser.setDialogTitle(FILE_CHOOSER_DIALOG_TITLE);
+        fileChooser.setCurrentDirectory(new File(System.getProperty(DIRECTORY_PROPERTY)));
         FileFilter fileFilter = new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().endsWith(".lua") || f.isDirectory();
+                return f.getName().endsWith(LUA_FILE_EXTENSION) || f.isDirectory();
             }
 
             @Override
             public String getDescription() {
-                return "Lua source File (*.lua)";
+                return LUA_FILE_FILTER_DESCRIPTION;
             }
         };
         fileChooser.setFileFilter(fileFilter);
-        fileChooser.setSelectedFile(new File("PriceTable.lua"));
+        fileChooser.setSelectedFile(new File(FILE_CHOOSER_DEFAULT_FILE_NAME));
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            presenter.updateTableWithTTCPrices(selectedFile.getAbsolutePath());
+            presenter.updateTableWithTtcPrices(selectedFile.getAbsolutePath());
         }
     }
 

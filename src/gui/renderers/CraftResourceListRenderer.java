@@ -8,6 +8,7 @@ import java.awt.*;
 import java.net.URL;
 
 public class CraftResourceListRenderer extends JPanel implements ListCellRenderer<CraftResource> {
+    private static final Color COLOR_SELECTION_BACKGROUND = new Color(200, 240, 250);
 
     private JPanel container;
     private JLabel craftResourceField;
@@ -23,7 +24,7 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
         setupCraftResourceField(craftResource);
         setupPriceField(craftResource);
         if (isSelected) {
-            setSelectionColours(list.getSelectionBackground(), list.getSelectionForeground());
+            setSelectionColours(COLOR_SELECTION_BACKGROUND, list.getForeground());
         } else {
             setSelectionColours(list.getBackground(), list.getForeground());
         }
@@ -32,14 +33,18 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
 
     private void setupCraftResourceField(CraftResource craftResource) {
         URL materialIconPath = getClass().getResource(craftResource.getMaterial().getMaterialIconImagePath());
-        ImageIcon craftResourceIcon = new ImageIcon(materialIconPath);
-        craftResourceField.setIcon(craftResourceIcon);
+        if (materialIconPath != null) {
+            ImageIcon craftResourceIcon = new ImageIcon(materialIconPath);
+            craftResourceField.setIcon(craftResourceIcon);
+        }
         craftResourceField.setText(craftResource.toString());
     }
 
     private void setupPriceField(CraftResource craftResource) {
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
-        priceField.setIcon(new ImageIcon(goldIconPath));
+        if (goldIconPath != null) {
+            priceField.setIcon(new ImageIcon(goldIconPath));
+        }
         priceField.setText(String.valueOf(craftResource.getTotalPrice()));
     }
 

@@ -8,6 +8,12 @@ import java.awt.*;
 import java.net.URL;
 
 public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
+    private static final Color COLOR_SELECTION_BACKGROUND = new Color(200, 240, 250);
+    private static final Color COLOR_LEGENDARY = new Color(170, 120, 0);
+    private static final Color COLOR_EPIC = new Color(150, 0, 150);
+    private static final Color COLOR_RARE = new Color(0, 100, 150);
+    private static final Color COLOR_FINE = new Color(0, 150, 0);
+
     private JPanel container;
     private JPanel nameContainer;
 
@@ -26,7 +32,7 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
         setupItemField(item);
         setupCraftResourcesField(item);
         if (isSelected) {
-            setSelectionColours(list.getSelectionBackground(), list.getSelectionForeground());
+            setSelectionColours(COLOR_SELECTION_BACKGROUND, list.getForeground());
         } else {
             setSelectionColours(list.getBackground(), list.getForeground());
         }
@@ -35,31 +41,31 @@ public class ItemListRenderer extends JPanel implements ListCellRenderer<Item> {
 
     private void setupPriceField(Item item) {
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
-        priceField.setIcon(new ImageIcon(goldIconPath));
+        if (goldIconPath != null) {
+            priceField.setIcon(new ImageIcon(goldIconPath));
+        }
         priceField.setText(String.valueOf(item.getPrice()));
     }
 
     private void setupItemField(Item item) {
         URL itemIconPath = getClass().getResource(item.getItemIconImagePath());
-        itemField.setIcon(new ImageIcon(itemIconPath));
+        if (itemIconPath != null) {
+            itemField.setIcon(new ImageIcon(itemIconPath));
+        }
         itemField.setText(item.toString());
         itemField.setForeground(getRarityColourFrom(item));
     }
 
     private Color getRarityColourFrom(Item item) {
-        Color colorLegendary = new Color(170, 120, 0);
-        Color colorEpic = new Color(150, 0, 150);
-        Color colorRare = new Color(0, 100, 150);
-        Color colorFine = new Color(0, 150, 0);
         switch (item.getQualityType()) {
             case LEGENDARY:
-                return colorLegendary;
+                return COLOR_LEGENDARY;
             case EPIC:
-                return colorEpic;
+                return COLOR_EPIC;
             case RARE:
-                return colorRare;
+                return COLOR_RARE;
             case FINE:
-                return colorFine;
+                return COLOR_FINE;
             default:
                 return Color.black;
         }

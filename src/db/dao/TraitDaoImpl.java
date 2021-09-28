@@ -18,7 +18,7 @@ public class TraitDaoImpl implements TraitDao {
                     "ON traits.material_id = materials.id " +
                     "JOIN material_types " +
                     "ON materials.type_id = material_types.id " +
-                    "WHERE trait_type_name = ";
+                    "WHERE trait_type_name = \"%1$s\"";
 
     private DatabaseHelper databaseHelper;
 
@@ -27,7 +27,7 @@ public class TraitDaoImpl implements TraitDao {
     }
 
     public List<Trait> getTraitFor(TraitType traitType) {
-        String completeQuery = QUERY_GET_BY_TYPE + "\"" + traitType.name() + "\"";
+        String completeQuery = String.format(QUERY_GET_BY_TYPE, traitType.name());
         return databaseHelper.executeStatementWithResult(completeQuery, new TraitParser());
     }
 }

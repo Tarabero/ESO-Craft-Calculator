@@ -6,6 +6,8 @@ import entities.Material;
 import entities.Trait;
 
 public class Weapon extends Item {
+    private static final String WEAPON_ICON_IMAGE_DIRECTORY_PATH = "Weapon/";
+
     private final WeaponType weaponType;
 
     public Weapon(WeaponType weaponType, Trait trait, Material baseMaterial) {
@@ -33,6 +35,6 @@ public class Weapon extends Item {
 
     @Override
     protected String getItemIconPath() {
-        return "Weapon/" + getWeaponType().toString().toLowerCase().replace(" ", "_");
+        return WEAPON_ICON_IMAGE_DIRECTORY_PATH + getWeaponType().toString().toLowerCase().replace(" ", "_");
     }
 }

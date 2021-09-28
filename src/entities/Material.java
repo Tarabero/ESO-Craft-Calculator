@@ -1,6 +1,7 @@
 package entities;
 
 public class Material extends Entity {
+    private static final String MATERIAL_ICON_IMAGE_PATH = "/images/Materials/%s.png";
 
     private Integer price;
     private final MaterialType materialType;
@@ -40,7 +41,7 @@ public class Material extends Entity {
 
     public String getMaterialIconImagePath() {
         if (materialIconImagePass == null) {
-            materialIconImagePass = "/images/Materials/" + getMaterialIconImageName() + ".png";
+            materialIconImagePass = String.format(MATERIAL_ICON_IMAGE_PATH, getMaterialIconImageName());
         }
         return materialIconImagePass;
     }

@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class NewItemDialog extends JDialog {
+    private static final String NEW_ITEM_DIALOG_TITLE = "Specify Item";
+
     private JPanel contentPane;
     private JButton btnAddItem;
     private JButton btnCancel;
@@ -36,7 +38,7 @@ public class NewItemDialog extends JDialog {
     }
 
     private void setupBasicElements() {
-        setTitle("Specify Item");
+        setTitle(NEW_ITEM_DIALOG_TITLE);
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnAddItem);
         setModalityType(Dialog.DEFAULT_MODALITY_TYPE);

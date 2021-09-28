@@ -7,26 +7,28 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TTCParser {
-
+public class TtcParser {
+    public static final int PARSE_ERROR = -1;
     private static final String REGEX_MATERIAL = "\\[%1$d\\]=\\{\\[\\d*\\]=\\{\\[\\d*\\]=\\{\\[\\-?\\d*\\]=\\{\\[\\\"Avg\\\"\\]=\\d*\\.?\\d*,\\[\\\"Max\\\"\\]=\\d*\\.?\\d*,\\[\\\"Min\\\"\\]=\\d*\\.?\\d*,\\[\\\"EntryCount\\\"\\]=\\d*,\\[\\\"AmountCount\\\"\\]=\\d*,\\[\\\"SuggestedPrice\\\"\\]=\\d*\\.?\\d*,},},}";
     private static final String REGEX_SUGGESTED_PRICE = "\\[\\\"SuggestedPrice\\\"\\]=\\d*\\.?\\d*,";
     private static final String REGEX_AVERAGE_PRICE = "\\[\\\"Avg\\\"\\]=\\d*\\.?\\d*,";
     private static final String REGEX_NUMBER = "\\d*\\.?\\d";
+    private static final String REGEX_TTC_PRICE_TABLE_MARKER = "function TamrielTradeCentrePrice:LoadPriceTable\\(\\)";
+
 
     private final String ttcPriceList;
 
-    public TTCParser(String ttcPriceListFilePath) throws FileNotFoundException {
-        ttcPriceList = createTTCPriceListSuperString(ttcPriceListFilePath);
+    public TtcParser(String ttcPriceListFilePath) throws FileNotFoundException {
+        ttcPriceList = createTtcPriceListSuperString(ttcPriceListFilePath);
     }
 
-    public boolean chosenFileIsTTCPriceTable() {
-        Pattern pattern = Pattern.compile("function TamrielTradeCentrePrice:LoadPriceTable\\(\\)");
+    public boolean isTtcPriceTable() {
+        Pattern pattern = Pattern.compile(REGEX_TTC_PRICE_TABLE_MARKER);
         Matcher matcher = pattern.matcher(ttcPriceList);
         return matcher.find();
     }
 
-    private static String createTTCPriceListSuperString(String ttcPriceListFilePath) throws FileNotFoundException {
+    private static String createTtcPriceListSuperString(String ttcPriceListFilePath) throws FileNotFoundException {
         File file = new File(ttcPriceListFilePath);
         Scanner fileScanner = new Scanner(file);
         StringBuilder result = new StringBuilder();
@@ -36,19 +38,12 @@ public class TTCParser {
         return result.toString();
     }
 
-    public double getSuggestedPriceFromTTCFor(int ttcMaterialID) {
+    public double getSuggestedPriceFromTtcFor(int ttcMaterialID) {
         String resultGlobalSearch = getSubstringFrom(ttcPriceList, String.format(REGEX_MATERIAL, ttcMaterialID));
         if (resultGlobalSearch == null) {
-            return -1;
+            return PARSE_ERROR;
         }
         return getPriceFrom(resultGlobalSearch, REGEX_SUGGESTED_PRICE);
-    }
-
-    private double getAvgPriceFromTTCFor(int ttcMaterialID) {
-        String resultGlobalSearch = getSubstringFrom(ttcPriceList, String.format(REGEX_MATERIAL, ttcMaterialID));
-        double avgPrice = getPriceFrom(resultGlobalSearch, REGEX_AVERAGE_PRICE);
-        System.out.println("Average price for " + ttcMaterialID + " is " + avgPrice + " gold");
-        return avgPrice;
     }
 
     private String getSubstringFrom(String sourceString, String regex) {
@@ -64,6 +59,9 @@ public class TTCParser {
     private double getPriceFrom(String fullString, String regexNeededPriceLine) {
         String resultString = getSubstringFrom(fullString, regexNeededPriceLine);
         String numInString = getSubstringFrom(resultString, REGEX_NUMBER);
+        if (numInString == null) {
+            return PARSE_ERROR;
+        }
         return Double.parseDouble(numInString);
     }
 }
