@@ -1,8 +1,10 @@
 package gui.dialog.priceeditor;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class PriceEditorDialog extends JDialog {
@@ -69,7 +71,28 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void onTamrielTradeCenterDataCall() throws FileNotFoundException {
-        presenter.updateTableWithTTCPrices();
+        String dialogTitle = "Open Tamriel Trade Center price list";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(dialogTitle);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        FileFilter fileFilter = new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getName().endsWith(".lua") || f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return "Lua source File (*.lua)";
+            }
+        };
+        fileChooser.setFileFilter(fileFilter);
+        fileChooser.setSelectedFile(new File("PriceTable.lua"));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            presenter.updateTableWithTTCPrices(selectedFile.getAbsolutePath());
+        }
     }
 
     private void onCancelAction() {

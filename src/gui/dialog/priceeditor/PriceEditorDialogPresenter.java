@@ -3,8 +3,9 @@ package gui.dialog.priceeditor;
 import entities.Material;
 import util.DatabaseRepository;
 import util.MaterialCache;
-import util.TTCHelper;
+import util.TTCParser;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -24,10 +25,42 @@ public class PriceEditorDialogPresenter {
         materialTableModel = new MaterialTableModel(listMaterials);
     }
 
-    public void updateTableWithTTCPrices() throws FileNotFoundException {
-        TTCHelper.updateMaterialsWithTTCPrices(listMaterials);
-        materialTableModel.updateMaterials(listMaterials);
+    public void updateTableWithTTCPrices(String ttcPriceListPath) throws FileNotFoundException {
+        if (ttcPriceListPath.endsWith(".lua")) {
+            TTCParser parser = new TTCParser(ttcPriceListPath);
+            if (parser.chosenFileIsTTCPriceTable()) {
+                int materialsQuantity = listMaterials.size();
+                int successfullyEdited = 0;
+                for (Material material :
+                        listMaterials) {
+                    int ttcID = material.getTtcId();
+                    int newPrice = (int) Math.round(parser.getSuggestedPriceFromTTCFor(ttcID));
+                    if (newPrice == -1) {
+                        continue;
+                    }
+                    material.setPrice(newPrice);
+                    successfullyEdited++;
+                }
+                materialTableModel.updateMaterials(listMaterials);
+                fireSuccessfulMaterialsPriceTTCUpdate(successfullyEdited, materialsQuantity);
+                parser = null; //cleaning instance
+            } else fireWrongFileDialog();
+        } else fireWrongFileDialog();
+    }
 
+    private void fireSuccessfulMaterialsPriceTTCUpdate(int successfullyEdited, int overallQuantity) {
+        String message = "%1$s of %2$s materials updated successfully!";
+        JOptionPane.showMessageDialog(null,
+                String.format(message, successfullyEdited, overallQuantity),
+                "Price import successful",
+                JOptionPane.PLAIN_MESSAGE);
+    }
+
+    private void fireWrongFileDialog() {
+        JOptionPane.showMessageDialog(null,
+                "This is not a valid file!",
+                "File error",
+                JOptionPane.WARNING_MESSAGE);
     }
 
     private List<Material> getAllMaterials() {
