@@ -3,12 +3,14 @@ package gui.dialog.priceeditor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 public class PriceEditorDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTable materialsTable;
+    private JButton buttonGetPricesFromTTC;
 
     private final PriceEditorDialogPresenter presenter;
     private final PriceEditorDialogActionListener listener;
@@ -39,6 +41,17 @@ public class PriceEditorDialog extends JDialog {
             }
         });
 
+        buttonGetPricesFromTTC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    onTamrielTradeCenterDataCall();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancelAction();
@@ -53,6 +66,10 @@ public class PriceEditorDialog extends JDialog {
             listener.onMaterialPriceChanged();
         }
         dispose();
+    }
+
+    private void onTamrielTradeCenterDataCall() throws FileNotFoundException {
+        presenter.updateTableWithTTCPrices();
     }
 
     private void onCancelAction() {
@@ -77,7 +94,7 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void setupTable() {
-        presenter.updateMaterialTableModel();
+        presenter.setupMaterialTableModel();
         materialsTable.setModel(presenter.getMaterialTableModel());
     }
 }

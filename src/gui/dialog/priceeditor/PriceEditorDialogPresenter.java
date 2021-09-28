@@ -3,22 +3,31 @@ package gui.dialog.priceeditor;
 import entities.Material;
 import util.DatabaseRepository;
 import util.MaterialCache;
+import util.TTCHelper;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class PriceEditorDialogPresenter {
 
     private final DatabaseRepository databaseRepository;
     private MaterialTableModel materialTableModel;
+    private final List<Material> listMaterials;
 
     public PriceEditorDialogPresenter(final DatabaseRepository databaseRepository) {
         this.databaseRepository = databaseRepository;
-        updateMaterialTableModel();
+        listMaterials = getAllMaterials();
+        setupMaterialTableModel();
     }
 
-    public void updateMaterialTableModel() {
-        List<Material> materialsList = getAllMaterials();
-        materialTableModel = new MaterialTableModel(materialsList);
+    public void setupMaterialTableModel() {
+        materialTableModel = new MaterialTableModel(listMaterials);
+    }
+
+    public void updateTableWithTTCPrices() throws FileNotFoundException {
+        TTCHelper.updateMaterialsWithTTCPrices(listMaterials);
+        materialTableModel.updateMaterials(listMaterials);
+
     }
 
     private List<Material> getAllMaterials() {
@@ -27,6 +36,10 @@ public class PriceEditorDialogPresenter {
 
     public void updateMaterialsPrice() {
         List<Material> editedMaterials = materialTableModel.getChangedMaterialPriceList();
+        updateMaterialsData(editedMaterials);
+    }
+
+    private void updateMaterialsData(List<Material> editedMaterials) {
         consoleMaterialsOutLog("MATERIALS EDITED:", editedMaterials);
         for (Material material :
                 editedMaterials) {
