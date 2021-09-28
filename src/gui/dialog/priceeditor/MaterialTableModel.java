@@ -75,6 +75,14 @@ public class MaterialTableModel extends AbstractTableModel {
         return columnIndex == PRICE_COLUMN_INDEX;
     }
 
+    public void updateMaterials(List<Material> materials) {
+        for (Material material :
+                materials) {
+            noteTheChange(material);
+        }
+        fireTableDataChanged();
+    }
+
     private void noteTheChange(Material material) {
         changedMaterials.remove(material);
         changedMaterials.add(material);

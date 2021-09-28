@@ -8,7 +8,6 @@ import java.awt.*;
 import java.net.URL;
 
 public class CraftResourceListRenderer extends JPanel implements ListCellRenderer<CraftResource> {
-
     private JPanel container;
     private JLabel craftResourceField;
     private JLabel priceField;
@@ -32,14 +31,18 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
 
     private void setupCraftResourceField(CraftResource craftResource) {
         URL materialIconPath = getClass().getResource(craftResource.getMaterial().getMaterialIconImagePath());
-        ImageIcon craftResourceIcon = new ImageIcon(materialIconPath);
-        craftResourceField.setIcon(craftResourceIcon);
+        if (materialIconPath != null) {
+            ImageIcon craftResourceIcon = new ImageIcon(materialIconPath);
+            craftResourceField.setIcon(craftResourceIcon);
+        }
         craftResourceField.setText(craftResource.toString());
     }
 
     private void setupPriceField(CraftResource craftResource) {
         URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
-        priceField.setIcon(new ImageIcon(goldIconPath));
+        if (goldIconPath != null) {
+            priceField.setIcon(new ImageIcon(goldIconPath));
+        }
         priceField.setText(String.valueOf(craftResource.getTotalPrice()));
     }
 

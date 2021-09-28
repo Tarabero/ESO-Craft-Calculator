@@ -10,12 +10,12 @@ import util.MaterialCache;
 import java.util.List;
 
 public class MaterialDaoImpl implements MaterialDao {
-    private static final String QUERY_ALL_MATERIALS = "SELECT materials.id, materials.material_name, materials.price, material_types.material_type_name " +
+    private static final String QUERY_ALL_MATERIALS = "SELECT materials.id, materials.material_name, materials.price, materials.ttc_id, material_types.material_type_name " +
             "FROM materials " +
             "JOIN material_types " +
             "ON materials.type_id = material_types.id";
 
-    private static final String QUERY_SEARCH_MATERIAL = "SELECT materials.id, materials.material_name, materials.price, material_types.material_type_name " +
+    private static final String QUERY_SEARCH_MATERIAL = "SELECT materials.id, materials.material_name, materials.price, materials.ttc_id, material_types.material_type_name " +
             "FROM materials " +
             "JOIN material_types " +
             "ON materials.type_id = material_types.id " +
@@ -26,7 +26,7 @@ public class MaterialDaoImpl implements MaterialDao {
                     "SET price = %1$d " +
                     "WHERE id = %2$d ;";
 
-    private DatabaseHelper databaseHelper;
+    private final DatabaseHelper databaseHelper;
 
     public MaterialDaoImpl(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;

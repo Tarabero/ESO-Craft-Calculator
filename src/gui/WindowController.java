@@ -61,7 +61,7 @@ public class WindowController implements MainScreenActionListener {
         databaseHelper = DatabaseHelper.getInstance();
         databaseHelper.connect();
         databaseRepository = new DatabaseRepository(databaseHelper);
-        setProgramLookAndFeelTheme(LookAndFeelThemes.METAL);
+        setProgramLookAndFeelTheme(LookAndFeelThemes.WINDOWS);
         openMainScreenWindow();
     }
 

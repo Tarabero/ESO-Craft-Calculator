@@ -1,14 +1,26 @@
 package gui.dialog.priceeditor;
 
+import util.LuaFileFilter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class PriceEditorDialog extends JDialog {
+    private static final String PRICE_EDITOR_WINDOW_TITLE = "Material Price Editor";
+    private static final String DIRECTORY_PROPERTY = "user.dir";
+    private static final String FILE_CHOOSER_DIALOG_TITLE = "Open Tamriel Trade Center price table";
+    private static final String FILE_CHOOSER_DEFAULT_FILE_NAME = "PriceTable.lua";
+    private static final String FILE_ERROR_DIALOG_TITLE = "File read error";
+    private static final String FILE_ERROR_DIALOG_MESSAGE = "Error occurred while reading selected file!";
+
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTable materialsTable;
+    private JButton buttonGetPricesFromTtc;
 
     private final PriceEditorDialogPresenter presenter;
     private final PriceEditorDialogActionListener listener;
@@ -26,7 +38,7 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void setupBasicElements() {
-        setTitle("Material Price Editor");
+        setTitle(PRICE_EDITOR_WINDOW_TITLE);
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonOK);
         setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
@@ -39,6 +51,18 @@ public class PriceEditorDialog extends JDialog {
             }
         });
 
+        buttonGetPricesFromTtc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    onTamrielTradeCenterDataCall();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                    showFileErrorDialog();
+                }
+            }
+        });
+
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancelAction();
@@ -47,12 +71,32 @@ public class PriceEditorDialog extends JDialog {
         setupAlternativeCancelListeners();
     }
 
+    private void showFileErrorDialog() {
+        JOptionPane.showMessageDialog(null,
+                FILE_ERROR_DIALOG_MESSAGE,
+                FILE_ERROR_DIALOG_TITLE,
+                JOptionPane.WARNING_MESSAGE);
+    }
+
     private void onConfirmAction() {
         presenter.updateMaterialsPrice();
         if (presenter.hasPriceChanged()) {
             listener.onMaterialPriceChanged();
         }
         dispose();
+    }
+
+    private void onTamrielTradeCenterDataCall() throws FileNotFoundException {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle(FILE_CHOOSER_DIALOG_TITLE);
+        fileChooser.setCurrentDirectory(new File(System.getProperty(DIRECTORY_PROPERTY)));
+        fileChooser.setFileFilter(new LuaFileFilter());
+        fileChooser.setSelectedFile(new File(FILE_CHOOSER_DEFAULT_FILE_NAME));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            presenter.updateTableWithTtcPrices(selectedFile.getAbsolutePath());
+        }
     }
 
     private void onCancelAction() {
@@ -77,7 +121,7 @@ public class PriceEditorDialog extends JDialog {
     }
 
     private void setupTable() {
-        presenter.updateMaterialTableModel();
+        presenter.setupMaterialTableModel();
         materialsTable.setModel(presenter.getMaterialTableModel());
     }
 }

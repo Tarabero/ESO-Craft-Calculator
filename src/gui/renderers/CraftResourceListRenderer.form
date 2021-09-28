@@ -16,6 +16,7 @@
       <component id="ae3a8" class="javax.swing.JLabel" binding="priceField">
         <constraints border-constraint="East"/>
         <properties>
+          <font style="1"/>
           <horizontalTextPosition value="10"/>
           <text value="Label"/>
         </properties>

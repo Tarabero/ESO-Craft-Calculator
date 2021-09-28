@@ -1,13 +1,16 @@
 package entities;
 
 public class Material extends Entity {
+    private static final String MATERIAL_ICON_IMAGE_PATH = "/images/Materials/%s.png";
 
     private Integer price;
     private final MaterialType materialType;
+    private final Integer ttcId;
     private String materialIconImagePass;
 
-    public Material(int id, String name, int price, MaterialType materialType) {
+    public Material(int id, String name, Integer ttcId, int price, MaterialType materialType) {
         super(name, id);
+        this.ttcId = ttcId;
         this.price = price;
         this.materialType = materialType;
     }
@@ -18,6 +21,10 @@ public class Material extends Entity {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Integer getTtcId() {
+        return ttcId;
     }
 
     public MaterialType getMaterialType() {
@@ -34,7 +41,7 @@ public class Material extends Entity {
 
     public String getMaterialIconImagePath() {
         if (materialIconImagePass == null) {
-            materialIconImagePass = "/images/Materials/" + getMaterialIconImageName() + ".png";
+            materialIconImagePass = String.format(MATERIAL_ICON_IMAGE_PATH, getMaterialIconImageName());
         }
         return materialIconImagePass;
     }
