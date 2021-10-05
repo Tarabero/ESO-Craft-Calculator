@@ -9,10 +9,13 @@ import gui.main.MainScreen;
 import gui.main.MainScreenActionListener;
 import gui.main.MainScreenPresenter;
 import util.DatabaseRepository;
+import util.GlobalConstants;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.URL;
 
 public class WindowController implements MainScreenActionListener {
 
@@ -97,8 +100,16 @@ public class WindowController implements MainScreenActionListener {
         MainScreen window = new MainScreen(new MainScreenPresenter(), this);
         window.addWindowListener(windowListener);
         window.setLocationRelativeTo(null);
+        setWindowIcon(window);
         window.pack();
         window.setVisible(true);
+    }
+
+    private void setWindowIcon(Window window) {
+        URL programIcon = getClass().getClassLoader().getResource(GlobalConstants.UI_ICON_PROGRAM_PATH);
+        if (programIcon != null) {
+            window.setIconImage(new ImageIcon(programIcon).getImage());
+        }
     }
 
     @Override
@@ -111,6 +122,7 @@ public class WindowController implements MainScreenActionListener {
             newItemDialogPresenter = new NewItemDialogPresenter(databaseRepository);
         }
         NewItemDialog dialog = new NewItemDialog(newItemDialogPresenter, listener);
+        setWindowIcon(dialog);
         dialog.setLocationRelativeTo(null);
         dialog.pack();
         dialog.setVisible(true);
@@ -124,6 +136,7 @@ public class WindowController implements MainScreenActionListener {
     private void openPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
         PriceEditorDialogPresenter presenter = new PriceEditorDialogPresenter(databaseRepository);
         PriceEditorDialog dialog = new PriceEditorDialog(presenter, listener);
+        setWindowIcon(dialog);
         dialog.setLocationRelativeTo(null);
         dialog.pack();
         dialog.setVisible(true);
