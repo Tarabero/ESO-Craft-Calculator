@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 
 public class MainScreen extends JFrame {
-    private static final String MAIN_SCREEN_TITLE = "ESO Crafting Calculator v0.01 (Alpha)";
+    private static final String MAIN_SCREEN_TITLE = "ESO Craft Calculator";
 
     private JPanel panelMain;
     private JButton btnAddItem;
