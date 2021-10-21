@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 public class DatabaseHelper {
     private final static String DIRECTORY_PROPERTY = "user.dir";
     private final static String JDBC_CONFIGURATION = "jdbc:sqlite:";
-    private final static String DATABASE_LOCAL_PATH = "/teso_craft_database.s3db";
-    private final static String DATABASE_FILE_NOT_FOUND_ERR_MSG = "Database file \"teso_craft_database.s3db\" not found in the root directory! Application will be closed.";
+    private final static String DATABASE_LOCAL_PATH = "/ESOCC.s3db";
+    private final static String DATABASE_FILE_NOT_FOUND_ERR_MSG = "Database file \"ESOCC.s3db\" not found in the root directory! Application will be closed.";
     private static final String DATABASE_ERROR_DIALOG_TITLE = "Database error";
     private final static Logger logger = Logger.getLogger(DatabaseHelper.class.getSimpleName());
 
