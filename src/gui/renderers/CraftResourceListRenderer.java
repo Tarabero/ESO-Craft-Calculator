@@ -1,7 +1,7 @@
 package gui.renderers;
 
 import entities.CraftResource;
-import util.GlobalConstants;
+import util.ImageResource;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,10 +39,7 @@ public class CraftResourceListRenderer extends JPanel implements ListCellRendere
     }
 
     private void setupPriceField(CraftResource craftResource) {
-        URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
-        if (goldIconPath != null) {
-            priceField.setIcon(new ImageIcon(goldIconPath));
-        }
+        priceField.setIcon(ImageResource.getGoldIconImage());
         priceField.setText(String.valueOf(craftResource.getTotalPrice()));
     }
 
