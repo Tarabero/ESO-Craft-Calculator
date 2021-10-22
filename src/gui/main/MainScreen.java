@@ -7,7 +7,7 @@ import gui.dialog.priceeditor.PriceEditorDialog;
 import gui.renderers.CraftResourceListRenderer;
 import gui.renderers.ItemListRenderer;
 import gui.renderers.ToggleSelectionModel;
-import util.GlobalConstants;
+import util.ImageResource;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -16,7 +16,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 public class MainScreen extends JFrame {
     private static final String MAIN_SCREEN_TITLE = "ESO Craft Calculator";
@@ -89,10 +88,7 @@ public class MainScreen extends JFrame {
 
     private void setupTotalPrice() {
         goldIcon.setText("");
-        URL goldIconPath = getClass().getResource(GlobalConstants.UI_ICON_GOLD_IMAGE_PATH);
-        if (goldIconPath != null) {
-            goldIcon.setIcon(new ImageIcon(goldIconPath));
-        }
+        goldIcon.setIcon(ImageResource.getGoldIconImage());
         totalPrice.setText(presenter.getTotalPriceCounter().toString());
     }
 

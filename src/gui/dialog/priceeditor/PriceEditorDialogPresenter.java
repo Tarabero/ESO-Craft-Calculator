@@ -16,12 +16,18 @@ public class PriceEditorDialogPresenter {
     private static final String FILE_ERROR_DIALOG_TITLE = "File error";
     private static final String FILE_ERROR_DIALOG_MESSAGE = "Chosen file is not valid!";
 
+    public interface FileErrorListener {
+        void onError(String errorTitle, String errorMessage);
+    }
+
+    private FileErrorListener errorListener;
     private final DatabaseRepository databaseRepository;
     private MaterialTableModel materialTableModel;
     private final List<Material> listMaterials;
 
-    public PriceEditorDialogPresenter(final DatabaseRepository databaseRepository) {
+    public PriceEditorDialogPresenter(final DatabaseRepository databaseRepository, FileErrorListener errorListener) {
         this.databaseRepository = databaseRepository;
+        this.errorListener = errorListener;
         listMaterials = getAllMaterials();
         setupMaterialTableModel();
     }
@@ -33,14 +39,14 @@ public class PriceEditorDialogPresenter {
     public void updateTableWithTtcPrices(String ttcPriceListPath) throws FileNotFoundException {
         if (ttcPriceListPath.endsWith(LUA_FILE_EXTENSION)) {
             parseTtcFile(ttcPriceListPath);
-        } else showFileErrorDialog();
+        } else fireError(FILE_ERROR_DIALOG_MESSAGE);
     }
 
     private void parseTtcFile(String ttcPriceListPath) throws FileNotFoundException {
         TtcParser parser = new TtcParser(ttcPriceListPath);
         if (parser.isTtcPriceTable()) {
             updateMaterialsPricesWith(parser);
-        } else showFileErrorDialog();
+        } else fireError(FILE_ERROR_DIALOG_MESSAGE);
     }
 
     private void updateMaterialsPricesWith(TtcParser parser) {
@@ -68,11 +74,10 @@ public class PriceEditorDialogPresenter {
                 JOptionPane.PLAIN_MESSAGE);
     }
 
-    private void showFileErrorDialog() {
-        JOptionPane.showMessageDialog(null,
-                FILE_ERROR_DIALOG_MESSAGE,
-                FILE_ERROR_DIALOG_TITLE,
-                JOptionPane.WARNING_MESSAGE);
+    private void fireError(String errorMessage) {
+        if (errorListener != null) {
+            errorListener.onError(FILE_ERROR_DIALOG_TITLE, errorMessage);
+        }
     }
 
     private List<Material> getAllMaterials() {

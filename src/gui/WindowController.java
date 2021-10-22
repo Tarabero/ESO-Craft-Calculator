@@ -60,12 +60,42 @@ public class WindowController implements MainScreenActionListener {
         }
     };
 
+    private final DatabaseHelper.DatabaseHelperErrorListener databaseErrorListener = new DatabaseHelper.DatabaseHelperErrorListener() {
+        @Override
+        public void onError(String errorTitle, String errorMessage) {
+            onDatabaseError(errorTitle, errorMessage);
+        }
+    };
+    private final PriceEditorDialogPresenter.FileErrorListener filePickerErrorListener = new PriceEditorDialogPresenter.FileErrorListener() {
+        @Override
+        public void onError(String errorTitle, String errorMessage) {
+            onFilePickerError(errorTitle, errorMessage);
+        }
+    };
+
     public WindowController() {
         databaseHelper = DatabaseHelper.getInstance();
+        databaseHelper.setErrorListener(databaseErrorListener);
         databaseHelper.connect();
         databaseRepository = new DatabaseRepository(databaseHelper);
         setProgramLookAndFeelTheme(LookAndFeelThemes.WINDOWS);
         openMainScreenWindow();
+    }
+
+    private void onDatabaseError(String errorTitle, String errorMessage) {
+        showErrorDialog(errorTitle, errorMessage);
+        System.exit(1);
+    }
+
+    private void showErrorDialog(String errorTitle, String errorMessage) {
+        JOptionPane.showMessageDialog(null,
+                errorMessage,
+                errorTitle,
+                JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void onFilePickerError(String errorTitle, String errorMessage) {
+        showErrorDialog(errorTitle, errorMessage);
     }
 
     private void mainScreenClosingAction() {
@@ -134,7 +164,7 @@ public class WindowController implements MainScreenActionListener {
     }
 
     private void openPriceEditorDialog(PriceEditorDialog.PriceEditorDialogActionListener listener) {
-        PriceEditorDialogPresenter presenter = new PriceEditorDialogPresenter(databaseRepository);
+        PriceEditorDialogPresenter presenter = new PriceEditorDialogPresenter(databaseRepository, filePickerErrorListener);
         PriceEditorDialog dialog = new PriceEditorDialog(presenter, listener);
         setWindowIcon(dialog);
         dialog.setLocationRelativeTo(null);
