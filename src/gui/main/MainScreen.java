@@ -27,9 +27,10 @@ public class MainScreen extends JFrame {
     private JList<CraftResource> listCraftResources;
     private JList<Item> listItems;
     private JLabel totalPrice;
-    private JLabel goldIcon;
     private JLabel totalPriceLabel;
+    private JLabel goldIcon;
     private JSpinner spinnerSurplusValue;
+    private JButton btnRemoveAll;
 
     private int selectedPosition = -1;
     private final MainScreenPresenter presenter;
@@ -107,6 +108,13 @@ public class MainScreen extends JFrame {
             }
         });
 
+        btnRemoveAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRemoveAllAction();
+            }
+        });
+
         btnPriceEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -129,6 +137,11 @@ public class MainScreen extends JFrame {
 
     private void onRemoveItemAction() {
         presenter.removeItemFromItemList(selectedPosition);
+        updateTotalPrice();
+    }
+
+    private void onRemoveAllAction() {
+        presenter.clearLists();
         updateTotalPrice();
     }
 
