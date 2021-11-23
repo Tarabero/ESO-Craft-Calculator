@@ -20,12 +20,12 @@
 # FAQ and UI instructions.
 
 ## Base elements: 
-[1] Item constructor – define your item on adding to the list by selecting its type, class, trait, quality.
-[2] Items List – displaying currently added items with all required resources (material and quantity) and total price (based on required materials’ cost).
-[3] Total Price – automatically calculates total price based on items’ prime cost and surplus value.
-[4] Materials List – displaying all materials required to produce all items in Items list: initial material, its quantity and total cost based on material’s price (changeable in Material Price Editor)
-[5] Surplus Value  – sets the desired surplus value (in %), which takes place in Total Price calculation. 0% means that total price will be just the prime cost.  
-[6] Material Price Editor – edit the price of each material by yourself or load suggested prices from the Tamriel Trade Centre Add-on’s price list.
+1. Item constructor – define your item on adding to the list by selecting its type, class, trait, quality.
+2. Items List – displaying currently added items with all required resources (material and quantity) and total price (based on required materials’ cost).
+3.Total Price – automatically calculates total price based on items’ prime cost and surplus value.
+4. Materials List – displaying all materials required to produce all items in Items list: initial material, its quantity and total cost based on material’s price (changeable in Material Price Editor)
+5. Surplus Value  – sets the desired surplus value (in %), which takes place in Total Price calculation. 0% means that total price will be just the prime cost.  
+6. Material Price Editor – edit the price of each material by yourself or load suggested prices from the Tamriel Trade Centre Add-on’s price list.
 
 ## FAQ:
 ### How to add item to the list:
