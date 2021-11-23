@@ -14,8 +14,8 @@
 ## Installation:
 1. Download the [latest version](https://drive.google.com/drive/folders/1dtx2jaPJYjnRe9dKoPUKaO5lHIQASZlu?usp=sharing)
 2. Extract contents of the zip file (*ESOCC.exe* and *ESOCC.s3db*) somewhere. 
-> *ESOCC.exe* requires *ESOCC.s3db* database to work, so you should keep them in the same folder.
 3. That is it! To use the program run ESOCC.exe.
+> *ESOCC.exe* requires *ESOCC.s3db* database to work, so you should keep them in the same folder.
 
 # Screenshots
 
@@ -82,6 +82,6 @@
   8. Click Get Tamriel Trade Center prices button.
   9. In the appeared explorer window go to the directory where you extracted files from PriceTable.zip on step 5 and select PriceTable.lua file.
   10.	Click Open button.
-  > If you selected the right file you will see the dialog showing number of successfully updated materials, click OK to continue
+  > If you selected the valid file you will see the dialog showing number of successfully updated materials, click OK to continue
   11.	Confirm new prices by pressing OK in Material Price Editor window.
   > Confirmed changes save to *ESOCC.s3db* database and will persist on the next program startup.
