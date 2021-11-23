@@ -63,6 +63,12 @@ public class MainScreenPresenter {
         }
     }
 
+    public void clearLists() {
+        itemsModel.clear();
+        craftResourcesModel.clear();
+        totalPriceCounter = 0;
+    }
+
     private void actionRemoveItem(Item item) {
         decreaseTotalPrice(item);
         removeItemMaterialsFromMaterialList(item);
@@ -116,7 +122,7 @@ public class MainScreenPresenter {
 
     private int getTotalPriceWithSurplusValue() {
         double percentToCoefficient = 0.01;
-        double surplusValuePercentage = (Double) spinnerModel.getNumber() * percentToCoefficient;
+        double surplusValuePercentage = spinnerModel.getNumber().doubleValue() * percentToCoefficient;
         double result = totalPriceCounter;
         result += result * surplusValuePercentage;
         return (int) Math.round(result);
