@@ -37,13 +37,13 @@
   1. Click the Add Item button.
   2. Specify the Item by selecting its parameters (type, slot, trait, quality).
   3. Click the dialog’s Add Item button.
-<img src="screenshots/faq/2.png" width="100%" align=center/>
+<img src="screenshots/faq/2.png" width="80%" align=center/>
 
 ### How to show prime cost as Total Price:
   1. Go to surplus value spinner.
   2. Set manually or click arrow down to 0.
   > With 0% surplus value total price will only consist of item’s prime cost.
-<img src="screenshots/faq/3.png" width="70%" align=center/>
+<img src="screenshots/faq/3.png" width="60%" align=center/>
 
 ### How to edit materials’ prices:
   1. Click Material Price Editor button.
