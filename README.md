@@ -17,26 +17,33 @@
 > *ESOCC.exe* requires *ESOCC.s3db* database to work, so you should keep them in the same folder.
 3. That is it! To use the program run ESOCC.exe.
 
-# FAQ and UI instructions.
+# Screenshots
+
+<img src="screenshots/1.png" width="49%"/> <img src="screenshots/2.png" width="34%"/> <img src="screenshots/3.png" width="15%"/>
+
+# FAQ and UI instructions
 
 ## Base elements: 
-1. Item constructor – define your item on adding to the list by selecting its type, class, trait, quality.
-2. Items List – displaying currently added items with all required resources (material and quantity) and total price (based on required materials’ cost).
-3.Total Price – automatically calculates total price based on items’ prime cost and surplus value.
-4. Materials List – displaying all materials required to produce all items in Items list: initial material, its quantity and total cost based on material’s price (changeable in Material Price Editor)
-5. Surplus Value  – sets the desired surplus value (in %), which takes place in Total Price calculation. 0% means that total price will be just the prime cost.  
-6. Material Price Editor – edit the price of each material by yourself or load suggested prices from the Tamriel Trade Centre Add-on’s price list.
+  1. Item constructor – define your item on adding to the list by selecting its type, class, trait, quality.
+  2. Items List – displaying currently added items with all required resources (material and quantity) and total price (based on required materials’ cost).
+  3.Total Price – automatically calculates total price based on items’ prime cost and surplus value.
+  4. Materials List – displaying all materials required to produce all items in Items list: initial material, its quantity and total cost based on material’s price (changeable in Material Price Editor)
+  5. Surplus Value  – sets the desired surplus value (in %), which takes place in Total Price calculation. 0% means that total price will be just the prime cost.  
+  6. Material Price Editor – edit the price of each material by yourself or load suggested prices from the Tamriel Trade Centre Add-on’s price list.
+<img src="screenshots/faq/1.png" width="100%" align=center/>
 
 ## FAQ:
 ### How to add item to the list:
   1. Click the Add Item button.
   2. Specify the Item by selecting its parameters (type, slot, trait, quality).
   3. Click the dialog’s Add Item button.
+<img src="screenshots/faq/2.png" width="100%" align=center/>
 
 ### How to show prime cost as Total Price:
   1. Go to surplus value spinner.
   2. Set manually or click arrow down to 0.
   > With 0% surplus value total price will only consist of item’s prime cost.
+<img src="screenshots/faq/3.png" width="70%" align=center/>
 
 ### How to edit materials’ prices:
   1. Click Material Price Editor button.
@@ -44,6 +51,7 @@
   3. Edit the value in the Price column for selected material’s string.
   4. Confirm the edits by clicking the OK button. 
   > Confirmed changes save to *ESOCC.s3db* database and will persist on the next program startup.
+<img src="screenshots/faq/4.png" width="100%" align=center/>
 
 ### How to upgrade material prices with prices from Tamriel Trade Centre:
   > Loading TTC prices means setting app’s materials’ prices to suggested (median) materials’ prices from TTC’s price list.
