@@ -5,6 +5,9 @@ import entities.CraftResource;
 import entities.Item;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 public class MainScreenPresenter {
 
@@ -126,6 +129,34 @@ public class MainScreenPresenter {
         double result = totalPriceCounter;
         result += result * surplusValuePercentage;
         return (int) Math.round(result);
+    }
+
+    public void exportMaterialListToClipboard() {
+        if (!craftResourcesModel.isEmpty()) {
+            String exportString = getCraftResourceListAsString();
+            StringSelection stringSelection = new StringSelection(exportString);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stringSelection, null);
+        }
+    }
+
+    private String getCraftResourceListAsString() {
+        StringBuilder resultString = new StringBuilder("ESO Shopping list:");
+        CraftResource craftResourceBuffer;
+        for (int craftResourceIndex = 0; craftResourceIndex < craftResourcesModel.size(); craftResourceIndex++) {
+            craftResourceBuffer = craftResourcesModel.getElementAt(craftResourceIndex);
+            resultString.append(System.getProperty("line.separator"))
+                    .append(craftResourceBuffer.toString())
+                    .append(" - ")
+                    .append(craftResourceBuffer.getTotalPrice())
+                    .append("g");
+            if (craftResourceBuffer.getQuantity() > 1) {
+                resultString.append(" (")
+                        .append(craftResourceBuffer.getMaterial().getPrice())
+                        .append("g/unit)");
+            }
+        }
+        return resultString.toString();
     }
 }
 

@@ -31,6 +31,7 @@ public class MainScreen extends JFrame {
     private JLabel goldIcon;
     private JSpinner spinnerSurplusValue;
     private JButton btnRemoveAll;
+    private JButton btnCopyToClipboard;
 
     private int selectedPosition = -1;
     private final MainScreenPresenter presenter;
@@ -115,6 +116,13 @@ public class MainScreen extends JFrame {
             }
         });
 
+        btnCopyToClipboard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                copyMaterialsToClipBoard();
+            }
+        });
+
         btnPriceEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,6 +155,10 @@ public class MainScreen extends JFrame {
 
     private void updateTotalPrice() {
         totalPrice.setText(presenter.getTotalPriceCounter().toString());
+    }
+
+    private void copyMaterialsToClipBoard() {
+        presenter.exportMaterialListToClipboard();
     }
 
     private void openPriceEditorDialog() {
