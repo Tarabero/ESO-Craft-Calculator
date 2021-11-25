@@ -88,3 +88,8 @@
   > If you selected the valid file you will see the dialog showing number of successfully updated materials, click OK to continue
   10	Confirm new prices by pressing *OK* in Material Price Editor window.
   > Confirmed changes save to the *ESOCC.s3db* database and will persist on the next program startup.
+
+# Feedback
+If you are looking for the feedback (bugs report, feature request, etc.) you can contact me via:
+Discord: HibiscusT#6394
+Telegram: @HibiscusT
