@@ -12,7 +12,7 @@
 [Java Runtime Environment 8](https://java.com/en/download/manual.jsp)
 
 ## Installation:
-1. Download the [latest version](https://drive.google.com/drive/folders/1dtx2jaPJYjnRe9dKoPUKaO5lHIQASZlu?usp=sharing)
+1. **Download the [latest version](https://drive.google.com/drive/folders/1dtx2jaPJYjnRe9dKoPUKaO5lHIQASZlu?usp=sharing)**
 2. Extract contents of the zip file (*ESOCC.exe* and *ESOCC.s3db*) somewhere. 
 3. That is it! To use the program run ESOCC.exe.
 > *ESOCC.exe* requires *ESOCC.s3db* database to work, so you should keep them in the same folder.
