@@ -34,22 +34,27 @@
 
 ## FAQ:
 ### How to add item to the list:
-  1. Click the Add Item button.
+  1. Click the *Add Item* button.
   2. Specify the Item by selecting its parameters (type, slot, trait, quality).
-  3. Click the dialog’s Add Item button.
+  3. Click the dialog’s *Add Item* button.
 <img src="screenshots/faq/2.png" width="80%" align=center/>
 
+### How to export materials list as text:
+  1. Click the *Copy material list to clipboard* button
+  2. If the material list isn't empy it will export its content as text to your clipboard.
+  3. Paste the copied text where you need it (notepad, messanger, etc.).
+
 ### How to show prime cost as Total Price:
-  1. Go to surplus value spinner.
-  2. Set manually or click arrow down to 0.
+  1. Go to the surplus value spinner.
+  2. Set manually or click the arrow down to 0.
   > With 0% surplus value total price will only consist of item’s prime cost.
 <img src="screenshots/faq/3.png" width="60%" align=center/>
 
 ### How to edit materials’ prices:
-  1. Click Material Price Editor button.
+  1. Click the *Material Price Editor* button.
   2. Find needed material.
-  3. Edit the value in the Price column for selected material’s string.
-  4. Confirm the edits by clicking the OK button. 
+  3. Edit the value in the *Price* column for selected material’s string.
+  4. Confirm the edits by clicking the *OK* button. 
   > Confirmed changes save to *ESOCC.s3db* database and will persist on the next program startup.
 <img src="screenshots/faq/4.png" width="100%" align=center/>
 
@@ -57,31 +62,29 @@
   > Loading TTC prices means setting app’s materials’ prices to suggested (median) materials’ prices from TTC’s price list.
   
   ***If you have Tamriel Trade Centre ESO add-on installed:***
-  1. Open explorer and go to
+  1. Open explorer and go to the 
 *C:\Users\YOUR USERNAME\Documents\Elder Scrolls Online\live\AddOns\TamrielTradeCentre\Client*
-  2. Run Client.exe to update TTC price table.
-  3. Go back to ESO Craft Calculator.
-  4. Click Material Price Editor button.
-  5. Click Get Tamriel Trade Center prices button.
+  2. Run the *Client.exe* to update TTC price table.
+  3. Go back to the ESO Craft Calculator.
+  4. Click the *Material Price Editor* button.
+  5. Click the *Get Tamriel Trade Center prices* button.
   6. In the appeared explorer window go to 
   /Documents/Elder Scrolls Online/live/AddOns/TamrielTradeCentre
-  and select PriceTable.lua file.
-  7. Click Open button.
+  and doble click *PriceTable.lua* file or select it and click the *Open* button.
   *If you selected the right file you will see the dialog showing number of successfully updated materials, click OK to continue*
-  8. Confirm new prices by pressing OK in Material Price Editor window. 
-  > Confirmed changes save to *ESOCC.s3db* database and will persist on the next program startup.
+  7. Confirm new prices by pressing *OK* in Material Price Editor window. 
+  > Confirmed changes save to the *ESOCC.s3db* database and will persist on the next program startup.
 
   ***If you do*** **NOT** ***have Tamriel Trade Centre ESO add-on installed:***
   1. Go to [Tamriel Trade Centre official website](https://tamrieltradecentre.com/)
   2. Select your server (EU/US) and your platform (PC/XBOX/PS)
   3. Click on Addon button and select Web Client (Beta)
   4. Download Price Table
-  5. Extract downloaded PriceTable.zip somewhere
-  6. Go back to ESO Craft Calculator.
-  7. Click Material Price Editor button.
-  8. Click Get Tamriel Trade Center prices button.
-  9. In the appeared explorer window go to the directory where you extracted files from PriceTable.zip on step 5 and select PriceTable.lua file.
-  10.	Click Open button.
+  5. Extract downloaded *PriceTable.zip* somewhere
+  6. Go back to the *ESO Craft Calculator*.
+  7. Click the *Material Price Editor* button.
+  8. Click the *Get Tamriel Trade Center prices* button.
+  9. In the appeared explorer window go to the directory where you extracted files from PriceTable.zip on step 5 and doble click *PriceTable.lua* file or select it and click the *Open* button.
   > If you selected the valid file you will see the dialog showing number of successfully updated materials, click OK to continue
-  11.	Confirm new prices by pressing OK in Material Price Editor window.
-  > Confirmed changes save to *ESOCC.s3db* database and will persist on the next program startup.
+  10	Confirm new prices by pressing *OK* in Material Price Editor window.
+  > Confirmed changes save to the *ESOCC.s3db* database and will persist on the next program startup.
