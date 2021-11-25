@@ -91,5 +91,5 @@
 
 # Feedback
 If you are looking for the feedback (bugs report, feature request, etc.) you can contact me via:
-Discord: HibiscusT#6394
-Telegram: @HibiscusT
++ Discord: HibiscusT#6394
++ Telegram: @HibiscusT
