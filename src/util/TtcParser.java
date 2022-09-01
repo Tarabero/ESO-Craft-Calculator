@@ -13,7 +13,7 @@ public class TtcParser {
     private static final String REGEX_SUGGESTED_PRICE = "\\[\\\"SuggestedPrice\\\"\\]=\\d*\\.?\\d*,";
     private static final String REGEX_AVERAGE_PRICE = "\\[\\\"Avg\\\"\\]=\\d*\\.?\\d*,";
     private static final String REGEX_NUMBER = "\\d*\\.?\\d";
-    private static final String REGEX_TTC_PRICE_TABLE_MARKER = "function TamrielTradeCentrePrice:LoadPriceTable\\(\\)";
+    private static final String REGEX_TTC_PRICE_TABLE_MARKER = "function TamrielTradeCentrePrice:LoadPriceTable";
 
 
     private final String ttcPriceList;

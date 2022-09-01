@@ -1,7 +1,7 @@
 package util;
 
-import com.sun.istack.internal.Nullable;
 import entities.Material;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
